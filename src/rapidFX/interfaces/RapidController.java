@@ -1,6 +1,6 @@
 package rapidFX.interfaces;
 
-public interface RapidController
+public interface RapidController extends RapidFXComponent
 {
 	RapidView getView();
 	RapidModel getModel();

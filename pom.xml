@@ -11,32 +11,13 @@
 	<dependency>
 	    <groupId>org.openjfx</groupId>
 	    <artifactId>javafx-controls</artifactId>
-	    <version>15</version>
+	    <version>17</version>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
 	<dependency>
 	    <groupId>org.openjfx</groupId>
 	    <artifactId>javafx-graphics</artifactId>
-	    <version>15</version>
+	    <version>17</version>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
-	<dependency>
-	    <groupId>org.openjfx</groupId>
-	    <artifactId>javafx-web</artifactId>
-	    <version>16</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
-	<dependency>
-	    <groupId>org.openjfx</groupId>
-	    <artifactId>javafx-fxml</artifactId>
-	    <version>15</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.json/json -->
-<dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20210307</version>
-</dependency>
-	
   </dependencies>
 </project>

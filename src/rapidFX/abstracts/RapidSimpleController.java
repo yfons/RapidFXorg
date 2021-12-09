@@ -1,8 +1,5 @@
 package rapidFX.abstracts;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import rapidFX.interfaces.RapidController;
 import rapidFX.interfaces.RapidModel;
 import rapidFX.interfaces.RapidView;
@@ -16,14 +13,14 @@ public abstract class RapidSimpleController<viewClass extends RapidView,modelCla
 	{
 		return view;
 	}
-	
+
 	@Override
 	public final modelClass getModel()
 	{
 		return model;
 	}
-	
+
 	@Override
 	public abstract void setUpController();
-	
+
 }

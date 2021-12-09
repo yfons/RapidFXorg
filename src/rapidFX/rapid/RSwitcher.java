@@ -14,22 +14,22 @@ public class RSwitcher extends RapidSimpleController<RSwitcherView, RSwitcherMod
 		view = new RSwitcherView();
 		model = new RSwitcherModel();
 	}
-	
+
 	public void setPosition(Position pos)
 	{
 		view.setPosition(pos);
 	}
-	
+
 	public void appendFactories(RSwitchFactory<?, ?>... factories)
 	{
 		model.appendFactories(factories);
 	}
-	
+
 	public ObjectProperty<Node> getContentProperty()
 	{
 		return model.getContentProperty();
 	}
-		
+
 	@Override
 	public void setUpController()
 	{

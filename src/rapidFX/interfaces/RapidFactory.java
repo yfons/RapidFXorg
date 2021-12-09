@@ -2,8 +2,8 @@ package rapidFX.interfaces;
 
 import javafx.beans.property.ObjectProperty;
 
-public interface RapidFactory
+public interface RapidFactory extends RapidFXComponent
 {
 	ObjectProperty<? extends RapidController> setNewController();
-	RapidFactory setUpFactory();
+	void setUpFactory();
 }

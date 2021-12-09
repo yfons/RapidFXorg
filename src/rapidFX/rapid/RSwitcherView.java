@@ -25,19 +25,19 @@ public class RSwitcherView implements RapidView
 	@Rmodel
 	private ObjectProperty<ObservableList<Node>> navBarChildrenList;
 	private BorderPane root = new BorderPane();
-	@Rmodel 
+	@Rmodel
 	private ObjectProperty<Node> contentProperty = root.centerProperty() ;
-	
+
 	RSwitcherView()
 	{
-		
+
 	}
 	@Override
-	public BorderPane getRootPane() 
+	public BorderPane getRootPane()
 	{
 		return root;
 	}
-	
+
 	public void setUpView()
 	{
 		contentProperty = root.centerProperty();
@@ -45,26 +45,26 @@ public class RSwitcherView implements RapidView
 		navBarChildrenList.get().addListener(listChangeListener);
 		root.setTop(navbar = hNavbar);
 	}
-	
-	ListChangeListener<Node> listChangeListener = new ListChangeListener<Node>()
+
+	ListChangeListener<Node> listChangeListener = new ListChangeListener<>()
 	{
 		@Override
 		public void onChanged(Change<? extends Node> c)
 		{
 			c.next();
 			navbar.getChildren().addAll(c.getAddedSubList());
-		}	
+		}
 	};
-	ChangeListener<Position> positionListener = new ChangeListener<Position>()
+	ChangeListener<Position> positionListener = new ChangeListener<>()
 	{
-		
+
 		@Override
 		public void changed(ObservableValue<? extends Position> observable, Position oldValue, Position newValue)
 		{
 			handleOldValue(oldValue);
 			handleNewValue(newValue);
 		}
-		
+
 		private void handleNewValue(Position newValue)
 		{
 			if (newValue != null)
@@ -90,16 +90,16 @@ public class RSwitcherView implements RapidView
 				}
 			}
 		}
-		
+
 		private void switchFromTo(Pane from, Pane to)
 		{
 			if (from.getChildren().size() != 0)
 				to.getChildren().addAll(from.getChildren());
-			
+
 			navbar = to;
 			navBarChildrenList.set(navbar.getChildren());
 		}
-		
+
 		private void handleOldValue(Position oldValue)
 		{
 			switch (oldValue)
@@ -118,14 +118,14 @@ public class RSwitcherView implements RapidView
 					break;
 			}
 		}
-		
+
 	};
-			
+
 	public void setPosition(Position pos)
 	{
 		this.positionProperty.set(pos);
 	}
-	
+
 	public Pane getNavBar()
 	{
 		return navbar;

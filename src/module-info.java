@@ -4,7 +4,6 @@ module scdfg
 	requires transitive javafx.controls;
 	requires javafx.base;
 	requires java.base;
-	
-	exports application;
-	
+	exports examples.HelloWorld;
+
 }

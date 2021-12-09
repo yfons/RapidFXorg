@@ -1,6 +1,6 @@
 package rapidFX.interfaces;
 
-public interface RapidModel
+public interface RapidModel extends RapidFXComponent
 {
 	void setUpModel();
 }

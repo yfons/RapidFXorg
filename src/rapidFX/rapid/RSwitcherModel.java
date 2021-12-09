@@ -15,17 +15,17 @@ public class RSwitcherModel implements RapidModel
 	private ObjectProperty<ObservableList<Node>> list;
 	@RautoGenerate
 	private ObjectProperty<ObservableList<Node>> navBarChildrenList;
-	
+
 	RSwitcherModel()
 	{
-		
+
 	}
-	
+
 	ObjectProperty<Node> getContentProperty()
 	{
 		return this.contentProperty;
 	}
-	
+
 	void appendFactories(RSwitchFactory<?,?>... factories)
 	{
 		for (var k : factories)
@@ -34,12 +34,12 @@ public class RSwitcherModel implements RapidModel
 			this.navBarChildrenList.get().add(k.setUpShownNode().getShownNode());
 		}
 	}
-	
+
 	public ObjectProperty<ObservableList<Node>> getList()
 	{
 		return list;
 	}
-	
+
 	@Override
 	public void setUpModel()
 	{
