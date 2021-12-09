@@ -45,6 +45,7 @@ public class LoginView extends RapidSimpleView<VBox>
 	@Override
 	public void setUpView()
 	{
+		// problem with the automatic bindings is they only work on Objectproperties currently
 		title.textProperty().bind(titleText);
 		// will not find LoginView.css in the current directory
 		//loadMyCss();
