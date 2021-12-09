@@ -46,5 +46,6 @@ public class LoginView extends RapidSimpleView<VBox>
 	public void setUpView()
 	{
 		title.textProperty().bind(titleText);
+		loadMyCss();
 	}
 }
