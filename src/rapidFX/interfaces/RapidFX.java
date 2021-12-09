@@ -45,7 +45,7 @@ public final class RapidFX
 		return new SimpleObjectProperty<>();
 	}
 	
-	@SuppressWarnings({ "rawtypes", "preview", "unchecked" })
+	@SuppressWarnings({ "rawtypes","unchecked" })
 	public static void connect(final Object bindFrom, final Object bindTo, final Class<? extends Annotation> annotation)
 			throws IllegalArgumentException, IllegalAccessException
 	{
