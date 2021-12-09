@@ -3,7 +3,7 @@ package examples.HelloWorld;
 import java.util.Random;
 
 import javafx.beans.property.ObjectProperty;
-import rapidFX.RautoGenerate;
+import rapidFX.annotation.RautoGenerate;
 import rapidFX.interfaces.RapidModel;
 //"Buisness Logic" -> Everything that only needs Properties and backend to work
 // no Eventhandlers, no Nodes here

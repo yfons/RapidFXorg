@@ -5,9 +5,9 @@ import java.lang.reflect.Field;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import rapidFX.RautoGenerate;
-import rapidFX.Rcontroller;
-import rapidFX.Rmodel;
+import rapidFX.annotation.RautoGenerate;
+import rapidFX.annotation.Rcontroller;
+import rapidFX.annotation.Rmodel;
 
 public final class RapidFX
 {
@@ -46,7 +46,7 @@ public final class RapidFX
 	}
 
 	@SuppressWarnings({ "rawtypes","unchecked" })
-	public static void connect(final RapidFXComponent bindFrom, final RapidFXComponent bindTo, final Class<? extends Annotation> annotation)
+	public static void connect(final RapidView bindFrom, final RapidFXComponent bindTo, final Class<? extends Annotation> annotation)
 			throws IllegalArgumentException, IllegalAccessException
 	{
 		final var bindToFields = bindTo.getClass().getDeclaredFields();
@@ -92,7 +92,6 @@ public final class RapidFX
 
 		setUp(model,controller,view);
 
-		connect(controller, model ,Rmodel.class);
 		connect(view, controller, Rcontroller.class);
 		connect(view, model, Rmodel.class);
 

@@ -1,4 +1,4 @@
-package rapidFX.rapid;
+package rapidFX.rSwitch;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -11,8 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import rapidFX.Position;
-import rapidFX.RautoGenerate;
-import rapidFX.Rmodel;
+import rapidFX.annotation.RautoGenerate;
+import rapidFX.annotation.Rmodel;
 import rapidFX.interfaces.RapidView;
 
 public class RSwitcherView implements RapidView

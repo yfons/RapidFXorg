@@ -1,4 +1,4 @@
-package rapidFX.rapid;
+package rapidFX.rSwitch;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;

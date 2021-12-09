@@ -1,10 +1,10 @@
-package rapidFX.rapid;
+package rapidFX.rSwitch;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import rapidFX.RautoGenerate;
+import rapidFX.annotation.RautoGenerate;
 import rapidFX.interfaces.RapidModel;
 
 public class RSwitcherModel implements RapidModel
