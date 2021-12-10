@@ -1,4 +1,4 @@
-package rapidFX.rSwitch;
+package rapidFX.prebuilds.rSwitch;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Node;
@@ -9,10 +9,18 @@ import rapidFX.interfaces.RapidController;
 public class RSwitcher extends RapidSimpleController<RSwitcherView, RSwitcherModel> implements RapidController
 {
 	Node shownNode;
+
 	public RSwitcher()
 	{
 		view = new RSwitcherView();
 		model = new RSwitcherModel();
+	}
+
+	@Override
+	public void setUpController()
+	{
+		model.setUpModel();
+		view.setUpView();
 	}
 
 	public void setPosition(Position pos)
@@ -28,12 +36,5 @@ public class RSwitcher extends RapidSimpleController<RSwitcherView, RSwitcherMod
 	public ObjectProperty<Node> getContentProperty()
 	{
 		return model.getContentProperty();
-	}
-
-	@Override
-	public void setUpController()
-	{
-		model.setUpModel();
-		view.setUpView();
 	}
 }

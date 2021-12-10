@@ -1,4 +1,4 @@
-package rapidFX.rSwitch;
+package rapidFX.prebuilds.rSwitch;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
@@ -24,7 +24,7 @@ public abstract class RSwitchFactory<ControllerClass extends RapidController,Sho
 
 	public RSwitchFactory()
 	{
-		this.setNewController();
+		this.newController();
 	}
 	public RSwitchFactory(boolean b) {
 		this();
@@ -50,7 +50,7 @@ public abstract class RSwitchFactory<ControllerClass extends RapidController,Sho
 	protected final void swapToView()
 	{
 		if (this.isSelfRefreshing)
-			this.setNewController();
+			this.newController();
 			this.centerProperty.set(this.controllerProperty.get().getView().getRootPane());
 	}
 

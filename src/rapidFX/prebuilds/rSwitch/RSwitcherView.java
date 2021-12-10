@@ -1,4 +1,4 @@
-package rapidFX.rSwitch;
+package rapidFX.prebuilds.rSwitch;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -11,11 +11,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import rapidFX.Position;
+import rapidFX.abstracts.RapidSimpleView;
 import rapidFX.annotation.RautoGenerate;
 import rapidFX.annotation.Rmodel;
 import rapidFX.interfaces.RapidView;
 
-public class RSwitcherView implements RapidView
+public class RSwitcherView extends RapidSimpleView<BorderPane>
 {
 	private final HBox hNavbar = new HBox();
 	private final VBox vNavbar = new VBox();
@@ -24,30 +25,33 @@ public class RSwitcherView implements RapidView
 	private ObjectProperty<Position> positionProperty;
 	@Rmodel
 	private ObjectProperty<ObservableList<Node>> navBarChildrenList;
-	private BorderPane root = new BorderPane();
 	@Rmodel
-	private ObjectProperty<Node> contentProperty = root.centerProperty() ;
+	private ObjectProperty<Node> contentProperty;
 
 	RSwitcherView()
 	{
-
-	}
-	@Override
-	public BorderPane getRootPane()
-	{
-		return root;
+		root = new BorderPane();
+		contentProperty = root.centerProperty();
 	}
 
 	public void setUpView()
 	{
-		contentProperty = root.centerProperty();
 		this.positionProperty.addListener(positionListener);
 		navBarChildrenList.get().addListener(listChangeListener);
 		root.setTop(navbar = hNavbar);
 	}
 
-	ListChangeListener<Node> listChangeListener = new ListChangeListener<>()
+	public void setPosition(Position pos)
 	{
+		this.positionProperty.set(pos);
+	}
+
+	public Pane getNavBar()
+	{
+		return navbar;
+	}
+
+	private final ListChangeListener<Node> listChangeListener = new ListChangeListener<>() {
 		@Override
 		public void onChanged(Change<? extends Node> c)
 		{
@@ -55,8 +59,7 @@ public class RSwitcherView implements RapidView
 			navbar.getChildren().addAll(c.getAddedSubList());
 		}
 	};
-	ChangeListener<Position> positionListener = new ChangeListener<>()
-	{
+	private final ChangeListener<Position> positionListener = new ChangeListener<>() {
 
 		@Override
 		public void changed(ObservableValue<? extends Position> observable, Position oldValue, Position newValue)
@@ -67,10 +70,8 @@ public class RSwitcherView implements RapidView
 
 		private void handleNewValue(Position newValue)
 		{
-			if (newValue != null)
-			{
-				switch (newValue)
-				{
+			if (newValue != null) {
+				switch (newValue) {
 					case BOTTOM:
 						switchFromTo(vNavbar, hNavbar);
 						root.setBottom(navbar);
@@ -102,8 +103,7 @@ public class RSwitcherView implements RapidView
 
 		private void handleOldValue(Position oldValue)
 		{
-			switch (oldValue)
-			{
+			switch (oldValue) {
 				case BOTTOM:
 					root.setBottom(null);
 					break;
@@ -121,13 +121,4 @@ public class RSwitcherView implements RapidView
 
 	};
 
-	public void setPosition(Position pos)
-	{
-		this.positionProperty.set(pos);
-	}
-
-	public Pane getNavBar()
-	{
-		return navbar;
-	}
 }

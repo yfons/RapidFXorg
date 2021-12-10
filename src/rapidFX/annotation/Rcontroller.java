@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import rapidFX.interfaces.RapidFX;
+import rapidFX.core.RapidFX;
 
 /**
  * {@summary During the Initialization of a entire Controller in

@@ -4,6 +4,6 @@ import javafx.beans.property.ObjectProperty;
 
 public interface RapidFactory extends RapidFXComponent
 {
-	ObjectProperty<? extends RapidController> setNewController();
+	ObjectProperty<? extends RapidController> newController();
 	void setUpFactory();
 }

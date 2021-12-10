@@ -3,7 +3,8 @@ package examples.HelloWorld;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import rapidFX.interfaces.RapidFX;
+import rapidFX.core.RapidFX;
+import rapidFX.prebuilds.rSwitch.RSwitcher;
 
 public class Launcher extends Application {
 	public static void main(String[] args) {
@@ -28,7 +29,9 @@ public class Launcher extends Application {
 		 */
 		RapidFX.rapidGenerate(log).setUpController();
 		primaryStage.setScene(new Scene(log.getView().getRootPane()));
+		// RSwitcher r = new RSwitcher();
 		primaryStage.show();
+		
 	}
 
 }

@@ -4,7 +4,9 @@
   <artifactId>RapidFX</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>RapidFX</name>
+<build>
   
+</build>
   <dependencies>
 
   	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->

@@ -28,8 +28,10 @@ public class LoginView extends RapidSimpleView<VBox>
 	private final ObjectProperty<EventHandler<ActionEvent>> closeActionProperty = close.onActionProperty();
 	// Get's initialized as new SimpleObjectProperty<>()
 	// Get's bound to the titleText in the Model
-	@Rmodel
+	@Rcontroller
 	private ObjectProperty<String> titleText;
+	@Rcontroller
+	private ObjectProperty<String> titleTexst;
 
 
 	LoginView()
@@ -46,7 +48,7 @@ public class LoginView extends RapidSimpleView<VBox>
 	public void setUpView()
 	{
 		// problem with the automatic bindings is they only work on ObjectProperties currently
-		title.textProperty().bind(titleText);
+		//title.textProperty().bind(titleText);
 
 		// will not find LoginView.css in the current directory, as it searches for ViewClassName.css which is currently LoginView.css
 		//loadMyCss();

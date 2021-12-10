@@ -14,12 +14,10 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
 	@RautoGenerate
 	private ObjectProperty<EventHandler<ActionEvent>> okActionProperty;
 	// Get's Initialized as new SimpleObjectProperty<>()
-	// Doesnt get bound to the greetingsProperty in the Model, as only the view binds to controller and model automatically
-	@Rmodel
+	@RautoGenerate
 	private ObjectProperty<String> greetingsProperty;
 	// Get's Initialized as new SimpleObjectProperty<>()
-	// gets treated as RautoGenerate because its in the Controller, use in the Controller only RautoGenerate
-	@Rcontroller 
+	@RautoGenerate 
 	private ObjectProperty<EventHandler<ActionEvent>> closeActionProperty;
 
 	public Login() {

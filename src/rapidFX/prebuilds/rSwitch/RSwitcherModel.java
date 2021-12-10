@@ -1,4 +1,4 @@
-package rapidFX.rSwitch;
+package rapidFX.prebuilds.rSwitch;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
@@ -12,13 +12,17 @@ public class RSwitcherModel implements RapidModel
 	@RautoGenerate
 	private ObjectProperty<Node> contentProperty;
 	@RautoGenerate
-	private ObjectProperty<ObservableList<Node>> list;
-	@RautoGenerate
 	private ObjectProperty<ObservableList<Node>> navBarChildrenList;
 
-	RSwitcherModel()
+	public RSwitcherModel()
 	{
 
+	}
+	
+	@Override
+	public void setUpModel()
+	{
+		this.navBarChildrenList.set(FXCollections.observableArrayList());
 	}
 
 	ObjectProperty<Node> getContentProperty()
@@ -35,14 +39,4 @@ public class RSwitcherModel implements RapidModel
 		}
 	}
 
-	public ObjectProperty<ObservableList<Node>> getList()
-	{
-		return list;
-	}
-
-	@Override
-	public void setUpModel()
-	{
-		this.navBarChildrenList.set(FXCollections.observableArrayList());
-	}
 }
