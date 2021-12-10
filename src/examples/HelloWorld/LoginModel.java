@@ -25,8 +25,8 @@ public class LoginModel implements RapidModel
 	{
 		
 		titleText.set("You are logged in");
-		Double x = (new Random().nextDouble());
-		greetingsProperty.set(x.toString() );
+		System.out.println("Hello from the Model");
+
 	}
 
 }

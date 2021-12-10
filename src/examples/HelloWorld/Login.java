@@ -14,9 +14,6 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
 	@RautoGenerate
 	private ObjectProperty<EventHandler<ActionEvent>> okActionProperty;
 	// Get's Initialized as new SimpleObjectProperty<>()
-	@RautoGenerate
-	private ObjectProperty<String> greetingsProperty;
-	// Get's Initialized as new SimpleObjectProperty<>()
 	@RautoGenerate 
 	private ObjectProperty<EventHandler<ActionEvent>> closeActionProperty;
 
@@ -33,7 +30,7 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
 	public void setUpController() {
 		okActionProperty.set(event -> {
 			model.login();
-			System.out.println("Hello From The Controller and the Model"+ this.greetingsProperty.get());
+			System.out.println("Hello From The Controller");
 			
 		});
 		closeActionProperty.set(event -> Platform.exit());
