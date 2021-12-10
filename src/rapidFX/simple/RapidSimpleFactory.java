@@ -1,4 +1,4 @@
-package rapidFX.abstracts;
+package rapidFX.simple;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,6 +13,9 @@ public abstract class RapidSimpleFactory<ControllerClass extends RapidController
 	@Override
 	public abstract ObjectProperty<ControllerClass> newController();
 
+	@Override
+	public abstract void setUpFactory();
+	
 	public final ObjectProperty<ControllerClass> getControllerProperty()
 	{
 		return controllerProperty;
@@ -21,19 +24,12 @@ public abstract class RapidSimpleFactory<ControllerClass extends RapidController
 	{
 		this.controllerProperty.set(controller);
 	}
-	protected final void RapidFXNewController(ControllerClass newController)
+	protected final  void RapidFXCurrentController(ControllerClass newController)
 	{
-		try
-		{
-			RapidFX.rapidGenerate(newController).setUpController();
-		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
-		{
-			e.printStackTrace();
-		}
+			try {
+				RapidFX.rapidGenerate(newController).setUpController();
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
 	}
-
-
-	@Override
-	public abstract void setUpFactory();
-
 }

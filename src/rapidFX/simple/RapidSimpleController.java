@@ -1,4 +1,4 @@
-package rapidFX.abstracts;
+package rapidFX.simple;
 
 import rapidFX.interfaces.RapidController;
 import rapidFX.interfaces.RapidModel;

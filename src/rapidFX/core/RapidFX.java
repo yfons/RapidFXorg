@@ -4,132 +4,89 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import rapidFX.annotation.RautoGenerate;
 import rapidFX.annotation.Rcontroller;
 import rapidFX.annotation.Rmodel;
 import rapidFX.interfaces.RapidController;
 import rapidFX.interfaces.RapidFXComponent;
 import rapidFX.interfaces.RapidView;
 
-public final class RapidFX
+public class RapidFX
 {
+	/**
+	 * @implNote the Setup and Connect Methods will get Called properly for the Controller and the View and the Model so it's not necessary to call them
+	 * {@summary Takes from the Controller the View and the Model and RautoGenerates all Attributes + binds the Properties from the View}
+	 * @apiNote Watch {@link RapidFX#connect(RapidView, RapidFXComponent, Class) connect} and {@link setUp} for more Information
+	 * @param controller
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 */
 	public static RapidController rapidGenerate(final RapidController controller)
-			throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException
+			throws IllegalArgumentException, IllegalAccessException
 	{
 		final var model = controller.getModel();
 		final var view = controller.getView();
 
 		setUp(model, controller, view);
 
+
 		connect(view, controller, Rcontroller.class);
 		connect(view, model, Rmodel.class);
 
 		return controller;
 	}
-
-	public static void setUp(RapidFXComponent... toSetUpObjects) throws IllegalArgumentException, IllegalAccessException
+	/**
+	 * all ObjectProperty which are tagged with RautoGenerate will get the default value of "new SimpleObjectProperty<>" <br>
+	 * Rmodel and Rcontroller are only allowed in Classes which implement the RapidView the System will stop if this Rule is violated<br><br>
+	 * Rmodel and Rcontroller will get Treated as RautoGenerate in the view and get also the Default Values<br><br>
+	 * for Unit Testing this Method can be used only on a Single Object to see if its fully Functional
+	 * @param toSetUpObjects
+	 */
+	public static void setUp(RapidFXComponent... toSetUpObjects)  
 	{
 		for (var toSetUp : toSetUpObjects) {
-
 			Field[] fields = toSetUp.getClass().getDeclaredFields();
 
 			for (var field : fields) {
-
-				field.setAccessible(true);
-
-				if (isRapidModelOrRapidControllerPresent(field)) {
-					if (isSetUpClassAView(toSetUp)) {
-						if (isFieldNull(toSetUp, field)) {
-							setDefaultFieldValue(toSetUp, field);
-						}
-					} else {
-						throw new IllegalArgumentException(
-								"@Rmodel and @RController Annotations are only allowed in classes which implement the: "
-										+ RapidView.class + "\r\n" + "but the Field:: " + field.getName()
-										+ "\r\n violated that rule in the CLASS:: " + field.getDeclaringClass()
-										+ "\r\n this 'can be' fixed by changing the Annotation to @RautoGenerate");
-					}
-				} else if (isRautoGeneratePresent(field) && isFieldNull(toSetUp, field)) {
-					setDefaultFieldValue(toSetUp, field);
-				}
+				final FieldHandler fieldHandler = new FieldHandler(field, toSetUp);
+				
+				if (fieldHandler.isRapidAnnotationPresent()) {
+					fieldHandler.setDefaultValue();
+				} 
 			}
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+
+	/**
+	 * Connects all fields in the View which are Tagged as Rmodel with the model
+	 * Connects all fields in the View which are Tagged as Rcontroller with the controller
+	 * 
+	 * @apiNote the restriction to connect only Rcontroller to a controller is not set.<br> in theory you can tag ObjectProperty Fields in your  view with any annotation and bind them to any other Class as it's based on searching Fields with the given annotation and searching in the bindTo Object the Fields with the same Name <br> this can be used to test only certain parts by changing the Annotations, but in the Real Application RapidFX.rapidGenerate() should be used to set the bindings and connecting the view
+	 * @param view 
+	 * @param bindTo
+	 * @param annotation
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 */
 	public static void connect(final RapidView view, final RapidFXComponent bindTo,
 			final Class<? extends Annotation> annotation) throws IllegalArgumentException, IllegalAccessException
+
 	{
-		final var bindToFields = bindTo.getClass().getDeclaredFields();
 		final var viewFields = view.getClass().getDeclaredFields();
 
 		for (Field viewField : viewFields) {
-			viewField.setAccessible(true);
-			if (isAnnotationPresent(annotation, viewField)) {
-				if (viewField.get(view) instanceof ObjectProperty viewProperty) {
-					boolean isFieldExisting = false;
-					for (Field bindToField : bindToFields) {
-						bindToField.setAccessible(true);
-						if (isBindFieldNameEqualToViewFieldName(viewField, bindToField)) {
-							ObjectProperty<?> bindToProperty = (ObjectProperty<?>) bindToField.get(bindTo);
-							viewProperty.bind(bindToProperty);
-							isFieldExisting = true;
-							break;
-						}
-					}
-					if (!isFieldExisting) {
-						throw new IllegalStateException(
-								"The Field:: " + viewField.getName() + " was not found in:: " + bindTo.toString());
-					}
-				} else {
-					throw new IllegalArgumentException(
-							"The Field is in an Invalid State or  NULL or not from Type ObjectProperty:: "
-									+ viewField.getName() + " :: Content is:: " + viewField.get(view));
-				}
-			}
+			FieldHandler fieldHandler = new FieldHandler(viewField, view);
+
+			if (fieldHandler.isAnnotationPresent(annotation)) {
+				ObjectProperty<Object> viewProperty = fieldHandler.getObject();
+				
+				final Field bindToField = fieldHandler.findFieldWithSameName(bindTo);
+				System.out.println(new FieldHandler(bindToField, bindTo).getObject());
+				final var bindToProperty = new FieldHandler(bindToField, bindTo).getObject() ;
+
+				viewProperty.bind(bindToProperty);
+			} 
 		}
-	}
-
-	private static boolean isBindFieldNameEqualToViewFieldName(Field viewField, Field bindToField)
-	{
-		return bindToField.getName().equals(viewField.getName().intern());
-	}
-
-	private static boolean isAnnotationPresent(final Class<? extends Annotation> annotation, Field fieldFrom)
-	{
-		return fieldFrom.isAnnotationPresent(annotation);
-	}
-	private static boolean isSetUpClassAView(RapidFXComponent toSetUp)
-	{
-		return RapidView.class.isAssignableFrom(toSetUp.getClass());
-	}
-
-	private static boolean isRautoGeneratePresent(Field field)
-	{
-		return field.isAnnotationPresent(RautoGenerate.class);
-	}
-
-	private static boolean isFieldNull(RapidFXComponent toSetUp, Field field) throws IllegalAccessException
-	{
-		return field.get(toSetUp) == null;
-	}
-
-	private static boolean isRapidModelOrRapidControllerPresent(Field field)
-	{
-		return isAnnotationPresent(Rmodel.class, field) || isAnnotationPresent(Rcontroller.class, field);
-	}
-
-	private static void setDefaultFieldValue(RapidFXComponent toSetUp, Field field)
-	{
-		try {
-			field.set(toSetUp, getDefaultValueForType(field.getType()));
-		} catch (Exception e) {
-			e.getMessage();
-		}
-	}
-	private static Object getDefaultValueForType(Class<?> type)
-	{
-		return new SimpleObjectProperty<>();
 	}
 }

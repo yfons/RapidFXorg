@@ -8,14 +8,11 @@ import java.lang.annotation.Target;
 import rapidFX.core.RapidFX;
 
 /**
- * {@summary During the Initialization of a entire Controller in
- * {@link RapidFX#rapidGenerate(rapidFX.interfaces.RapidController)} or a single
- * Component {@link RapidFX#setUp(rapidFX.interfaces.RapidFXComponent...)} or a single Component which gets Connected {@link RapidFX#connect(rapidFX.interfaces.RapidFXComponent, rapidFX.interfaces.RapidFXComponent, Class)}<br>
- * Gets treated as {@link RautoGenerate} and field Value = new
- * SimpleObjectProperty<>() if it's null <br> 2. (if getting Connected) Get the Field Name from the Field
- * tagged with {@link Rmodel} <br>3. Field from the View get's taken and gets
- * bound to the Field in the Model which has the exact same name }
- * @apiNote Field must be of Type ObjectProperty
+ * @apiNote
+ * Field must be of Type ObjectProperty and not Null ( as long as {@link RapidFX#setUp(rapidFX.interfaces.RapidFXComponent...) the Setup} was called before it won't be null) else it will crash<br>
+ * @implNote
+* During {@link RapidFX#setUp(rapidFX.interfaces.RapidFXComponent...) the RapidFX Setup} of a view this Annotation is treated as RautoGenerate<br>
+* During {@link RapidFX#rapidGenerate(rapidFX.interfaces.RapidController) the Rapid Generation} all Fields tagged with this Annotation will get bound to the Field in the Model which has the same name and is also a ObjectProperty which is NOT null
  */
 @Target(
 { ElementType.FIELD })

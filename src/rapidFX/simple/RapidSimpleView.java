@@ -1,4 +1,4 @@
-package rapidFX.abstracts;
+package rapidFX.simple;
 
 import javafx.scene.layout.Pane;
 import rapidFX.interfaces.RapidView;
@@ -21,7 +21,7 @@ public abstract class RapidSimpleView<rootPane extends Pane> implements RapidVie
 		try {
 			this.root.getStylesheets().add(this.getClass().getResource(this.getClass().getName() + ".css").toString());
 		} catch (Exception e) {
-			System.err.println("Could not find: " + this.getClass().getName() + ".css");
+			System.err.println("Could not find:: " + this.getClass().getName() + ".css");
 		}
 	}
 
