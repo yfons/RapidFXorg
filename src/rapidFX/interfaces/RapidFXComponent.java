@@ -17,9 +17,6 @@ public interface RapidFXComponent
 		} catch (IllegalArgumentException | SecurityException e)
 		{
 			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 }
