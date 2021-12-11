@@ -24,8 +24,10 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
 
 	// normally gets Called after RapidFX.rapidGenerate is done so use Constructor to set values before generation and this method after the generation
 	// can call corresponding model.setUpModel and view.setUpView
-	@Override
-	public void setUpController() {
+	
+	@SuppressWarnings("unchecked")
+	@Override 
+	public Login setUpController() {
 		okActionProperty.set(event -> {
 			model.login();
 			System.out.println("Hello From The Controller");
@@ -34,6 +36,7 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
 		closeActionProperty.set(event -> Platform.exit());
 		model.setUpModel();
 		view.setUpView();
+		return this;
 	}
 
 }

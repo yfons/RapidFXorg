@@ -20,7 +20,8 @@ public abstract class RapidSimpleController<viewClass extends RapidView,modelCla
 		return model;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public abstract void setUpController();
+	public abstract RapidSimpleController<?,?>  setUpController();
 
 }

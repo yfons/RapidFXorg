@@ -2,13 +2,34 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>RapidFX</groupId>
   <artifactId>RapidFX</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <name>RapidFX</name>
-<build>
-  
-</build>
-  <dependencies>
+<distributionManagement>
+   <repository>
+     <id>github</id>
+     <name>GitHub OWNER Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/yfons/RapidFXorg</url>
+   </repository>
+</distributionManagement>
 
+    <build>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+  <dependencies>
   	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
 	<dependency>
 	    <groupId>org.openjfx</groupId>

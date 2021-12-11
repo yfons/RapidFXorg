@@ -11,7 +11,7 @@ public abstract class RapidSimpleFactory<ControllerClass extends RapidController
 	protected final ObjectProperty<ControllerClass> controllerProperty = new SimpleObjectProperty<>();
 
 	@Override
-	public abstract ObjectProperty<ControllerClass> newController();
+	public abstract  ControllerClass newController();
 
 	@Override
 	public abstract void setUpFactory();
@@ -24,12 +24,19 @@ public abstract class RapidSimpleFactory<ControllerClass extends RapidController
 	{
 		this.controllerProperty.set(controller);
 	}
-	protected final  void RapidFXCurrentController(ControllerClass newController)
+	protected final  ControllerClass RapidFXCurrentController()
+	{
+		return RapidFXController(this.controllerProperty.get());
+	}
+	@SuppressWarnings("unchecked")
+	protected final ControllerClass RapidFXController(ControllerClass controller)
 	{
 			try {
-				RapidFX.rapidGenerate(newController).setUpController();
+				return (ControllerClass) RapidFX.rapidGenerate(controller);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
+				System.exit(-1);
+				return null;
 			}
 	}
 }

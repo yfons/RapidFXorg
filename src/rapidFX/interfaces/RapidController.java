@@ -6,7 +6,7 @@ public interface RapidController extends RapidFXComponent
 {
 	RapidView getView();
 	RapidModel getModel();
-	void setUpController();
+	<T extends RapidController> T setUpController();
 	default void RapidFXgenerateMe()
 	{
 		try
