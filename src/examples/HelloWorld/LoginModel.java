@@ -12,16 +12,15 @@ public class LoginModel implements RapidModel
 	@RautoGenerate
 	private ObjectProperty<String> greetingsProperty;
 
-	@Override
 	public void setUpModel()
 	{
-		
+
 		titleText.set("Hello World");
-		
+
 	}
 	public void login()
 	{
-		
+
 		titleText.set("You are logged in");
 		System.out.println("Hello from the Model");
 

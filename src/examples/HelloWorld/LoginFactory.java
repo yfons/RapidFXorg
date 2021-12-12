@@ -1,6 +1,5 @@
 package examples.HelloWorld;
 
-import rapidFX.simple.RapidSimpleController;
 import rapidFX.simple.RapidSimpleFactory;
 
 public class LoginFactory extends RapidSimpleFactory<Login>
@@ -10,14 +9,14 @@ public class LoginFactory extends RapidSimpleFactory<Login>
 	public Login newController()
 	{
 
-		return super.RapidFXController(new Login()).setUpController();
+		return new Login();
 	}
 
 	@Override
 	public void setUpFactory()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

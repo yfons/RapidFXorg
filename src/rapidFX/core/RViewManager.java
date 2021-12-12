@@ -5,24 +5,24 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
-import rapidFX.interfaces.RapidFactory;
+import rapidFX.interfaces.RapidController;
 
 public class RViewManager<keyValue>
 {
-	private final ObservableMap<keyValue, RapidFactory> factoryMap = FXCollections.observableHashMap();
+	private final ObservableMap<keyValue, RapidController> factoryMap = FXCollections.observableHashMap();
 	private Scene scene;
 	public RViewManager(Scene scene){
 		this.scene = scene;
 	}
-	public void appendFactory(keyValue key,RapidFactory factory)
+	public void appendFactory(keyValue key,RapidController factory)
 	{
 		factoryMap.put(key,factory);
 	}
 	public void removeFactory(keyValue key) {
 		factoryMap.remove(key);
-		
+
 	}
-	public ObservableMap<keyValue, RapidFactory> getMap() {
+	public ObservableMap<keyValue, RapidController> getMap() {
 		return factoryMap;
 	}
 	public Set<keyValue> getKeys() {
@@ -30,6 +30,6 @@ public class RViewManager<keyValue>
 	}
 
 	public void swapToView(keyValue key) {
-		scene.setRoot(factoryMap.get(key).newController().getView().getRootPane());
+		scene.setRoot(factoryMap.get(key).getView().getRootPane());
 	}
 }

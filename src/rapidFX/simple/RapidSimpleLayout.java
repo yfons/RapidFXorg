@@ -11,8 +11,4 @@ public abstract class RapidSimpleLayout<layoutNode extends Node> implements Rapi
 	{
 		return this.layout;
 	}
-
-	@Override
-	public abstract void setUpLayout();
-
 }

@@ -1,5 +1,6 @@
 package rapidFX.simple;
 
+import javafx.scene.layout.Pane;
 import rapidFX.interfaces.RapidController;
 import rapidFX.interfaces.RapidModel;
 import rapidFX.interfaces.RapidView;
@@ -13,15 +14,13 @@ public abstract class RapidSimpleController<viewClass extends RapidView,modelCla
 	{
 		return view;
 	}
-
+	public final Pane getRootPane() {
+		return view.getRootPane();
+	}
 	@Override
 	public final modelClass getModel()
 	{
 		return model;
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public abstract RapidSimpleController<?,?>  setUpController();
 
 }

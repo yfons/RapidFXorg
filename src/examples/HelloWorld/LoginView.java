@@ -16,13 +16,13 @@ public class LoginView extends RapidSimpleView<VBox>
 	private final Label title = new Label();
 	private final Button ok = new Button("OK");
 	private final Button close = new Button("Close");
-	
+
 	// Get's not Initialized because the constructor of Login is called before the RapidFX.rapidGenerate method
 	// in the Login Object the view gets Created before the initializations happen and in hte constructor the okActionProperty will get set to the value in the Contructor
 	// Get's bound to the okActionProperty in the Controller
 	@Rcontroller
 	private  ObjectProperty<EventHandler<ActionEvent>> okActionProperty ;
-	// Get's not Initialized because its not null 
+	// Get's not Initialized because its not null
 	// Get's bound to the closeActionProperty in the Controller
 	@Rcontroller
 	private final ObjectProperty<EventHandler<ActionEvent>> closeActionProperty = close.onActionProperty();
@@ -41,8 +41,6 @@ public class LoginView extends RapidSimpleView<VBox>
 		root.getChildren().addAll(title,new HBox(ok,close));
 	}
 
-
-	@Override
 	public void setUpView()
 	{
 		// problem with the automatic bindings is they only work on Objectproperties currently

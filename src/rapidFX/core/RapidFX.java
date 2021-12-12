@@ -2,6 +2,7 @@ package rapidFX.core;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 import javafx.beans.property.ObjectProperty;
 import rapidFX.annotation.Rcontroller;
@@ -42,17 +43,41 @@ public class RapidFX
 	 * for Unit Testing this Method can be used only on a Single Object to see if its fully Functional
 	 * @param toSetUpObjects
 	 */
-	public static void setUp(RapidFXComponent... toSetUpObjects)  
+	public static void setUp(RapidFXComponent... toSetUpObjects)
 	{
 		for (var toSetUp : toSetUpObjects) {
 			Field[] fields = toSetUp.getClass().getDeclaredFields();
 
 			for (var field : fields) {
 				final FieldHandler fieldHandler = new FieldHandler(field, toSetUp);
-				
+
 				if (fieldHandler.isRapidAnnotationPresent()) {
-					fieldHandler.setDefaultValue();
-				} 
+					try
+					{
+						System.out.println(fieldHandler.isRapidAnnotationPresent()+""+fieldHandler.getObject());
+						fieldHandler.setDefaultValue();
+					} catch (IllegalAccessException | IllegalArgumentException | ClassNotFoundException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InstantiationException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvocationTargetException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NoSuchMethodException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SecurityException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}
@@ -61,9 +86,9 @@ public class RapidFX
 	/**
 	 * Connects all fields in the View which are Tagged as Rmodel with the model
 	 * Connects all fields in the View which are Tagged as Rcontroller with the controller
-	 * 
+	 *
 	 * @apiNote the restriction to connect only Rcontroller to a controller is not set.<br> in theory you can tag ObjectProperty Fields in your  view with any annotation and bind them to any other Class as it's based on searching Fields with the given annotation and searching in the bindTo Object the Fields with the same Name <br> this can be used to test only certain parts by changing the Annotations, but in the Real Application RapidFX.rapidGenerate() should be used to set the bindings and connecting the view
-	 * @param view 
+	 * @param view
 	 * @param bindTo
 	 * @param annotation
 	 * @throws IllegalArgumentException
@@ -79,14 +104,9 @@ public class RapidFX
 			FieldHandler fieldHandler = new FieldHandler(viewField, view);
 
 			if (fieldHandler.isAnnotationPresent(annotation)) {
-				ObjectProperty<Object> viewProperty = fieldHandler.getObject();
-				
-				final Field bindToField = fieldHandler.findFieldWithSameName(bindTo);
-				System.out.println(new FieldHandler(bindToField, bindTo).getObject());
-				final var bindToProperty = new FieldHandler(bindToField, bindTo).getObject() ;
-
-				viewProperty.bind(bindToProperty);
-			} 
+				fieldHandler.bindProperties(bindTo);
+			}
 		}
 	}
+
 }
