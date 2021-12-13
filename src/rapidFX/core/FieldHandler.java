@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import rapidFX.annotation.RautoGenerate;
 import rapidFX.annotation.Rcontroller;
 import rapidFX.annotation.Rmodel;
@@ -98,14 +100,14 @@ public class FieldHandler<T>
 		Field bindToField;
 
 		bindToField = this.findFieldWithSameName(bindTo);
-		if(getObject() instanceof ObservableList myList && bindToField.get(bindTo) instanceof ObservableList bindToList) {
-			
+		if(getObject() instanceof Property myProperty && bindToField.get(bindTo) instanceof EventHandler bindToList) {
+			myProperty.setValue(bindToList);
 		}
 		else if (getObject() instanceof Property myProperty && bindToField.get(bindTo) instanceof Property bindToProperty)
 		{
 				myProperty.bind(bindToProperty);
 		}else {
-			throw new Error("One of these Fields is not a Property or A ObservableList or it's mixed::  "+field+" :: " +bindToField.get(bindTo));
+			throw new Error("One of these Fields is not a Property or A EventHanlder or it's wrong mixed::  "+field+" :: " +bindToField.get(bindTo));
 		}
 	}
 
