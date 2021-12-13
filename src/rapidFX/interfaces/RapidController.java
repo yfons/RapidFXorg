@@ -4,7 +4,7 @@ import rapidFX.core.RapidFX;
 
 public interface RapidController extends RapidFXComponent
 {
-	RapidView getView();
+	RapidView<?> getView();
 	RapidModel getModel();
 	default void RapidFXgenerateMe()
 	{

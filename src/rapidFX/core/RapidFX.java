@@ -4,7 +4,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-import javafx.beans.property.ObjectProperty;
 import rapidFX.annotation.RautoGenerate;
 import rapidFX.annotation.Rcontroller;
 import rapidFX.annotation.Rmodel;
@@ -50,7 +49,7 @@ public class RapidFX
 			Field[] fields = toSetUp.getClass().getDeclaredFields();
 
 			for (var field : fields) {
-				final FieldHandler<?> fieldHandler = new FieldHandler<Object>(field, toSetUp);
+				final FieldHandler<?> fieldHandler = new FieldHandler<>(field, toSetUp);
 
 				if (fieldHandler.isAnnotationPresent(RautoGenerate.class)) {
 					try
@@ -60,8 +59,8 @@ public class RapidFX
 					{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} 
-				
+					}
+
 				}
 			}
 		}
@@ -79,14 +78,14 @@ public class RapidFX
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
-	public static void connect(final RapidView view, final RapidFXComponent bindTo,
+	public static void connect(final RapidView<?> view, final RapidFXComponent bindTo,
 			final Class<? extends Annotation> annotation) throws IllegalArgumentException, IllegalAccessException
 
 	{
 		final var viewFields = view.getClass().getDeclaredFields();
 
 		for (Field viewField : viewFields) {
-			FieldHandler<?> fieldHandler = new FieldHandler<Object>(viewField, view);
+			FieldHandler<?> fieldHandler = new FieldHandler<>(viewField, view);
 
 			if (fieldHandler.isAnnotationPresent(annotation)) {
 				fieldHandler.bindProperties(bindTo);

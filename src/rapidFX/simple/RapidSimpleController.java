@@ -5,7 +5,7 @@ import rapidFX.interfaces.RapidController;
 import rapidFX.interfaces.RapidModel;
 import rapidFX.interfaces.RapidView;
 
-public abstract class RapidSimpleController<viewClass extends RapidView,modelClass extends RapidModel> implements RapidController
+public abstract class RapidSimpleController<viewClass extends RapidView<?>,modelClass extends RapidModel> implements RapidController
 {
 	protected viewClass view;
 	protected modelClass model;

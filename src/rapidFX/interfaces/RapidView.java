@@ -2,7 +2,7 @@ package rapidFX.interfaces;
 
 import javafx.scene.layout.Pane;
 
-public interface RapidView extends RapidFXComponent
+public interface RapidView<T extends Pane> extends RapidFXComponent
 {
-	Pane getRootPane();
+	T getRootPane();
 }
