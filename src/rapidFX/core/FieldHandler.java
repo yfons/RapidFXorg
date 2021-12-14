@@ -6,8 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.event.EventHandler;
 import rapidFX.interfaces.RapidFXComponent;
 
 public class FieldHandler<T>
@@ -83,61 +81,28 @@ public class FieldHandler<T>
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException | ClassNotFoundException e)
 		{
-			System.err.println(
+			throw new Error(
 					"If your Object is of Type ObjectProperty then it will get set to New SimpleObjectProperty, only properties with Simple at the start work with this generation, set the values manually to avoid that as the binding will still Work with any Properties or something else went wrong while setting the default value for::  "
 							+ field
-							+ " :: look at RapidFX.core.FieldHandler#getDefaultValue for the Possible Exceptions");
-			e.printStackTrace();
-			return null;
+							+ " :: look at RapidFX.core.FieldHandler#getDefaultValue for the Possible Exceptions"
+							+ e.getMessage());
+
 		}
 	}
 
 	/**
-	 * Works with Any Properties and with Property to Eventhandler
+	 * Works with property bind Property and with Property add Eventhandler and
+	 * Property add ChangeListener
 	 *
 	 * @param bindTo
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
-	@SuppressWarnings(
-	{ "unchecked", "rawtypes" })
 	public void bindProperties(final RapidFXComponent bindTo) throws IllegalArgumentException, IllegalAccessException
 	{
-		Field bindToField;
-
-		bindToField = this.findFieldWithSameName(bindTo, "");
-		if (getObject() instanceof Property myProperty)
-		{
-
-			if (bindToField.get(bindTo) instanceof ChangeListener bindToListener)
-			{
-				myProperty.addListener(bindToListener);
-			} else if (bindToField.get(bindTo) instanceof EventHandler bindToHandler)
-			{
-				myProperty.setValue(bindToHandler);
-			} else if (bindToField.get(bindTo) instanceof Property bindToProperty)
-			{
-				myProperty.bind(bindToProperty);
-			} else
-			{
-				throw new Error(
-						"One of these Fields is not a Property or A EventHandler or it's wrong mixed or null or its not Supported:: "
-								+ bindToField.get(bindTo) + " :: in the class:: " + bindToField.getDeclaringClass());
-			}
-		}
-		if (getObject() instanceof ReadOnlyProperty<?> myProperty)
-		{
-			if (bindToField.get(bindTo) instanceof ChangeListener bindToListener)
-			{
-				myProperty.addListener(bindToListener);
-			}
-		}
-		else
-		{
-			throw new Error("The Field " + getObject()
-					+ " is null or not a ReadOnlyProperty or Listener couldn't get Added:: "
-					+ field.getDeclaringClass());
-		}
+		final Field bindToField = this.findFieldWithSameName(bindTo, "");
+		ReadOnlyProperty<?> viewProperty = (ReadOnlyProperty<?>) getObject();
+		RConnector connector = new RConnector(viewProperty, bindToField, bindTo);
+		connector.connectProperties();
 	}
-
 }

@@ -12,4 +12,27 @@ public abstract class RapidSimpleView<rootPane extends Pane> implements RapidVie
 	{
 		return root;
 	}
+
+	/**
+	 * adds to the root node which is given by {@link RapidSimpleView#root} a Style
+	 * Sheet which is named after the view class name + .css <br>
+	 * e.g ExamplePaneView.java -> ExamplePaneView.css
+	 */
+	protected final void cssStyleRoot()
+	{
+		root.getStylesheets().add(findCssStyleSheet());
+	}
+
+	private final String findCssStyleSheet()
+	{
+		try
+		{
+			return getClass().getResource(this.getClass().getSimpleName() + ".css").toString();
+		} catch (NullPointerException e)
+		{
+			throw new NullPointerException("The Field was not found in:: " + this.getClass() + " ::with the Name:: "
+					+ this.getClass().getSimpleName() + ".css and null Pointer Exception occured" + e.getMessage());
+		}
+	}
+
 }

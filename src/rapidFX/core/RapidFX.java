@@ -66,7 +66,6 @@ public class RapidFX
 		}
 	}
 
-
 	/**
 	 * Connects all fields in the View which are Tagged as Rmodel with the model
 	 * Connects all fields in the View which are Tagged as Rcontroller with the controller
@@ -92,5 +91,4 @@ public class RapidFX
 			}
 		}
 	}
-
 }
