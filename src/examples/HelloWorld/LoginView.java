@@ -1,6 +1,7 @@
 package examples.HelloWorld;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -18,23 +19,26 @@ public class LoginView extends RapidSimpleView<VBox>
 	private final Button close = new Button("Close");
 
 	// Get's not Initialized because the constructor of Login is called before the RapidFX.rapidGenerate method
-	// in the Login Object the view gets Created before the initializations happen and in hte constructor the okActionProperty will get set to the value in the Contructor
+	// in the Login Object the view gets Created before the initializations happen and in the constructor the okActionProperty will get set to the value in the Contructor
 	// Get's bound to the okActionProperty in the Controller
+	// for the Naming the controller names should get created before so it's easier to swap the views
 	@Rcontroller
 	private  ObjectProperty<EventHandler<ActionEvent>> okActionProperty ;
 	// Get's not Initialized because its not null
+	// it's also possible to add an Eventhandler/ChangeListener with this setup just name the EventHandler/ChangeListener in the Controller like you did in the view
+	// changelistener work also for ReadonlyPropertys
 	// Get's bound to the closeActionProperty in the Controller
 	@Rcontroller
-	private final ObjectProperty<EventHandler<ActionEvent>> closeActionProperty = close.onActionProperty();
-	// Get's initialized as new SimpleObjectProperty<>()
-	// Get's bound to the titleText in the Model
+	private final ObjectProperty<EventHandler<ActionEvent>> closeEHAction = close.onActionProperty();
+	// Get's bound to the titleText in the Model as all Propertys can be bound
 	@Rmodel
-	private ObjectProperty<String> titleText;
+	private final StringProperty titleTextProperty = title.textProperty();
 
 
 	LoginView()
 	{
 		// root is predefined in the RapidSimpleView as Object of the Generic type which is mentioned at the class declaration
+		// also the getter is already there, with the Generic type
 		root = new VBox();
 		// gets set before annotations get Read so it will bind ok.onActionProperty() to the Controller
 		okActionProperty = ok.onActionProperty() ;
@@ -43,9 +47,7 @@ public class LoginView extends RapidSimpleView<VBox>
 
 	public void setUpView()
 	{
-		// problem with the automatic bindings is they only work on Objectproperties currently
-		title.textProperty().bind(titleText);
-		// will not find LoginView.css in the current directory
-		//loadMyCss();
+		// will not find the CSS as the File LoginView.css is not in the current package
+		// cssStyleRoot();
 	}
 }

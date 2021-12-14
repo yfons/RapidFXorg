@@ -24,25 +24,20 @@ class RConnector
 
 	public void connectProperties()
 	{
-		try
+		if (bindToFieldObject instanceof ChangeListener<?> listener)
 		{
-			if (bindToFieldObject instanceof ChangeListener<?> listener)
-			{
-				addListener(listener);
-			} else
-			{
-				Property<?> property = (Property<?>) viewProperty;
-				connectOnPropertyInterface(property);
-			}
-		} catch (Exception e)
+			addListener(listener);
+		} else
 		{
-			e.printStackTrace();
+			Property<?> property = (Property<?>) viewProperty;
+			connectOnPropertyInterface(property);
 		}
+
 	}
 
 	@SuppressWarnings(
 	{ "rawtypes", "unchecked" })
-	private void connectOnPropertyInterface(Property property) throws IllegalAccessException, Error
+	private void connectOnPropertyInterface(Property property)
 	{
 		if (bindToFieldObject instanceof EventHandler<?> bindToHandler)
 		{
@@ -57,11 +52,11 @@ class RConnector
 	}
 
 	private void throwIncompatiblePropertiesError(final Field bindToField)
-			throws Error, IllegalAccessException
 	{
 		throw new Error(
-				"One of these Fields is not a Property or A EventHandler or it's wrong mixed or null or its not Supported:: "
-						+ bindToField.getName()+ " ::in the class:: " + bindToField.getDeclaringClass());
+				"One of these Fields is not a Property or A EventHandler or it's wrong mixed or null or its not Supported::\n"
+						+ bindToField.getName() + " ::in the class:: " + bindToField.getDeclaringClass()
+		+"\n"+viewProperty.getName()+" :: of ");
 	}
 
 	@SuppressWarnings(

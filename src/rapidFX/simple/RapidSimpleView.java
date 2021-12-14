@@ -25,14 +25,7 @@ public abstract class RapidSimpleView<rootPane extends Pane> implements RapidVie
 
 	private final String findCssStyleSheet()
 	{
-		try
-		{
-			return getClass().getResource(this.getClass().getSimpleName() + ".css").toString();
-		} catch (NullPointerException e)
-		{
-			throw new NullPointerException("The Field was not found in:: " + this.getClass() + " ::with the Name:: "
-					+ this.getClass().getSimpleName() + ".css and null Pointer Exception occured" + e.getMessage());
-		}
+			return getResource(getClass().getSimpleName() + ".css");
 	}
 
 }
