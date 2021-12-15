@@ -16,7 +16,7 @@ import rapidFX.core.RapidFX;
 @Target(
 { ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Rmodel
+public @interface RapidFXmodel
 {
 
 }

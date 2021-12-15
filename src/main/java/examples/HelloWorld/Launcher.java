@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import rapidFX.core.RapidFX;
+import rapidFX.interfaces.RapidController;
+import rapidFX.interfaces.RapidFactory;
 
 public class Launcher extends Application {
 	public static void main(String[] args) {
@@ -12,10 +14,6 @@ public class Launcher extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
-
-		Login log = new Login();
-		Login log2 = new Login();
 
 		/**
 		 * 1. RapidFX executes the RapidFX Annotations with -> RapidFX.setUp() which gives all Attributes which are tagged and null a new SimpleObjectProperty
@@ -30,9 +28,8 @@ public class Launcher extends Application {
 		 *
 		 * after these initilizations -> the method setUpController gets called which is basically the content of the constructor but now its safe that all tagged properties are setup properly
 		 */
-		RapidFX.rapidGenerate(log);
-		RapidFX.rapidGenerate(log2);
-		primaryStage.setScene(new Scene(log.getView().getRootPane()));
+		Login log1 = RapidFX.createController(Login::new);
+		primaryStage.setScene(new Scene(log1.getView().getRootPane()));
 		// RSwitcher r = new RSwitcher();
 		primaryStage.show();
 

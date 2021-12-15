@@ -8,7 +8,7 @@ public interface RapidController extends RapidFXComponent
 	RapidView<?> getView();
 	RapidModel getModel();
 	Pane getRootPane();
-	default void RapidFXgenerateMe()
+	default void rapidFXgenerateMe()
 	{
 		try
 		{
@@ -18,5 +18,4 @@ public interface RapidController extends RapidFXComponent
 			e.printStackTrace();
 		}
 	}
-	
 }

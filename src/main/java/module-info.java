@@ -9,4 +9,5 @@ module rapidfx
 	exports rapidFX.annotation;
 	exports rapidFX.interfaces;
 	exports rapidFX.core;
+	opens premade;
 }

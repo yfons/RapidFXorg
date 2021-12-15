@@ -8,8 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import rapidFX.annotation.Rcontroller;
-import rapidFX.annotation.Rmodel;
+import rapidFX.annotation.RapidFXcontroller;
+import rapidFX.annotation.RapidFXmodel;
 import rapidFX.simple.RapidSimpleView;
 
 public class LoginView extends RapidSimpleView<VBox>
@@ -22,16 +22,16 @@ public class LoginView extends RapidSimpleView<VBox>
 	// in the Login Object the view gets Created before the initializations happen and in the constructor the okActionProperty will get set to the value in the Contructor
 	// Get's bound to the okActionProperty in the Controller
 	// for the Naming the controller names should get created before so it's easier to swap the views
-	@Rcontroller
+	@RapidFXcontroller
 	private  ObjectProperty<EventHandler<ActionEvent>> okActionProperty ;
 	// Get's not Initialized because its not null
 	// it's also possible to add an Eventhandler/ChangeListener with this setup just name the EventHandler/ChangeListener in the Controller like you did in the view
 	// changelistener work also for ReadonlyPropertys
 	// Get's bound to the closeActionProperty in the Controller
-	@Rcontroller
+	@RapidFXcontroller
 	private final ObjectProperty<EventHandler<ActionEvent>> closeEHAction = close.onActionProperty();
 	// Get's bound to the titleText in the Model as all Propertys can be bound
-	@Rmodel
+	@RapidFXmodel
 	private final StringProperty titleTextProperty = title.textProperty();
 
 

@@ -1,20 +1,39 @@
 package rapidFX.core;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.function.Supplier;
 
-import rapidFX.annotation.RautoGenerate;
-import rapidFX.annotation.Rcontroller;
-import rapidFX.annotation.Rmodel;
+import rapidFX.annotation.RapidFXautoGenerate;
+import rapidFX.annotation.RapidFXcontroller;
+import rapidFX.annotation.RapidFXmodel;
 import rapidFX.interfaces.RapidController;
 import rapidFX.interfaces.RapidFXComponent;
 import rapidFX.interfaces.RapidView;
 
 public class RapidFX
 {
-	private static final Class<RautoGenerate> AUTO_GENERATION_ANNOTATION = RautoGenerate.class;
-	private static final Class<Rcontroller> VIEW_TO_CONTROLLER_ANNOTATION = Rcontroller.class;
-	private static final Class<Rmodel> VIEW_TO_MODEL_ANNOTATION = Rmodel.class;
+	private static final Class<RapidFXautoGenerate> AUTO_GENERATION_ANNOTATION = RapidFXautoGenerate.class;
+	private static final Class<RapidFXcontroller> VIEW_TO_CONTROLLER_ANNOTATION = RapidFXcontroller.class;
+	private static final Class<RapidFXmodel> VIEW_TO_MODEL_ANNOTATION = RapidFXmodel.class;
+
+	/**
+	 * Should be used to create new Instances instead of new XYZ() as it makes it easier to switch out controllers
+	 * @param <controller>
+	 * @param constructor
+	 * @return
+	 */
+	public static <controller extends RapidController> controller createController(final Supplier<controller> constructor) {
+		try
+		{
+			return constructor.get();
+		} catch (IllegalArgumentException  e)
+		{
+			throw new Error(e.getMessage());
+		}
+	}
 
 	/**
 	 * @implNote the Setup and Connect Methods will get Called properly for the
@@ -28,7 +47,7 @@ public class RapidFX
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
-	public static RapidController rapidGenerate(final RapidController controller)
+	public static <controllClass extends RapidController>controllClass rapidGenerate(final controllClass controller)
 			throws IllegalArgumentException, IllegalAccessException
 	{
 		final var model = controller.getModel();

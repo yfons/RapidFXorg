@@ -3,12 +3,12 @@ package rapidFX.simple;
 import javafx.scene.layout.Pane;
 import rapidFX.interfaces.RapidView;
 
-public abstract class RapidSimpleView<rootPane extends Pane> implements RapidView<rootPane>
+public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane> implements RapidView<ROOT_PANE_TYPE>
 {
-	protected rootPane root;
+	protected ROOT_PANE_TYPE root;
 
 	@Override
-	public rootPane getRootPane()
+	public ROOT_PANE_TYPE getRootPane()
 	{
 		return root;
 	}

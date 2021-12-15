@@ -8,7 +8,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import rapidFX.interfaces.RapidFXComponent;
 
-class RConnector
+public class RConnector
 {
 	private final ReadOnlyProperty<?> viewProperty;
 	private final Field bindToField;

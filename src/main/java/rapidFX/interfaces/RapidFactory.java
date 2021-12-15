@@ -1,7 +1,10 @@
 package rapidFX.interfaces;
 
-public interface RapidFactory <T extends RapidController>extends RapidFXComponent
+import java.util.function.Supplier;
+
+import rapidFX.core.RapidFX;
+
+public interface RapidFactory extends RapidFXComponent
 {
-	T newController();
-	void setUpFactory();
+
 }

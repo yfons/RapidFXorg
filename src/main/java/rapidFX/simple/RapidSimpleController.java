@@ -5,12 +5,12 @@ import rapidFX.interfaces.RapidController;
 import rapidFX.interfaces.RapidModel;
 import rapidFX.interfaces.RapidView;
 
-public abstract class RapidSimpleController<viewClass extends RapidView<?>,modelClass extends RapidModel> implements RapidController
+public abstract class RapidSimpleController<RAPID_VIEW_CLASS extends RapidView<?>,RAPID_MODEL_CLASS extends RapidModel> implements RapidController
 {
-	protected viewClass view;
-	protected modelClass model;
+	protected RAPID_VIEW_CLASS view;
+	protected RAPID_MODEL_CLASS model;
 
-	public final viewClass getView()
+	public final RAPID_VIEW_CLASS getView()
 	{
 		return view;
 	}
@@ -23,9 +23,10 @@ public abstract class RapidSimpleController<viewClass extends RapidView<?>,model
 		return view.getRootPane();
 	}
 	@Override
-	public final modelClass getModel()
+	public final RAPID_MODEL_CLASS getModel()
 	{
 		return model;
 	}
+
 
 }

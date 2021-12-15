@@ -1,22 +1,11 @@
 package examples.HelloWorld;
 
+import java.util.function.Supplier;
+
 import rapidFX.simple.RapidSimpleFactory;
 
-public class LoginFactory extends RapidSimpleFactory<Login>
+public class LoginFactory 
 {
 
-	@Override
-	public Login newController()
-	{
-
-		return new Login();
-	}
-
-	@Override
-	public void setUpFactory()
-	{
-		// TODO Auto-generated method stub
-
-	}
 
 }

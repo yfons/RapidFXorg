@@ -4,12 +4,12 @@ import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import rapidFX.annotation.RautoGenerate;
+import rapidFX.annotation.RapidFXautoGenerate;
 import rapidFX.simple.RapidSimpleController;
 
 public class Login extends RapidSimpleController<LoginView, LoginModel> {
 	// Get's Initialized as new SimpleObjectProperty<>()
-	@RautoGenerate
+	@RapidFXautoGenerate
 	private ObjectProperty<EventHandler<ActionEvent>> okActionProperty;
 
 	public Login() {
@@ -17,9 +17,8 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
 		model = new LoginModel();
 		// view is predefined as viewClass generic type
 		view = new LoginView();
-
+		rapidFXgenerateMe();
 		// if you want to Execute all Annotations ( Autogenerating + setting bindings ) you have to call that in the Controller or with the static RapidFX.rapidGenerate(Controller controller)
-		RapidFXgenerateMe();
 		setUpController();
 	}
 	EventHandler<ActionEvent> closeEHAction = event ->{
@@ -36,6 +35,4 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
 		model.setUpModel();
 		view.setUpView();
 	}
-
-
 }

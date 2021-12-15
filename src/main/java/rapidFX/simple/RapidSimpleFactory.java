@@ -5,21 +5,14 @@ import javafx.beans.property.SimpleObjectProperty;
 import rapidFX.interfaces.RapidController;
 import rapidFX.interfaces.RapidFactory;
 
-public abstract class RapidSimpleFactory<ControllerClass extends RapidController> implements RapidFactory<ControllerClass>
+public abstract class RapidSimpleFactory<RAPID_CONTROLLER_CLASS extends RapidController> implements RapidFactory
 {
-	protected final ObjectProperty<ControllerClass> controllerProperty = new SimpleObjectProperty<>();
-
-	@Override
-	public abstract ControllerClass newController();
-
-	@Override
-	public abstract void setUpFactory();
-
-	public final ObjectProperty<ControllerClass> getControllerProperty()
+	protected final ObjectProperty<RAPID_CONTROLLER_CLASS> controllerProperty = new SimpleObjectProperty<>();
+	public final ObjectProperty<RAPID_CONTROLLER_CLASS> getControllerProperty()
 	{
 		return controllerProperty;
 	}
-	protected final void setController(ControllerClass controller)
+	protected final void setController(RAPID_CONTROLLER_CLASS controller)
 	{
 		this.controllerProperty.set(controller);
 	}
