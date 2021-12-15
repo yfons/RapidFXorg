@@ -48,11 +48,12 @@ public class RapidFX
 	 * Rmodel and Rcontroller are only allowed in Classes which implement the
 	 * RapidView the System will stop if this Rule is violated<br>
 	 * <br>
-	 * Rmodel and Rcontroller will get Treated as RautoGenerate in the view and get
-	 * also the Default Values<br>
+	 * Should only be used on Classes which are not affected by the
+	 * {@link RapidFX#rapidGenerate(RapidController) rapidGeneration} but still want
+	 * the {@link RapidFX#setUp(RapidFXComponent...) auto Generation } for Initializing their Fields
 	 * <br>
 	 * for Unit Testing this Method can be used only on a Single Object to see if
-	 * its fully Functional
+	 * its fully Functional, this should be the case for the Controller and the Model
 	 *
 	 * @param toSetUpObjects
 	 */
@@ -79,8 +80,8 @@ public class RapidFX
 	 * Connects all fields in the View which are Tagged as Rcontroller with the
 	 * controller
 	 *
-	 * @apiNote the restriction to connect only Rcontroller to a controller is not
-	 *          set.<br>
+	 * @apiNote the restriction to connect only Rcontroller or Rmodel to a controller or Model is not
+	 *          set. The RapidFXComponent can be here Any RapidFXComponent<br>
 	 *          in theory you can tag ObjectProperty Fields in your view with any
 	 *          annotation and bind them to any other Class as it's based on
 	 *          searching Fields with the given annotation and searching in the

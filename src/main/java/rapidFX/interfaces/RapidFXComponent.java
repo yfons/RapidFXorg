@@ -10,7 +10,6 @@ public interface RapidFXComponent
 	 * {@link RapidFX#rapidGenerate(RapidController) rapidGeneration} but still want
 	 * the {@link RapidFX#setUp(RapidFXComponent...) auto Generation } for
 	 * initializing their fields which are tagged as {@link RautoGenerate }
-	 * or for unit testing Controller / Model classes
 	 */
 	default void RapidFXSetUpMe()
 	{
@@ -23,6 +22,11 @@ public interface RapidFXComponent
 		}
 	}
 
+	/**
+	 * searches a resource in the Same path as the Calling Class is in, if the class is not "open PACKAGENAME" then this will result in an Errror
+	 * @param resourceName
+	 * @return
+	 */
 	default String getResource(String resourceName)
 	{
 		try

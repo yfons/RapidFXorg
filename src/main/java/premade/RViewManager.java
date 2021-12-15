@@ -1,4 +1,4 @@
-package rapidFX.core;
+package premade;
 
 import java.util.Set;
 
@@ -20,7 +20,6 @@ public class RViewManager<keyValue>
 	}
 	public void removeFactory(keyValue key) {
 		factoryMap.remove(key);
-
 	}
 	public ObservableMap<keyValue, RapidController> getMap() {
 		return factoryMap;

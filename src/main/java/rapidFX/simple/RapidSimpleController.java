@@ -9,11 +9,16 @@ public abstract class RapidSimpleController<viewClass extends RapidView<?>,model
 {
 	protected viewClass view;
 	protected modelClass model;
-	@Override
+
 	public final viewClass getView()
 	{
 		return view;
 	}
+	
+	/**
+	 * @Override
+	 * Should be called from other Controllers when The View and it's components shouldn't be visible
+	 */
 	public final Pane getRootPane() {
 		return view.getRootPane();
 	}
