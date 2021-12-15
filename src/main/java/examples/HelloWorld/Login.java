@@ -26,7 +26,7 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
 	};
 	// gets Called after RapidFX.rapidGenerate is done so use Constructor to set values before generation and this method after the generation
 	// can call corresponding model.setUpModel and view.setUpView if they are defined
-	public void setUpController() {
+	private void setUpController() {
 		// the ok ActionProperty would have gave a NullPointerException if it's set before RapidFXGenerateMe(), only after that the Autogenerate is done
 		okActionProperty.set(event -> {
 			model.login();
