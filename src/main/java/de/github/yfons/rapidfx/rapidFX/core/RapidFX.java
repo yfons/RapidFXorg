@@ -27,14 +27,16 @@ public class RapidFX
 	 * @throws RapidFXException
 	 */
 	public static <controller extends RapidController> controller createController(
-			final Supplier<controller> constructor) throws RapidFXException
+			final Supplier<controller> constructor) 
 	{
 		try
 		{
 			return constructor.get();
 		} catch (IllegalArgumentException e)
 		{
-			throw new RapidFXException(e.getMessage());
+			System.err.println(e.getMessage());
+			System.exit(-1);
+			return null;
 		}
 	}
 
