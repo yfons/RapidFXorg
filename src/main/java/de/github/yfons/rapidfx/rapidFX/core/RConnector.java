@@ -42,8 +42,6 @@ public class RConnector
 
 	}
 
-	@SuppressWarnings(
-	{ "rawtypes", "unchecked" })
 	private void connectOnPropertyInterface(Property property)
 	{
 		if (bindToFieldObject instanceof EventHandler<?> bindToHandler)
@@ -66,9 +64,8 @@ public class RConnector
 						+ viewProperty.getName() + " :: of ");
 	}
 
-	@SuppressWarnings(
-	{ "unchecked", "rawtypes" })
-	private void addListener(ChangeListener listener)
+
+	private  void addListener(ChangeListener listener)
 	{
 		viewProperty.addListener(listener);
 	}
@@ -78,9 +75,8 @@ public class RConnector
 		property.setValue(bindToHandler);
 	}
 
-	@SuppressWarnings(
-	{ "unchecked", "rawtypes" })
-	private void bindProperty(Property bindToProperty, Property property)
+
+	private <TYPE> void bindProperty(Property<TYPE> bindToProperty, Property<TYPE> property)
 	{
 		bindToProperty.bind(property);
 	}

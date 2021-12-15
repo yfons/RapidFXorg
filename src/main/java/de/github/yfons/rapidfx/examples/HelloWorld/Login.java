@@ -1,6 +1,7 @@
 package de.github.yfons.rapidfx.examples.HelloWorld;
 
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidFXautoGenerate;
+import de.github.yfons.rapidfx.rapidFX.core.RapidFX;
 import de.github.yfons.rapidfx.rapidFX.simple.RapidSimpleController;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -15,14 +16,16 @@ public class Login extends RapidSimpleController<LoginView, LoginModel>
 
 	public Login()
 	{
-		// model is predefined as modelClass generic type
-		model = new LoginModel();
+		// this way of setting the model and view is prefered as its easier to swap them out afterwards during refactoring
+		// model is predefined as modelClass generic type	
+		model = RapidFX.createModel(LoginModel::new);
 		// view is predefined as viewClass generic type
-		view = new LoginView();
+		view = RapidFX.createView(LoginView::new);
 		rapidFXgenerateMe();
 		// if you want to Execute all Annotations ( Autogenerating + setting bindings )
 		// you have to call that in the Controller or with the static
 		// RapidFX.rapidGenerate(Controller controller)
+		// RapidFX.rapidGenerate(this)  is equals to         rapidFXgenerateMe();
 		setUpController();
 	}
 

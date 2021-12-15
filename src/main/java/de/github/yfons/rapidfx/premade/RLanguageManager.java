@@ -10,6 +10,14 @@ import java.util.Properties;
 
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
 
+/**
+ * @Deprecated
+ * doesnt work yet
+ * @author marti
+ *
+ * @param <KEYS>
+ */
+
 public class RLanguageManager<KEYS> implements RapidFXComponent
 {
 	String languageSettings = "";

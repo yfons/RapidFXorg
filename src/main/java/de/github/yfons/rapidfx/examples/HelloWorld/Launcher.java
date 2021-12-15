@@ -37,6 +37,7 @@ public class Launcher extends Application
 		 * properties are setup properly
 		 */
 		Login log1 = RapidFX.createController(Login::new);
+		
 		primaryStage.setScene(new Scene(log1.getView().getRootPane()));
 		primaryStage.show();
 
