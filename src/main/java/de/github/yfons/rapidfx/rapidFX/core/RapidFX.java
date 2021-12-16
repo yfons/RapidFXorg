@@ -7,9 +7,10 @@ import java.util.function.Supplier;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidFXautoGenerate;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidFXcontroller;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidFXmodel;
+import de.github.yfons.rapidfx.rapidFX.core.helper.FieldHandler;
+import de.github.yfons.rapidfx.rapidFX.core.helper.RCreator;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidController;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
-import de.github.yfons.rapidfx.rapidFX.interfaces.RapidModel;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidView;
 
 public class RapidFX
@@ -20,51 +21,18 @@ public class RapidFX
 
 	/**
 	 * Should be used to create new Instances instead of new XYZ() as it makes it
-	 * easier to switch out controllers
+	 * easier to switch out These Objects<br>Setting the variables through an external method is recommended
+	 * the constructor should only instantiate the Objects
 	 * 
-	 * @param <CONTROLLER_NEW_CONSTRUCTOR> eg MyController::new
+	 * @param <CLASS_FOR_NEW_INSTANCE> eg MyController::new
 	 * @param constructor
 	 * @return
 	 * @throws RapidFXException
 	 */
-	public static <CONTROLLER_NEW_CONSTRUCTOR extends RapidController> CONTROLLER_NEW_CONSTRUCTOR createController(
-			final Supplier<CONTROLLER_NEW_CONSTRUCTOR> constructor)
+	public static <CLASS_FOR_NEW_INSTANCE extends RapidFXComponent> CLASS_FOR_NEW_INSTANCE create(
+			final Supplier<CLASS_FOR_NEW_INSTANCE> constructor)
 	{
-		return (CONTROLLER_NEW_CONSTRUCTOR) create(constructor);
-	}
-
-	/**
-	 * Should be used to create new Instances instead of new XYZ() as it makes it
-	 * easier to switch out views
-	 * 
-	 * @param <VIEW_NEW_CONSTRUCTOR> eg MyView::new
-	 * @param constructor
-	 * @return
-	 * @throws RapidFXException
-	 */
-	public static <VIEW_NEW_CONSTRUCTOR extends RapidModel> VIEW_NEW_CONSTRUCTOR createModel(
-			final Supplier<VIEW_NEW_CONSTRUCTOR> constructor)
-	{
-		return (VIEW_NEW_CONSTRUCTOR) create(constructor);
-	}
-
-	/**
-	 * Should be used to create new Instances instead of new XYZ() as it makes it
-	 * easier to switch out models
-	 * 
-	 * @param <MODEL_NEW_CONSTRUCTOR> eg MyModel::new
-	 * @param constructor
-	 * @return
-	 */
-	public static <MODEL_NEW_CONSTRUCTOR extends RapidView<?>> MODEL_NEW_CONSTRUCTOR createView(
-			final Supplier<MODEL_NEW_CONSTRUCTOR> constructor)
-	{
-		return (MODEL_NEW_CONSTRUCTOR) create(constructor);
-	}
-
-	private static <TYPE extends RapidFXComponent> TYPE create(Supplier<TYPE> constructor)
-	{
-		return constructor.get();
+		return new RCreator<CLASS_FOR_NEW_INSTANCE>(constructor).create();
 	}
 
 	/**
@@ -83,7 +51,6 @@ public class RapidFX
 			throws IllegalArgumentException, IllegalAccessException
 	{
 		final var model = controller.getModel();
-
 		final var view = controller.getView();
 
 		setUp(model, controller, view);
@@ -118,7 +85,7 @@ public class RapidFX
 
 			for (var field : fields)
 			{
-				final FieldHandler<?> fieldHandler = new FieldHandler<>(field, toSetUp);
+				final var fieldHandler = new FieldHandler<>(field, toSetUp);
 
 				if (fieldHandler.isAnnotationPresent(AUTO_GENERATION_ANNOTATION))
 				{

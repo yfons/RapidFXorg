@@ -1,7 +1,5 @@
 package de.github.yfons.rapidfx.rapidFX.interfaces;
 
-import java.lang.reflect.InvocationTargetException;
-
 import de.github.yfons.rapidfx.rapidFX.core.RapidFX;
 import javafx.scene.layout.Pane;
 
@@ -15,12 +13,12 @@ public interface RapidController extends RapidFXComponent
 
 	default void rapidFXgenerateMe()
 	{
-		try
-		{
-			RapidFX.rapidGenerate(this);
-		} catch (IllegalAccessException | IllegalArgumentException | SecurityException  e)
-		{
-			e.printStackTrace();
-		}
+			try
+			{
+				RapidFX.rapidGenerate(this);
+			} catch (IllegalArgumentException | IllegalAccessException e)
+			{
+				e.printStackTrace();
+			}
 	}
 }

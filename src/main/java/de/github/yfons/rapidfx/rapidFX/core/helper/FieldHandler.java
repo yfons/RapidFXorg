@@ -1,9 +1,10 @@
-package de.github.yfons.rapidfx.rapidFX.core;
+package de.github.yfons.rapidfx.rapidFX.core.helper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
+import de.github.yfons.rapidfx.rapidFX.core.RapidFXException;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -19,7 +20,7 @@ public class FieldHandler<T>
 		this.field = field;
 		this.fieldClass = field.getType();
 		this.objectToGetValues = objectToGetValues;
-		field.setAccessible(true);
+		this.field.setAccessible(true);
 	}
 
 	/**
@@ -33,9 +34,9 @@ public class FieldHandler<T>
 	 */
 	public void bindProperties(final RapidFXComponent bindTo) throws RapidFXException
 	{
-		final Field bindToField = this.findFieldWithSameName(bindTo);
-		ReadOnlyProperty<?> viewProperty = castToReadOnlyProperty();
-		RConnector connector = new RConnector(viewProperty, bindToField, bindTo);
+		final var bindToField = this.findFieldWithSameName(bindTo);
+		final var viewProperty = castToReadOnlyProperty();
+		final var connector = new RConnector(viewProperty, bindToField, bindTo);
 		connector.connectProperties();
 	}
 
@@ -44,14 +45,13 @@ public class FieldHandler<T>
 		try
 		{
 			if (!isClassTypeOfProperty())
-
+			{
 				castToPropertyError("Property");
-
-			else if (isNull())
+			} else if (isNull())
 			{
 				field.set(objectToGetValues, getDefaultValue());
 			}
-		} catch (IllegalAccessException | Error e)
+		} catch (IllegalAccessException e)
 		{
 			throw new RapidFXException("The Field:: " + field
 					+ " :: was not accessible, probably because the Module-info doesn't open the Package\n"
@@ -68,7 +68,7 @@ public class FieldHandler<T>
 	{
 		try
 		{
-			return field.get(this.objectToGetValues);
+			return this.field.get(this.objectToGetValues);
 		} catch (IllegalArgumentException | IllegalAccessException e)
 		{
 			throw new RapidFXException(e.getMessage());
@@ -77,10 +77,10 @@ public class FieldHandler<T>
 
 	private Field findFieldWithSameName(final RapidFXComponent bindTo) throws RapidFXException
 	{
-		final String fieldName = field.getName().intern();
+		final var fieldName = field.getName().intern();
 		try
 		{
-			Field foundField = bindTo.getClass().getDeclaredField(fieldName);
+			final var foundField = bindTo.getClass().getDeclaredField(fieldName);
 			foundField.setAccessible(true);
 			return foundField;
 		} catch (NoSuchFieldException e)
@@ -98,16 +98,14 @@ public class FieldHandler<T>
 
 	private boolean isClassTypeOfProperty()
 	{
-		return Property.class.isAssignableFrom(fieldClass);
+		return Property.class.isAssignableFrom(this.fieldClass);
 	}
 
 	public Object getDefaultValue() throws RapidFXException
 	{
-		Class<?> t;
 		try
 		{
-			t = Class.forName(field.getType().getPackageName() + ".Simple" + field.getType().getSimpleName());
-			System.out.println();
+			final var t = Class.forName(field.getType().getPackageName() + ".Simple" + field.getType().getSimpleName());
 			return t.getDeclaredConstructor().newInstance();
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException | ClassNotFoundException e)
@@ -119,15 +117,7 @@ public class FieldHandler<T>
 
 	private ReadOnlyProperty<?> castToReadOnlyProperty() throws RapidFXException
 	{
-		try
-		{
-			ReadOnlyProperty<?> viewProperty = (ReadOnlyProperty<?>) getObject();
-			return viewProperty;
-		} catch (ClassCastException e)
-		{
-			castToPropertyError("ReadOnlyProperty which is The SuperInterface of Property");
-			return null;
-		}
+		return (ReadOnlyProperty<?>) getObject();
 	}
 
 	private void castToPropertyError(String whatCast) throws IllegalArgumentException, RapidFXException

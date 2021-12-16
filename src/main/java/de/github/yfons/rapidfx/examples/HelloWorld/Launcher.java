@@ -36,7 +36,7 @@ public class Launcher extends Application
 		 * basically the content of the constructor but now its safe that all tagged
 		 * properties are setup properly
 		 */
-		Login log1 = RapidFX.createController(Login::new);
+		Login log1 = RapidFX.create(Login::new);
 		
 		primaryStage.setScene(new Scene(log1.getView().getRootPane()));
 		primaryStage.show();

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>rapidfxcore</groupId>
   <artifactId>de.github.yfons.rapidfx</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.4-SNAPSHOT</version>
   <name>de.github.yfons.rapidfx</name>
 <distributionManagement>
    <repository>
@@ -14,6 +14,16 @@
 
 
     <build>
+<resources>
+    <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+            <include>**/*.fxml</include>
+            <include>**/*.css</include>
+            <include>**/*.properties</include>
+        </includes>
+    </resource>
+</resources>
 
         <pluginManagement>
             <plugins>

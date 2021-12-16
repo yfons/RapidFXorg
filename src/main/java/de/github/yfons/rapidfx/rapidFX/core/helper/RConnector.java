@@ -1,11 +1,13 @@
-package de.github.yfons.rapidfx.rapidFX.core;
+package de.github.yfons.rapidfx.rapidFX.core.helper;
 
 import java.lang.reflect.Field;
 
+import de.github.yfons.rapidfx.rapidFX.core.RapidFXException;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 
 public class RConnector
@@ -36,10 +38,8 @@ public class RConnector
 			addListener(listener);
 		} else
 		{
-			Property<?> property = (Property<?>) viewProperty;
-			connectOnPropertyInterface(property);
+			connectOnPropertyInterface((Property<?>)viewProperty);
 		}
-
 	}
 
 	private void connectOnPropertyInterface(Property property)

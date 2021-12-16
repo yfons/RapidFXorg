@@ -3,6 +3,7 @@ module rapidfx
 	requires transitive javafx.base;
 	requires transitive javafx.graphics;
 	requires transitive javafx.controls;
+	requires java.desktop;
 
 	opens de.github.yfons.rapidfx.examples.HelloWorld;
 
