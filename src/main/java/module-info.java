@@ -6,7 +6,7 @@ module rapidfx
 	requires java.desktop;
 
 	opens de.github.yfons.rapidfx.examples.HelloWorld;
-
+	exports de.github.yfons.rapidfx.examples.LanguageChanging;
 	exports de.github.yfons.rapidfx.premade;
 	exports de.github.yfons.rapidfx.rapidFX.simple;
 	exports de.github.yfons.rapidfx.rapidFX.annotation;
