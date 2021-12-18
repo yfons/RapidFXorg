@@ -2,14 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>rapidfxcore</groupId>
   <artifactId>de.github.yfons.rapidfx</artifactId>
-  <version>1.0.4-SNAPSHOT</version>
+  <version>1.0.5-SNAPSHOT</version>
   <name>de.github.yfons.rapidfx</name>
 <distributionManagement>
-   <repository>
-     <id>github</id>
-     <name>GitHub yfons Apache Maven Packages</name>
-     <url>https://maven.pkg.github.com/yfons/RapidFXorg</url>
-   </repository>
+    <repository>
+        <id>internal.repo</id>
+        <name>Temporary Staging Repository</name>
+        <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
 </distributionManagement>
 
 
@@ -27,6 +27,36 @@
 
         <pluginManagement>
             <plugins>
+    <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+            <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+        </configuration>
+    </plugin>
+      <plugin>
+            <groupId>com.github.github</groupId>
+            <artifactId>site-maven-plugin</artifactId>
+            <version>0.11</version>
+            <configuration>
+                <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+                <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+                <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
+                <branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+                <includes><include>**/*</include></includes>
+                <repositoryName>RapidFXorg</repositoryName>      <!-- github repo name -->
+                <repositoryOwner>yfons</repositoryOwner>    <!-- github username  -->
+            </configuration>
+            <executions>
+              <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
+              <execution>
+                <goals>
+                  <goal>site</goal>
+                </goals>
+                <phase>deploy</phase>
+              </execution>
+            </executions>
+        </plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
