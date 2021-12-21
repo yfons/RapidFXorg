@@ -1,8 +1,7 @@
-package de.github.yfons.rapidfx.premade;
+package de.github.yfons.rapidfx.premade.language;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,31 +9,23 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Properties;
-import java.util.Set;
-
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
+import de.github.yfons.rapidfx.rapidFX.simple.RapidSimple;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-/**
- * @Deprecated doesnt work yet
- * @author marti
- *
- * @param <KEYS>
- */
 
-public abstract class RLanguageManager implements RapidFXComponent
+public abstract class RLanguageManager extends RapidSimple
 {
-	File supportedLanguagesFile;
-	private StringProperty language = new SimpleStringProperty("");
-	Properties supportedLanguages = new Properties();
-	FileReader reader;
+	private File supportedLanguagesFile;
+	private final StringProperty language = new SimpleStringProperty("");
+	private final Properties supportedLanguages = new Properties();
 
-	HashMap<String, StringProperty> languageKeys = new HashMap<>();
+	private final HashMap<String, StringProperty> languageKeys = new HashMap<>();
 
 	final String hardCodedLanguageDefault;
 
@@ -49,9 +40,36 @@ public abstract class RLanguageManager implements RapidFXComponent
 		language.addListener(languageListener);
 
 		swapToDefault();
-
 	}
-
+	
+	public final void translate(StringProperty... propertyToBindCollection)
+	{
+		for(var propertyToBind : propertyToBindCollection) {
+			propertyToBind.bind(languageKeys.get(propertyToBind.get()));
+		}
+	}
+	public final void swapLanguage(String newLanguage)
+	{
+		if (supportedLanguages.containsKey(newLanguage))
+		{
+			supportedLanguages.putIfAbsent("DEFAULT", newLanguage);
+			supportedLanguages.put("DEFAULT", newLanguage);
+			try
+			{
+				supportedLanguages.store(new FileWriter(supportedLanguagesFile), "Hello");
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			language.set((String) supportedLanguages.get(newLanguage));
+		}
+	}
+	private final void swapToDefault()
+	{
+		var hasDefault = supportedLanguages.get("DEFAULT");
+		String languageToSwap = hasDefault != null ? (String) hasDefault : hardCodedLanguageDefault;
+		swapLanguage(languageToSwap);
+	}
 	private final void setSupportedLanguages(String supportLanguages)
 	{
 		supportedLanguagesFile = getFile(supportLanguages);
@@ -70,15 +88,9 @@ public abstract class RLanguageManager implements RapidFXComponent
 		}
 	}
 
-	public final void swapToDefault()
-	{
-		var hasDefault = supportedLanguages.get("DEFAULT");
-		String languageToSwap = hasDefault != null ? (String) hasDefault : hardCodedLanguageDefault;
-		swapLanguage(languageToSwap);
 
-	}
 
-	private void setLanguageFormat(String format) throws IOException
+	private final  void setLanguageFormat(String format) throws IOException
 	{
 		File languageFormat = getFile(format);
 		Properties formatProperty = new Properties();
@@ -90,7 +102,6 @@ public abstract class RLanguageManager implements RapidFXComponent
 			String key = (String) it.next();
 			languageKeys.put(key, new SimpleStringProperty());
 		}
-		System.out.println(languageKeys);
 	}
 
 	private final ChangeListener<String> languageListener = new ChangeListener<>()
@@ -130,22 +141,7 @@ public abstract class RLanguageManager implements RapidFXComponent
 		}
 	};
 
-	public void swapLanguage(String newLanguage)
-	{
-		if (supportedLanguages.containsKey(newLanguage))
-		{
-			supportedLanguages.putIfAbsent("DEFAULT", newLanguage);
-			supportedLanguages.put("DEFAULT", newLanguage);
-			try
-			{
-				supportedLanguages.store(new FileWriter(supportedLanguagesFile), "Hello");
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-			language.set((String) supportedLanguages.get(newLanguage));
-		}
-	}
+
 
 	private final File getFile(String fileName)
 	{
@@ -173,8 +169,4 @@ public abstract class RLanguageManager implements RapidFXComponent
 		}
 	}
 
-	public final StringProperty getProperty(String key)
-	{
-		return languageKeys.get(key);
-	}
 }

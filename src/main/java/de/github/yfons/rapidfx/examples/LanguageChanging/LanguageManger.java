@@ -1,25 +1,19 @@
 package de.github.yfons.rapidfx.examples.LanguageChanging;
 
-import de.github.yfons.rapidfx.premade.RLanguageManager;
+import de.github.yfons.rapidfx.premade.language.RLanguageManager;
 import javafx.beans.property.StringProperty;
 
+/*
+ *  This class extends the Rlanguagemanager so the Language Files will get searched in this directory with
+ *  getClass.getResource("xyz").toString()
+ *  -> nothing to override here just the class path is set to your current package
+ *  -> the static final keys for the Language Files are optional to Write
+ */
 public class LanguageManger extends RLanguageManager
 {
-	private static LanguageManger manager = new LanguageManger("LANGUAGES.properties", "ENGLISH", "LANGUAGE.layout");
-
 	public LanguageManger(String supportLanguages, String hardCodedLanguageDefault, String languageLayout)
 	{
 		super(supportLanguages, hardCodedLanguageDefault, languageLayout);
-	}
-
-	public static void bindToKey(String key, StringProperty propertyToBind)
-	{
-		propertyToBind.bind(manager.getProperty(key));
-	}
-
-	public static void swapLanguages(String language)
-	{
-		manager.swapLanguage(language);
 	}
 
 	public static final String GERMAN = "GERMAN";

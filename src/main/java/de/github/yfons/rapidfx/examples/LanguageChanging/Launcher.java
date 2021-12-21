@@ -1,5 +1,6 @@
 package de.github.yfons.rapidfx.examples.LanguageChanging;
 
+import de.github.yfons.rapidfx.premade.language.RTranslator;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -18,23 +19,28 @@ public class Launcher extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		
-		Label greeting = new Label();
-		Button exit = new Button();
+		// as these Strings set the textProperty -> the LanguageManager gets the Content and tries to find the Keys which are the same as the Content and then they can get bound with bindTranslation
+		Label greeting = new Label(LanguageManger.BUTTON_NAVIGATION_GREETING);
+		Button exit = new Button(LanguageManger.BUTTON_NAVIGATION_EXIT);
 		Button switcher = new Button("Switch language");
 		HBox layoutbox = new HBox(greeting,exit,switcher);
 		
-		LanguageManger.bindToKey(LanguageManger.BUTTON_NAVIGATION_EXIT, exit.textProperty());
-		LanguageManger.bindToKey(LanguageManger.BUTTON_NAVIGATION_GREETING, greeting.textProperty());
+		// Injecting to the Manager which is through its static method available for any Node
+		// so any Node can bind its TextProperty to the Manager which is non Static
+		RTranslator.injectLanguageManager(new LanguageManger("LANGUAGES.properties", LanguageManger.ENGLISH, "LANGUAGE.layout"));
+		// any textProperty can be bound based on its Current Content if its Key exists in the Language.layout file
+		// the value represents always the value from the key in the current language.layout with the current language String
+		RTranslator.bindTranslation(greeting.textProperty(), exit.textProperty());
 		
 		switcher.onActionProperty().set(event ->{
 			if(isEnglish) {
-				LanguageManger.swapLanguages(LanguageManger.GERMAN);
+				// languages can be swapped to any Language which s listed in the languages.properties
+				RTranslator.swapLanguages(LanguageManger.GERMAN);
 				isEnglish = false;
 			}
 			else {
 				isEnglish = true;
-				LanguageManger.swapLanguages(LanguageManger.ENGLISH);
+				RTranslator.swapLanguages(LanguageManger.ENGLISH);
 			}
 		});
 		exit.onActionProperty().set(event -> Platform.exit());

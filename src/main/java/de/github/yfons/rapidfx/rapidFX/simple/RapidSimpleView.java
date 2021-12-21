@@ -3,7 +3,7 @@ package de.github.yfons.rapidfx.rapidFX.simple;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidView;
 import javafx.scene.layout.Pane;
 
-public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane> implements RapidView<ROOT_PANE_TYPE>
+public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane>extends RapidSimple implements RapidView<ROOT_PANE_TYPE>
 {
 	protected ROOT_PANE_TYPE root;
 

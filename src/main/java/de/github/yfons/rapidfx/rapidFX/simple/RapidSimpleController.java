@@ -1,11 +1,12 @@
 package de.github.yfons.rapidfx.rapidFX.simple;
 
+import de.github.yfons.rapidfx.rapidFX.core.RapidFX;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidController;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidModel;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidView;
 import javafx.scene.layout.Pane;
 
-public abstract class RapidSimpleController<RAPID_VIEW_CLASS extends RapidView<?>, RAPID_MODEL_CLASS extends RapidModel>
+public abstract class RapidSimpleController<RAPID_VIEW_CLASS extends RapidView<?>, RAPID_MODEL_CLASS extends RapidModel> extends RapidSimple
 		implements RapidController
 {
 	protected RAPID_VIEW_CLASS view;
@@ -30,5 +31,15 @@ public abstract class RapidSimpleController<RAPID_VIEW_CLASS extends RapidView<?
 	{
 		return model;
 	}
-
+	
+	protected final void rapidFXgenerateMe()
+	{
+			try
+			{
+				RapidFX.rapidGenerate(this);
+			} catch (IllegalArgumentException | IllegalAccessException e)
+			{
+				e.printStackTrace();
+			}
+	}
 }
