@@ -1,4 +1,4 @@
-module rapidfx
+module de.github.yfons.rapidfx
 {
 	requires transitive javafx.base;
 	requires transitive javafx.graphics;
@@ -12,6 +12,7 @@ module rapidfx
 	exports de.github.yfons.rapidfx.rapidFX.interfaces;
 	exports de.github.yfons.rapidfx.rapidFX.core;
 	exports  de.github.yfons.rapidfx.premade.language;
+	
 	opens de.github.yfons.rapidfx.premade.language;
 	opens de.github.yfons.rapidfx.premade;
 	opens de.github.yfons.rapidfx.rapidFX.simple;
