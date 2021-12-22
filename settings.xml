@@ -11,13 +11,13 @@
     <profile>
       <id>github</id>
       <repositories>
-                <repository>
-                    <id>central</id>
-                    <url>https://repo1.maven.org/maven2</url>
-                </repository>
+        <repository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+        </repository>
         <repository>
           <id>github</id>
-          <url>https://maven.pkg.github.com/yfons/RapidFXorg</url>
+          <url>https://maven.pkg.github.com/OWNER/REPOSITORY</url>
           <snapshots>
             <enabled>true</enabled>
           </snapshots>
@@ -30,7 +30,7 @@
     <server>
       <id>github</id>
       <username>yfons</username>
-      <password>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</password>
+      <password>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</password>
     </server>
   </servers>
 </settings>
