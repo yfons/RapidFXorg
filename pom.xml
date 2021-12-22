@@ -2,22 +2,18 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>rapidfxcore</groupId>
   <artifactId>de.github.yfons.rapidfx</artifactId>
-  <version>1.0.12</version>
+  <version>1.0.123456456</version>
   <name>de.github.yfons.rapidfx</name>
-<distributionManagement> 
-    <repository>
-        <id>internal.repo</id> 
-        <name>Temporary Staging Repository</name> 
-        <url>file://${project.build.directory}/mvn-artifact</url> 
-    </repository> 
+<distributionManagement>
+   <repository>
+     <id>github</id>
+     <name>GitHub yfons Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/yfons/RapidFXorg</url>
+   </repository>
 </distributionManagement>
 
-    <repositories>
-        <repository>
-            <id>readMaven</id>
-            <url>${myMavenRepoReadUrl}</url>
-        </repository>
-    </repositories>
+
+
     <build>
 <resources>
     <resource>
@@ -32,27 +28,18 @@
 
         <pluginManagement>
             <plugins>
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-source-plugin</artifactId>
-    <version>3.1.0</version>
-    <executions>
-        <execution>
-            <id>attach-sources</id>
-                <goals>
-                    <goal>jar</goal>
-                </goals>
-        </execution>
-    </executions>
-</plugin>
-
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<release>16</release>
-				</configuration>
-			</plugin>
+    <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.1</version>
+    </plugin>
+  
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>16</release>
+                </configuration>
+            </plugin>
 
             </plugins>
         </pluginManagement>
@@ -60,18 +47,18 @@
 
 
   <dependencies>
-  	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
-	<dependency>
-	    <groupId>org.openjfx</groupId>
-	    <artifactId>javafx-controls</artifactId>
-	    <version>17</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
-	<dependency>
-	    <groupId>org.openjfx</groupId>
-	    <artifactId>javafx-graphics</artifactId>
-	    <version>17</version>
-	</dependency>
+      <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>17</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics</artifactId>
+        <version>17</version>
+    </dependency>
 
 
   </dependencies>
