@@ -38,6 +38,10 @@ public class Launcher extends Application
 		 */
 		Login log1 = RapidFX.create(Login::new);
 		
+		// The Controller supports a toString Method to see Inside in which State it is currently
+		System.out.println(log1.toString());
+		
+		
 		primaryStage.setScene(new Scene(log1.getView().getRootPane()));
 		primaryStage.show();
 

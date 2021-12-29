@@ -27,7 +27,11 @@ public class Launcher extends Application
 		
 		// Injecting to the Manager which is through its static method available for any Node
 		// so any Node can bind its TextProperty to the Manager which is non Static
-		RTranslator.injectLanguageManager(new LanguageManger("LANGUAGES.properties", LanguageManger.ENGLISH, "LANGUAGE.layout"));
+		LanguageManger manager = new LanguageManger("LANGUAGES.properties", LanguageManger.ENGLISH, "LANGUAGE.layout");
+		RTranslator.injectLanguageManager(manager);
+		
+
+		
 		// any textProperty can be bound based on its Current Content if its Key exists in the Language.layout file
 		// the value represents always the value from the key in the current language.layout with the current language String
 		RTranslator.bindTranslation(greeting.textProperty(), exit.textProperty());
@@ -37,10 +41,14 @@ public class Launcher extends Application
 				// languages can be swapped to any Language which s listed in the languages.properties
 				RTranslator.swapLanguages(LanguageManger.GERMAN);
 				isEnglish = false;
+				// the Language Manager has a toString Method to read which state the manager is in at the moment, and to check which files are Loaded
+				System.out.println(manager.toString());
 			}
 			else {
 				isEnglish = true;
 				RTranslator.swapLanguages(LanguageManger.ENGLISH);
+				// the Language Manager has a toString Method to read which state the manager is in at the moment, and to check which files are Loaded
+				System.out.println(manager.toString());
 			}
 		});
 		exit.onActionProperty().set(event -> Platform.exit());

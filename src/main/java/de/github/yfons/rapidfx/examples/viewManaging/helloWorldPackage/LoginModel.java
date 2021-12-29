@@ -1,13 +1,12 @@
-package de.github.yfons.rapidfx.examples.HelloWorld;
+package de.github.yfons.rapidfx.examples.viewManaging.helloWorldPackage;
 
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidFXautoGenerate;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidModel;
-import de.github.yfons.rapidfx.rapidFX.simple.RapidSimpleModel;
 import javafx.beans.property.StringProperty;
 
 //"Buisness Logic" -> Everything that only needs Properties and backend to work
 // no Eventhandlers, no Nodes here
-public class LoginModel extends RapidSimpleModel implements RapidModel
+class LoginModel implements RapidModel
 {
 	@RapidFXautoGenerate
 	private StringProperty titleTextProperty;

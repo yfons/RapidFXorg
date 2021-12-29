@@ -4,14 +4,8 @@ import de.github.yfons.rapidfx.rapidFX.core.RapidFX;
 
 public interface RapidFXComponent
 {
-	static void RapidFXSetUP(RapidFXComponent component)
+	default void RapidFXSetUPMe()
 	{
-		try
-		{
-			RapidFX.setUp(component);
-		} catch (IllegalArgumentException | SecurityException e)
-		{
-			e.printStackTrace();
-		}
+			RapidFX.setUp(this);
 	}
 }

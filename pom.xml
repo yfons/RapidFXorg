@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>rapidfxcore</groupId>
   <artifactId>de.github.yfons.rapidfx</artifactId>
-  <version>1.111.859</version>
+  <version>1.114.659-SNAPSHOT</version>
   <name>de.github.yfons.rapidfx</name>
 <distributionManagement>
    <repository>

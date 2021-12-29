@@ -15,7 +15,7 @@ public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane>extends RapidS
 
 	/**
 	 * adds to the root node which is given by {@link RapidSimpleView#root} a Style
-	 * Sheet which is named after the view class name + .css <br>
+	 * Sheet which is named after the VIEW_CLASS_NAME + .css <br>
 	 * e.g ExamplePaneView.java -> ExamplePaneView.css
 	 */
 	protected final void cssStyleRoot()
@@ -26,6 +26,9 @@ public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane>extends RapidS
 	private final String findCssStyleSheet()
 	{
 		return getResource(getClass().getSimpleName() + ".css");
+	}
+	public String toString() {
+		return "\t\tView =>\n\t\t=> CLASS => " +this.getClass()+"\n\t\t=> ROOT_NODE => "+this.root;
 	}
 
 }

@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-import de.github.yfons.rapidfx.rapidFX.core.RapidFXException;
+import de.github.yfons.rapidfx.rapidFX.core.RapidFXRuntimeException;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
@@ -18,9 +18,9 @@ public class FieldHandler<T>
 	public FieldHandler(Field field, RapidFXComponent objectToGetValues)
 	{
 		this.field = field;
+		this.field.setAccessible(true);
 		this.fieldClass = field.getType();
 		this.objectToGetValues = objectToGetValues;
-		this.field.setAccessible(true);
 	}
 
 	/**
@@ -32,31 +32,64 @@ public class FieldHandler<T>
 	 * @throws IllegalAccessException
 	 * @throws RapidFXException
 	 */
-	public void bindProperties(final RapidFXComponent bindTo) throws RapidFXException
+	public void bindProperties(final RapidFXComponent bindTo)
 	{
 		final var bindToField = this.findFieldWithSameName(bindTo);
+
+		if (isNull())
+		{
+			isEmptyFieldErrorMessage(field);
+			return;
+		}
+		if (isNull(bindToField, bindTo))
+		{
+			isEmptyFieldErrorMessage(bindToField);
+			return;
+		}
+		launchConnector(bindTo, bindToField);
+	}
+
+	private void launchConnector(final RapidFXComponent bindTo, final Field bindToField)
+	{
+		final var connector = new RConnector(bindToField, bindTo);
 		final var viewProperty = castToReadOnlyProperty();
-		final var connector = new RConnector(viewProperty, bindToField, bindTo);
+		connector.setPropertyFrom(field, viewProperty);
 		connector.connectProperties();
 	}
 
-	public void setDefaultValue() throws RapidFXException
+	private void isEmptyFieldErrorMessage(final Field bindToField)
+	{
+		throw new RapidFXRuntimeException(
+				"\nThe Value of the Field which should be a Property/EventHandler/ChangeListener is null, can't bind to null"
+						+ "\n\t=> NAME => " + bindToField.getName() 
+						+ "\n\t=> CLASS => " + bindToField.getDeclaringClass()
+						+ "\n\t=> TYPE => " + bindToField.getType()+"\n");
+	}
+
+	public void setDefaultValue()
 	{
 		try
 		{
 			if (!isClassTypeOfProperty())
 			{
-				castToPropertyError("Property");
+				castToPropertyErrorMessage("Property");
 			} else if (isNull())
 			{
 				field.set(objectToGetValues, getDefaultValue());
 			}
 		} catch (IllegalAccessException e)
 		{
-			throw new RapidFXException("The Field:: " + field
-					+ " :: was not accessible, probably because the Module-info doesn't open the Package\n"
-					+ e.getMessage());
+			illegalAccessArgumentErrorMessage(e);
 		}
+	}
+
+	private void illegalAccessArgumentErrorMessage(Exception e)
+	{
+		throw new RapidFXRuntimeException(
+				"\nThe Field was not accessible to set a RautoGenerate value , probably caused by the Module-info doesn't open/exports the Package"
+						+ "\n\t=> Name =>" + field.getName() 
+						+ "\n\t=> Class => " + field.getDeclaringClass()
+						+ "\n\t=> Type => " + field.getType() +"\n"+ e.getMessage());
 	}
 
 	public boolean isAnnotationPresent(final Class<? extends Annotation> annotation)
@@ -64,18 +97,20 @@ public class FieldHandler<T>
 		return this.field.isAnnotationPresent(annotation);
 	}
 
-	private Object getObject() throws RapidFXException
+	private Object getObject(Field fields, RapidFXComponent comp)
 	{
+		field.setAccessible(true);
 		try
 		{
-			return this.field.get(this.objectToGetValues);
+			return fields.get(comp);
 		} catch (IllegalArgumentException | IllegalAccessException e)
 		{
-			throw new RapidFXException(e.getMessage());
+			illegalAccessArgumentErrorMessage(e);
+			return null;
 		}
 	}
 
-	private Field findFieldWithSameName(final RapidFXComponent bindTo) throws RapidFXException
+	private Field findFieldWithSameName(final RapidFXComponent bindTo)
 	{
 		final var fieldName = field.getName().intern();
 		try
@@ -85,15 +120,26 @@ public class FieldHandler<T>
 			return foundField;
 		} catch (NoSuchFieldException e)
 		{
-			throw new RapidFXException("The Field with the Name:: " + fieldName + " ::was not found in the Class:: "
-					+ bindTo.getClass()
-					+ "\nThis an be caused when the Module-Info doesn't \"open PACKAGENAME\" where the Class is Partof");
+			throw new RapidFXRuntimeException(
+					"\nThe Field was not found\nThis can be caused when the Module-Info doesn't \"open PACKAGENAME\" where the Class is Part of"
+							+ "\n\t=> NAME => " + fieldName 
+							+ "\n\t=> CLASS => " + bindTo.getClass()
+							+ "\n\t=> EXPECTED TYPE => " + field.getType() + "\n");
+		} catch (IllegalArgumentException e)
+		{
+			e.printStackTrace();
+			return null;
 		}
 	}
 
-	private boolean isNull() throws IllegalAccessException
+	private boolean isNull(Field fields, RapidFXComponent comp)
 	{
-		return this.field.get(this.objectToGetValues) == null;
+		return getObject(fields, comp) == null;
+	}
+
+	private boolean isNull()
+	{
+		return isNull(this.field, this.objectToGetValues);
 	}
 
 	private boolean isClassTypeOfProperty()
@@ -101,38 +147,34 @@ public class FieldHandler<T>
 		return Property.class.isAssignableFrom(this.fieldClass);
 	}
 
-	public Object getDefaultValue() throws RapidFXException
+	public final Object getDefaultValue()
 	{
 		try
 		{
 			final var t = Class.forName(field.getType().getPackageName() + ".Simple" + field.getType().getSimpleName());
 			return t.getDeclaredConstructor().newInstance();
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException | ClassNotFoundException e)
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException | SecurityException e)
 		{
-			instantiationError(e);
-			return null;
+			throw new RapidFXRuntimeException("\nDuring the try to set a default value an Exception Occured\nValues=>"+
+					"\nIf your Object is of Type ObjectProperty then it will get set to New SimpleXXXProperty, only properties with Simple at the start work with this generation\nSet the values manually to avoid that, as only Fields with <B>value<B> null are affected\n as the binding will still Work with any Properties or something else went wrong while setting the default value for::  "
+					+ "\n\t=> NAME => "+field.getName()
+					+ "\n\t=> TYPE => " + field.getType() 
+					+ "\n\t=> SEARCHED =>"+ field.getType().getPackageName() +" + .Simple + " +field.getType().getSimpleName()+"\n");
 		}
+
 	}
 
-	private ReadOnlyProperty<?> castToReadOnlyProperty() throws RapidFXException
+	private ReadOnlyProperty<?> castToReadOnlyProperty()
 	{
-		return (ReadOnlyProperty<?>) getObject();
+		return (ReadOnlyProperty<?>) getObject(this.field, this.objectToGetValues);
 	}
 
-	private void castToPropertyError(String whatCast) throws IllegalArgumentException, RapidFXException
+	private void castToPropertyErrorMessage(String whatCast)
 	{
-		throw new RapidFXException("Couldn't cast the Field:: " + field + " :: in the Class:: "
-				+ field.getDeclaringClass() + " :: to a " + whatCast + "\nThe Field is of Type :: " + field.getType()
-				+ " :: with the Value:: " + getObject());
+		throw new RapidFXRuntimeException("\nCouldn't cast the Field to a " + whatCast 
+				+ "\n\t=> NAME => " + field.getName()
+				+ "\n\t=> CLASS => " + field.getDeclaringClass() 
+				+ "\n\t=> TYPE => " + field.getType());
 	}
-
-	private void instantiationError(Exception e) throws RapidFXException
-	{
-		throw new RapidFXException(
-				"If your Object is of Type ObjectProperty then it will get set to New SimpleXXXProperty, only properties with Simple at the start work with this generation\nSet the values manually to avoid that, as only Fields with <B>value<B> null are affected\n as the binding will still Work with any Properties or something else went wrong while setting the default value for::  "
-						+ field + " :: look at RapidFX.core.FieldHandler#getDefaultValue for the Possible Exceptions"
-						+ e.getMessage());
-	}
-
 }

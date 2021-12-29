@@ -21,8 +21,9 @@ public class RapidFX
 
 	/**
 	 * Should be used to create new Instances instead of new XYZ() as it makes it
-	 * easier to switch out These Objects<br>Setting the variables through an external method is recommended
-	 * the constructor should only instantiate the Objects
+	 * easier to switch out These Objects<br>
+	 * Setting the variables through an external method is recommended the
+	 * constructor should only instantiate the Objects
 	 * 
 	 * @param <CLASS_FOR_NEW_INSTANCE> eg MyController::new
 	 * @param constructor
@@ -44,11 +45,8 @@ public class RapidFX
 	 *          connect} and {@link setUp} for more Information
 	 * @param controller
 	 * @return
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
 	 */
 	public static <controllClass extends RapidController> controllClass rapidGenerate(final controllClass controller)
-			throws IllegalArgumentException, IllegalAccessException
 	{
 		final var model = controller.getModel();
 		final var view = controller.getView();
@@ -89,13 +87,7 @@ public class RapidFX
 
 				if (fieldHandler.isAnnotationPresent(AUTO_GENERATION_ANNOTATION))
 				{
-					try
-					{
 						fieldHandler.setDefaultValue();
-					} catch (RapidFXException e)
-					{
-						e.printStackTrace();
-					}
 				}
 			}
 		}
@@ -119,12 +111,9 @@ public class RapidFX
 	 * @param view
 	 * @param bindTo
 	 * @param annotation
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
 	 */
 	public static void connect(final RapidView<?> view, final RapidFXComponent bindTo,
-			final Class<? extends Annotation> annotation) throws IllegalArgumentException, IllegalAccessException
-
+			final Class<? extends Annotation> annotation)
 	{
 		final var viewFields = view.getClass().getDeclaredFields();
 
@@ -134,13 +123,7 @@ public class RapidFX
 
 			if (fieldHandler.isAnnotationPresent(annotation))
 			{
-				try
-				{
-					fieldHandler.bindProperties(bindTo);
-				} catch (RapidFXException e)
-				{
-					e.printStackTrace();
-				}
+				fieldHandler.bindProperties(bindTo);
 			}
 		}
 	}
