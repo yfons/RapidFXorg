@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidFXautoGenerate;
 import de.github.yfons.rapidfx.rapidFX.core.RapidFX;
+import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFactory;
 import de.github.yfons.rapidfx.rapidFX.simple.RapidSimpleController;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -56,6 +57,7 @@ public class Login extends RapidSimpleController<LoginView, LoginModel>
 		});
 		model.setUpModel();
 		view.setUpView();
+		
 	}
 }
 

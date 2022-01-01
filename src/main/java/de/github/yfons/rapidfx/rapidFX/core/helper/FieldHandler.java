@@ -12,10 +12,10 @@ import javafx.beans.property.ReadOnlyProperty;
 public class FieldHandler<T>
 {
 	private final Field field;
-	private final RapidFXComponent objectToGetValues;
+	private final Object objectToGetValues;
 	private final Class<?> fieldClass;
 
-	public FieldHandler(Field field, RapidFXComponent objectToGetValues)
+	public FieldHandler(Field field, Object objectToGetValues)
 	{
 		this.field = field;
 		this.field.setAccessible(true);
@@ -32,7 +32,7 @@ public class FieldHandler<T>
 	 * @throws IllegalAccessException
 	 * @throws RapidFXException
 	 */
-	public void bindProperties(final RapidFXComponent bindTo)
+	public void bindProperties(final Object bindTo)
 	{
 		final var bindToField = this.findFieldWithSameName(bindTo);
 
@@ -49,7 +49,7 @@ public class FieldHandler<T>
 		launchConnector(bindTo, bindToField);
 	}
 
-	private void launchConnector(final RapidFXComponent bindTo, final Field bindToField)
+	private void launchConnector(final Object bindTo, final Field bindToField)
 	{
 		final var connector = new RConnector(bindToField, bindTo);
 		final var viewProperty = castToReadOnlyProperty();
@@ -97,7 +97,7 @@ public class FieldHandler<T>
 		return this.field.isAnnotationPresent(annotation);
 	}
 
-	private Object getObject(Field fields, RapidFXComponent comp)
+	private Object getObject(Field fields, Object comp)
 	{
 		field.setAccessible(true);
 		try
@@ -110,7 +110,7 @@ public class FieldHandler<T>
 		}
 	}
 
-	private Field findFieldWithSameName(final RapidFXComponent bindTo)
+	private Field findFieldWithSameName(final Object bindTo)
 	{
 		final var fieldName = field.getName().intern();
 		try
@@ -132,7 +132,7 @@ public class FieldHandler<T>
 		}
 	}
 
-	private boolean isNull(Field fields, RapidFXComponent comp)
+	private boolean isNull(Field fields, Object comp)
 	{
 		return getObject(fields, comp) == null;
 	}

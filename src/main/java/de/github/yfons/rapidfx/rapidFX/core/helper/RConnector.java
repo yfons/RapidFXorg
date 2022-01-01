@@ -3,7 +3,6 @@ package de.github.yfons.rapidfx.rapidFX.core.helper;
 import java.lang.reflect.Field;
 
 import de.github.yfons.rapidfx.rapidFX.core.RapidFXRuntimeException;
-import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
@@ -20,7 +19,7 @@ public class RConnector
 	private Property propertyFromBind;
 	private Field fieldFromProperty;
 
-	public RConnector(Field bindToField, RapidFXComponent bindTo)
+	public RConnector(Field bindToField, Object bindTo)
 	{
 
 		this.bindToField = bindToField;
@@ -88,8 +87,6 @@ public class RConnector
 				+"\n\t=> BASED_ON_CLASS => "+fieldFromProperty.getDeclaringClass()
 				);
 	}
-
-
 
 	private void addListener(ChangeListener listener)
 	{

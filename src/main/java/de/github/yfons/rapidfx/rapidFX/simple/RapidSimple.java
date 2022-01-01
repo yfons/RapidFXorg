@@ -10,7 +10,10 @@ import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
 
 public abstract class RapidSimple implements RapidFXComponent
 {
-
+	protected final void RapidFXSetUPMe()
+	{
+			RapidFX.setUp(this);
+	}
 	/**
 	 * searches a resource in the Same path as the Calling Class is in, if the class
 	 * is not "open PACKAGENAME" then this will result in a NPE
