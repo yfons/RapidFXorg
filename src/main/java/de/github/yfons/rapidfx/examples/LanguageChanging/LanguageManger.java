@@ -1,7 +1,6 @@
 package de.github.yfons.rapidfx.examples.LanguageChanging;
 
 import de.github.yfons.rapidfx.premade.language.RLanguageManager;
-import javafx.beans.property.StringProperty;
 
 /*
  *  This class extends the Rlanguagemanager so the Language Files will get searched in this directory with

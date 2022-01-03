@@ -1,21 +1,17 @@
 package de.github.yfons.rapidfx.premade.language;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
 
 import de.github.yfons.rapidfx.rapidFX.core.RapidFXRuntimeException;
-import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
 import de.github.yfons.rapidfx.rapidFX.simple.RapidSimple;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -126,7 +122,7 @@ public abstract class RLanguageManager extends RapidSimple
 					} else
 					{
 						throw new RapidFXRuntimeException(
-								"The key is Absent in the File " 
+								"The key is Absent in the File "
 								+ "\n\t=> KEY => " + key
 								+ "\n\t=> FILE => " + getFile(newValue));
 					}
@@ -147,7 +143,7 @@ public abstract class RLanguageManager extends RapidSimple
 		{
 			throw new RapidFXRuntimeException(
 					"During parsing the File Location to a URI/URL an Exception occured"
-					+ "\n\t=> NAME => " + fileName 
+					+ "\n\t=> NAME => " + fileName
 					+ "\n\t => PATH => " + this.getClass());
 		}
 	}
@@ -164,15 +160,16 @@ public abstract class RLanguageManager extends RapidSimple
 		}
 	}
 
+	@Override
 	public String toString()
 	{
 		return "Language Manager"
-				+ "\n\t=> CLASS => " + this.getClass() 
-				+ "\n\t=> HARD_CODED_DEFAULT => " + this.hardCodedLanguageDefault 
-				+ "\n\t=> CURRENT_LANGUAGE => " + this.language.get() 
-				+ "\n\t=> SUPPORTED_FILE => " + supportedLanguagesFile 
-				+ "\n\t=> SUPPORTED_PROPERTIES => " + supportedLanguages 
-				+ "\n\t=> LAYOUT_KEYS => " + languageKeys.keySet() 
+				+ "\n\t=> CLASS => " + this.getClass()
+				+ "\n\t=> HARD_CODED_DEFAULT => " + this.hardCodedLanguageDefault
+				+ "\n\t=> CURRENT_LANGUAGE => " + this.language.get()
+				+ "\n\t=> SUPPORTED_FILE => " + supportedLanguagesFile
+				+ "\n\t=> SUPPORTED_PROPERTIES => " + supportedLanguages
+				+ "\n\t=> LAYOUT_KEYS => " + languageKeys.keySet()
 				+ "\n\t=> LAYOUT_MAP => " + languageKeys.toString()+"\n";
 	}
 }

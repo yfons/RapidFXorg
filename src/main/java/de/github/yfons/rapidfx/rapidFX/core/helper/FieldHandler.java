@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import de.github.yfons.rapidfx.rapidFX.core.RapidFXRuntimeException;
-import de.github.yfons.rapidfx.rapidFX.interfaces.RapidFXComponent;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 
@@ -61,7 +60,7 @@ public class FieldHandler<T>
 	{
 		throw new RapidFXRuntimeException(
 				"\nThe Value of the Field which should be a Property/EventHandler/ChangeListener is null, can't bind to null"
-						+ "\n\t=> NAME => " + bindToField.getName() 
+						+ "\n\t=> NAME => " + bindToField.getName()
 						+ "\n\t=> CLASS => " + bindToField.getDeclaringClass()
 						+ "\n\t=> TYPE => " + bindToField.getType()+"\n");
 	}
@@ -87,7 +86,7 @@ public class FieldHandler<T>
 	{
 		throw new RapidFXRuntimeException(
 				"\nThe Field was not accessible to set a RautoGenerate value , probably caused by the Module-info doesn't open/exports the Package"
-						+ "\n\t=> Name =>" + field.getName() 
+						+ "\n\t=> Name =>" + field.getName()
 						+ "\n\t=> Class => " + field.getDeclaringClass()
 						+ "\n\t=> Type => " + field.getType() +"\n"+ e.getMessage());
 	}
@@ -122,7 +121,7 @@ public class FieldHandler<T>
 		{
 			throw new RapidFXRuntimeException(
 					"\nThe Field was not found\nThis can be caused when the Module-Info doesn't \"open PACKAGENAME\" where the Class is Part of"
-							+ "\n\t=> NAME => " + fieldName 
+							+ "\n\t=> NAME => " + fieldName
 							+ "\n\t=> CLASS => " + bindTo.getClass()
 							+ "\n\t=> EXPECTED TYPE => " + field.getType() + "\n");
 		} catch (IllegalArgumentException e)
@@ -159,7 +158,7 @@ public class FieldHandler<T>
 			throw new RapidFXRuntimeException("\nDuring the try to set a default value an Exception Occured\nValues=>"+
 					"\nIf your Object is of Type ObjectProperty then it will get set to New SimpleXXXProperty, only properties with Simple at the start work with this generation\nSet the values manually to avoid that, as only Fields with <B>value<B> null are affected\n as the binding will still Work with any Properties or something else went wrong while setting the default value for::  "
 					+ "\n\t=> NAME => "+field.getName()
-					+ "\n\t=> TYPE => " + field.getType() 
+					+ "\n\t=> TYPE => " + field.getType()
 					+ "\n\t=> SEARCHED =>"+ field.getType().getPackageName() +" + .Simple + " +field.getType().getSimpleName()+"\n");
 		}
 
@@ -172,9 +171,9 @@ public class FieldHandler<T>
 
 	private void castToPropertyErrorMessage(String whatCast)
 	{
-		throw new RapidFXRuntimeException("\nCouldn't cast the Field to a " + whatCast 
+		throw new RapidFXRuntimeException("\nCouldn't cast the Field to a " + whatCast
 				+ "\n\t=> NAME => " + field.getName()
-				+ "\n\t=> CLASS => " + field.getDeclaringClass() 
+				+ "\n\t=> CLASS => " + field.getDeclaringClass()
 				+ "\n\t=> TYPE => " + field.getType());
 	}
 }

@@ -1,6 +1,6 @@
 package de.github.yfons.rapidfx.rapidFX.interfaces;
 
-public interface RapidNode extends RapidFXComponent
+public interface RapidNode
 {
-	
+
 }

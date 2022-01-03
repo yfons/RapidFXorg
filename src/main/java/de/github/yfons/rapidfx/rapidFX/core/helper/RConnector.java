@@ -11,12 +11,12 @@ import javafx.event.EventHandler;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class RConnector
 {
-	private ReadOnlyProperty<?> viewProperty;
+	private ReadOnlyProperty<?> readOnlybindFromProperty;
 	private final Field bindToField;
 	private Object bindToFieldObject;
 
-	
-	private Property propertyFromBind;
+
+	private Property bindFromProperty;
 	private Field fieldFromProperty;
 
 	public RConnector(Field bindToField, Object bindTo)
@@ -39,11 +39,11 @@ public class RConnector
 	public void setPropertyFrom(Field fieldFromProperty,ReadOnlyProperty<?> viewProperty2)
 	{
 		this.fieldFromProperty = fieldFromProperty;
-		this.viewProperty = viewProperty2;
+		this.readOnlybindFromProperty = viewProperty2;
 		try {
-		this.propertyFromBind = (Property<?>) viewProperty;
+		this.bindFromProperty = (Property<?>) readOnlybindFromProperty;
 		}catch(Exception e) {
-			
+
 		}
 	}
 
@@ -65,22 +65,22 @@ public class RConnector
 			setHandlerOnProperty(bindToHandler);
 		} else if (bindToFieldObject instanceof Property<?> bindToProperty)
 		{
-			if(bindToField.getType().isAssignableFrom(viewProperty.getClass())) {
+			if(bindToField.getType().isAssignableFrom(readOnlybindFromProperty.getClass())) {
 				bindProperty(bindToProperty);
 			}
 			else
 			{
 				incompatiblePropertiesErrorMessage(bindToField);
 			}
-		} 
+		}
 	}
 
 	private void incompatiblePropertiesErrorMessage(final Field bindToField)
 	{
 		throw new RapidFXRuntimeException(
-				"\nThe Field is not  A EventHandler or A ChangeListener or an Assignable Property" 
+				"\nThe Field is not  A EventHandler or A ChangeListener or an Assignable Property"
 				+"\n\t=> NAME => "+ bindToField.getName()
-				+"\n\t=> CLASS => " + bindToField.getDeclaringClass() 
+				+"\n\t=> CLASS => " + bindToField.getDeclaringClass()
 				+"\n\t=> TYPE => " + bindToField.getType()
 				+"\n\t=> EXPECTED_TYPE => "+fieldFromProperty.getType()
 				+"\n\t=> BASED_ON_FIELD => "+ fieldFromProperty.getName()
@@ -90,16 +90,16 @@ public class RConnector
 
 	private void addListener(ChangeListener listener)
 	{
-		viewProperty.addListener(listener);
+		readOnlybindFromProperty.addListener(listener);
 	}
 
 	private void setHandlerOnProperty(EventHandler<?> bindToHandler)
 	{
-		propertyFromBind.setValue(bindToHandler);
+		bindFromProperty.setValue(bindToHandler);
 	}
 
-	private <TYPE> void bindProperty(Property<TYPE> bindToTheProperty)
+	private <TYPE> void bindProperty(Property<TYPE> bindToProperty)
 	{
-		propertyFromBind.bind(bindToTheProperty);
+		bindFromProperty.bind(bindToProperty);
 	}
 }

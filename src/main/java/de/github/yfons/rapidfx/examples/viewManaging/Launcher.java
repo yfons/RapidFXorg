@@ -19,29 +19,30 @@ public class Launcher extends Application
 		launch((String[]) null);
 	}
 
+	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
 		var log1 = RapidFX.create(Login::new);
 		var log2 = RapidFX.create(Login::new);
 		Scene scene = new Scene( log2.getRootPane() );
-		
+
 		RViewManager<String> manager = new RViewManager<>(scene);
 		manager.appendFactory("First View", log1);
 		manager.appendFactory("Second View", log2);
-		
 
-		
+
+
 		// normally the second view would have been shown, but here you change it to the first one
 		manager.swapToView("First View");
-		
+
 		System.out.println(manager);
 		Button button = new Button("Switch Button");
-		
+
 		// the eventhandler switches on action to the Second View, as the button will disappear -> only exists in First View
 		button.onActionProperty().set(event -> manager.swapToView("Second View"));
-		
+
 		log1.getRootPane().getChildren().add(button);
-		
+
 		primaryStage.setScene(scene);
 		primaryStage.show();
 

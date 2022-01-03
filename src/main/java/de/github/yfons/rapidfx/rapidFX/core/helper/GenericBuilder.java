@@ -6,32 +6,49 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class GenericBuilder<CLASS_TYPE> {
+import de.github.yfons.rapidfx.rapidFX.core.RapidFXRuntimeException;
 
-    private final Supplier<CLASS_TYPE> instantiator;
+public class GenericBuilder<CLASS_TYPE>
+{
 
-    private List<Consumer<CLASS_TYPE>> instanceModifiers = new ArrayList<>();
+	private final Supplier<CLASS_TYPE> instantiator;
 
-    public GenericBuilder(Supplier<CLASS_TYPE> instantiator) {
-        this.instantiator = instantiator;
-    }
+	private List<Consumer<CLASS_TYPE>> instanceModifiers = new ArrayList<>();
 
-    public <VALUE> GenericBuilder<CLASS_TYPE> with(BiConsumer<CLASS_TYPE, VALUE> consumer, VALUE value) {
-        Consumer<CLASS_TYPE> c = instance -> consumer.accept(instance, value);
-       
-        instanceModifiers.add(c);
-        return this;
-    }
+	public GenericBuilder(Supplier<CLASS_TYPE> instantiator)
+	{
+		this.instantiator = instantiator;
+	}
 
-    public CLASS_TYPE build() {
-        var value = clone();
-        instanceModifiers.clear();
-        return value;
-    }
-    public  CLASS_TYPE clone() {
-        CLASS_TYPE value = instantiator.get();
-        instanceModifiers.forEach(modifier -> modifier.accept(value));
-        return value;
-    }
-    
+	public <VALUE> GenericBuilder<CLASS_TYPE> with(BiConsumer<CLASS_TYPE, VALUE> consumer, VALUE value)
+	{
+		Consumer<CLASS_TYPE> c = instance -> consumer.accept(instance, value);
+
+		instanceModifiers.add(c);
+		return this;
+	}
+
+	public CLASS_TYPE build()
+	{
+		var value = clone();
+		instanceModifiers.clear();
+		return value;
+	}
+
+	@Override
+	public CLASS_TYPE clone()
+	{
+
+		try
+		{
+			CLASS_TYPE value;
+			value = instantiator.get();
+			instanceModifiers.forEach(modifier -> modifier.accept(value));
+			return value;
+		} catch (Exception e)
+		{
+			throw new RapidFXRuntimeException("Exception During Object Initalization\n"+e.getMessage());
+		}
+	}
+
 }

@@ -8,7 +8,7 @@ public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane>extends RapidS
 	protected ROOT_PANE_TYPE root;
 
 	@Override
-	public ROOT_PANE_TYPE getRootPane()
+	public final ROOT_PANE_TYPE getRootPane()
 	{
 		return root;
 	}
@@ -23,10 +23,11 @@ public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane>extends RapidS
 		root.getStylesheets().add(findCssStyleSheet());
 	}
 
-	private final String findCssStyleSheet()
+	protected final String findCssStyleSheet()
 	{
 		return getResource(getClass().getSimpleName() + ".css");
 	}
+	@Override
 	public String toString() {
 		return "\t\tView =>\n\t\t=> CLASS => " +this.getClass()+"\n\t\t=> ROOT_NODE => "+this.root;
 	}

@@ -2,7 +2,7 @@ package de.github.yfons.rapidfx.rapidFX.interfaces;
 
 import javafx.scene.layout.Pane;
 
-public interface RapidController extends RapidFXComponent
+public interface RapidController
 {
 	RapidView<?> getView();
 
