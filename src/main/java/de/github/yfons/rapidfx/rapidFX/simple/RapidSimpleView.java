@@ -3,7 +3,8 @@ package de.github.yfons.rapidfx.rapidFX.simple;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidView;
 import javafx.scene.layout.Pane;
 
-public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane>extends RapidSimple implements RapidView<ROOT_PANE_TYPE>
+public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane> extends RapidSimple
+		implements RapidView<ROOT_PANE_TYPE>
 {
 	protected ROOT_PANE_TYPE root;
 
@@ -27,9 +28,11 @@ public abstract class RapidSimpleView<ROOT_PANE_TYPE extends Pane>extends RapidS
 	{
 		return getResource(getClass().getSimpleName() + ".css");
 	}
+
 	@Override
-	public String toString() {
-		return "\t\tView =>\n\t\t=> CLASS => " +this.getClass()+"\n\t\t=> ROOT_NODE => "+this.root;
+	public String toString()
+	{
+		return "\t\tView =>\n\t\t=> CLASS => " + this.getClass() + "\n\t\t=> ROOT_NODE => " + this.root;
 	}
 
 }

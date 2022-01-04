@@ -6,7 +6,8 @@ public abstract class RapidSimpleModel implements RapidModel
 {
 
 	@Override
-	public String toString() {
-		return "\t\tModel =>\n\t\t=> CLASS => " +this.getClass();
+	public String toString()
+	{
+		return "\t\tModel =>\n\t\t=> CLASS => " + this.getClass();
 	}
 }

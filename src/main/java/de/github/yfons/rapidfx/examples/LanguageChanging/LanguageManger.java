@@ -17,6 +17,4 @@ public class LanguageManger extends RLanguageManager
 
 	public static final String GERMAN = "GERMAN";
 	public static final String ENGLISH = "ENGLISH";
-	public static final String BUTTON_NAVIGATION_GREETING = "BUTTON_NAVIGATION_GREETING";
-	public static final String BUTTON_NAVIGATION_EXIT = "BUTTON_NAVIGATION_EXIT";
 }

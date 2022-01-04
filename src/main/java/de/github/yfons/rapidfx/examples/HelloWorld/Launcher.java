@@ -15,11 +15,11 @@ public class Launcher extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		Login log1 = RapidFX.build(Login::new).build();
+		Login log1 = RapidFX.createNew(Login::new);
 
-		// The Controller supports a toString Method to see Inside in which State it is currently
+		// The Controller supports a toString Method to see Inside in which State it is
+		// currently
 		System.out.println(log1.toString());
-
 
 		primaryStage.setScene(new Scene(log1.getView().getRootPane()));
 		primaryStage.show();

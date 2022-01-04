@@ -45,10 +45,7 @@ public class RViewManager<keyValue>
 	@Override
 	public String toString()
 	{
-		return "View Manager"
-				+ "\n\t=> CLASS =>" + this.getClass()
-				+ "\n\t=> SCENE => " + this.scene
-				+ "\n\t=> CURRENT_VIEW => " + this.scene.getRoot()
-				+ "\n\t=> VIEW_MAP => " + factoryMap +"\n";
+		return "View Manager" + "\n\t=> CLASS =>" + this.getClass() + "\n\t=> SCENE => " + this.scene
+				+ "\n\t=> CURRENT_VIEW => " + this.scene.getRoot() + "\n\t=> VIEW_MAP => " + factoryMap + "\n";
 	}
 }

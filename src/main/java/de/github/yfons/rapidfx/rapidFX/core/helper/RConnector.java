@@ -8,13 +8,13 @@ import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings(
+{ "unchecked", "rawtypes" })
 public class RConnector
 {
 	private ReadOnlyProperty<?> readOnlybindFromProperty;
 	private final Field bindToField;
 	private Object bindToFieldObject;
-
 
 	private Property bindFromProperty;
 	private Field fieldFromProperty;
@@ -31,18 +31,20 @@ public class RConnector
 			throw new RapidFXRuntimeException(
 					"THIS EXCEPTION SHOULDN'T HAPPEN => post to  https://github.com/yfons/RapidFXorg  if it happens An error Occured during executing => this.bindToFieldObject = bindToField.get(bindTo); <= in the constructor of:: "
 							+ this.getClass() + "\n\t=> Values => this.bindToFieldObject == " + this.bindToFieldObject
-							+ "\n" + "bindToField == " + bindToField + "\nException occured::"+ e.getMessage());
+							+ "\n" + "bindToField == " + bindToField + "\nException occured::" + e.getMessage());
 
 		}
 	}
 
-	public void setPropertyFrom(Field fieldFromProperty,ReadOnlyProperty<?> viewProperty2)
+	public void setPropertyFrom(Field fieldFromProperty, ReadOnlyProperty<?> viewProperty2)
 	{
 		this.fieldFromProperty = fieldFromProperty;
 		this.readOnlybindFromProperty = viewProperty2;
-		try {
-		this.bindFromProperty = (Property<?>) readOnlybindFromProperty;
-		}catch(Exception e) {
+		try
+		{
+			this.bindFromProperty = (Property<?>) readOnlybindFromProperty;
+		} catch (Exception e)
+		{
 
 		}
 	}
@@ -65,10 +67,10 @@ public class RConnector
 			setHandlerOnProperty(bindToHandler);
 		} else if (bindToFieldObject instanceof Property<?> bindToProperty)
 		{
-			if(bindToField.getType().isAssignableFrom(readOnlybindFromProperty.getClass())) {
+			if (bindToField.getType().isAssignableFrom(readOnlybindFromProperty.getClass()))
+			{
 				bindProperty(bindToProperty);
-			}
-			else
+			} else
 			{
 				incompatiblePropertiesErrorMessage(bindToField);
 			}
@@ -78,14 +80,11 @@ public class RConnector
 	private void incompatiblePropertiesErrorMessage(final Field bindToField)
 	{
 		throw new RapidFXRuntimeException(
-				"\nThe Field is not  A EventHandler or A ChangeListener or an Assignable Property"
-				+"\n\t=> NAME => "+ bindToField.getName()
-				+"\n\t=> CLASS => " + bindToField.getDeclaringClass()
-				+"\n\t=> TYPE => " + bindToField.getType()
-				+"\n\t=> EXPECTED_TYPE => "+fieldFromProperty.getType()
-				+"\n\t=> BASED_ON_FIELD => "+ fieldFromProperty.getName()
-				+"\n\t=> BASED_ON_CLASS => "+fieldFromProperty.getDeclaringClass()
-				);
+				"\nThe Field is not  A EventHandler or A ChangeListener or an Assignable Property" + "\n\t=> NAME => "
+						+ bindToField.getName() + "\n\t=> CLASS => " + bindToField.getDeclaringClass()
+						+ "\n\t=> TYPE => " + bindToField.getType() + "\n\t=> EXPECTED_TYPE => "
+						+ fieldFromProperty.getType() + "\n\t=> BASED_ON_FIELD => " + fieldFromProperty.getName()
+						+ "\n\t=> BASED_ON_CLASS => " + fieldFromProperty.getDeclaringClass());
 	}
 
 	private void addListener(ChangeListener listener)

@@ -17,8 +17,7 @@ public abstract class RapidSimpleLayout<LAYOUT_NODE_TYPE extends Node> extends R
 	@Override
 	public String toString()
 	{
-		return "Layout =>\n\t=> CLASS => " + this.getClass()
-		+ "\n\t=> LAYOUT_CLASS => " + layout.getClass()
-		+ "\n\t=> LAYOUT_NODE => " + layout.toString() + "\n";
+		return "Layout =>\n\t=> CLASS => " + this.getClass() + "\n\t=> LAYOUT_CLASS => " + layout.getClass()
+				+ "\n\t=> LAYOUT_NODE => " + layout.toString() + "\n";
 	}
 }

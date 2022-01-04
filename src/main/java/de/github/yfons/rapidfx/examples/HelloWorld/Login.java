@@ -16,16 +16,17 @@ public class Login extends RapidSimpleController<LoginView, LoginModel>
 
 	public Login()
 	{
-		// this way of setting the model and view is prefered as its easier to swap them out afterwards during refactoring
+		// this way of setting the model and view is prefered as its easier to swap them
+		// out afterwards during refactoring
 		// model is predefined as modelClass generic type
-		model = RapidFX.create(LoginModel::new);
+		model = RapidFX.createNew(LoginModel::new);
 		// view is predefined as viewClass generic type
-		view = RapidFX.create(LoginView::new);
+		view = RapidFX.createNew(LoginView::new);
 		rapidFXMe();
 		// if you want to Execute all Annotations ( Autogenerating + setting bindings )
 		// you have to call that in the Controller or with the static
 		// RapidFX.rapidGenerate(Controller controller)
-		// RapidFX.rapidGenerate(this)  is equals to         rapidFXgenerateMe();
+		// RapidFX.rapidGenerate(this) is equals to rapidFXgenerateMe();
 		setUpController();
 	}
 
@@ -50,4 +51,3 @@ public class Login extends RapidSimpleController<LoginView, LoginModel>
 
 	}
 }
-

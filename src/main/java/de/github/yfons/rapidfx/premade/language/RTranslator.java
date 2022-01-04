@@ -20,10 +20,13 @@ public class RTranslator
 	{
 		manager.swapLanguage(language);
 	}
+
 	/**
-	 * Meant to be for Debugging Purposes when you can't reach the Manager afterwards
+	 * Meant to be for Debugging Purposes when you can't reach the Manager
+	 * afterwards
 	 */
-	public void printManager() {
+	public void printManager()
+	{
 		System.out.println(manager.toString());
 	}
 }

@@ -6,12 +6,14 @@ import de.github.yfons.rapidfx.rapidFX.interfaces.RapidModel;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidView;
 import javafx.scene.layout.Pane;
 
-public abstract class RapidSimpleWeakController <RAPID_VIEW_CLASS extends RapidView<?>> extends RapidSimple implements RapidController
+public abstract class RapidSimpleWeakController<RAPID_VIEW_CLASS extends RapidView<?>> extends RapidSimple
+		implements RapidController
 {
 	protected RAPID_VIEW_CLASS view;
 
-	protected void rapidFXMe() {
-		RapidFX.rapidGenerate(this);
+	protected RapidSimpleWeakController<RAPID_VIEW_CLASS> rapidFXMe()
+	{
+		return RapidFX.create(this).generate(this.view,this).connectWithController(this.view).get();
 	}
 
 	@Override
@@ -19,6 +21,7 @@ public abstract class RapidSimpleWeakController <RAPID_VIEW_CLASS extends RapidV
 	{
 		return view;
 	}
+
 	/**
 	 * @Override Should be called from other Controllers when The View and it's
 	 *           components shouldn't be visible
@@ -28,15 +31,17 @@ public abstract class RapidSimpleWeakController <RAPID_VIEW_CLASS extends RapidV
 	{
 		return view.getRootPane();
 	}
+
 	@Override
-	public RapidModel getModel() {
+	public RapidModel getModel()
+	{
 		return null;
 	}
+
 	@Override
 	public String toString()
 	{
-		return "Controller =>"
-				+ "\n\t=> CLASS => " + this.getClass()
-		+ "\n\t=> VIEW_OBJECT =>\n" + view.toString() + "\n";
+		return "Controller =>" + "\n\t=> CLASS => " + this.getClass() + "\n\t=> VIEW_OBJECT =>\n" + view.toString()
+				+ "\n";
 	}
 }

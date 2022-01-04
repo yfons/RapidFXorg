@@ -42,6 +42,7 @@ public abstract class RLanguageManager extends RapidSimple
 
 	public final void translate(StringProperty... propertyToBindCollection)
 	{
+		System.out.println(languageKeys);
 		for (var propertyToBind : propertyToBindCollection)
 		{
 			propertyToBind.bind(languageKeys.get(propertyToBind.get()));
@@ -56,7 +57,7 @@ public abstract class RLanguageManager extends RapidSimple
 			supportedLanguages.put("DEFAULT", newLanguage);
 			try
 			{
-				supportedLanguages.store(new FileWriter(supportedLanguagesFile), "Hello");
+				supportedLanguages.store(new FileWriter(supportedLanguagesFile), "\\u0020 for Spaces, and \\u003d for =");
 			} catch (IOException e)
 			{
 				e.printStackTrace();
@@ -121,10 +122,7 @@ public abstract class RLanguageManager extends RapidSimple
 						item.set(formatProperty.getProperty(key));
 					} else
 					{
-						throw new RapidFXRuntimeException(
-								"The key is Absent in the File "
-								+ "\n\t=> KEY => " + key
-								+ "\n\t=> FILE => " + getFile(newValue));
+						item.set(key);
 					}
 				});
 			}
@@ -141,10 +139,8 @@ public abstract class RLanguageManager extends RapidSimple
 			return new File(uri);
 		} catch (URISyntaxException e)
 		{
-			throw new RapidFXRuntimeException(
-					"During parsing the File Location to a URI/URL an Exception occured"
-					+ "\n\t=> NAME => " + fileName
-					+ "\n\t => PATH => " + this.getClass());
+			throw new RapidFXRuntimeException("During parsing the File Location to a URI/URL an Exception occured"
+					+ "\n\t=> NAME => " + fileName + "\n\t => PATH => " + this.getClass());
 		}
 	}
 
@@ -163,13 +159,10 @@ public abstract class RLanguageManager extends RapidSimple
 	@Override
 	public String toString()
 	{
-		return "Language Manager"
-				+ "\n\t=> CLASS => " + this.getClass()
-				+ "\n\t=> HARD_CODED_DEFAULT => " + this.hardCodedLanguageDefault
-				+ "\n\t=> CURRENT_LANGUAGE => " + this.language.get()
-				+ "\n\t=> SUPPORTED_FILE => " + supportedLanguagesFile
-				+ "\n\t=> SUPPORTED_PROPERTIES => " + supportedLanguages
-				+ "\n\t=> LAYOUT_KEYS => " + languageKeys.keySet()
-				+ "\n\t=> LAYOUT_MAP => " + languageKeys.toString()+"\n";
+		return "Language Manager" + "\n\t=> CLASS => " + this.getClass() + "\n\t=> HARD_CODED_DEFAULT => "
+				+ this.hardCodedLanguageDefault + "\n\t=> CURRENT_LANGUAGE => " + this.language.get()
+				+ "\n\t=> SUPPORTED_FILE => " + supportedLanguagesFile + "\n\t=> SUPPORTED_PROPERTIES => "
+				+ supportedLanguages + "\n\t=> LAYOUT_KEYS => " + languageKeys.keySet() + "\n\t=> LAYOUT_MAP => "
+				+ languageKeys.toString() + "\n";
 	}
 }
