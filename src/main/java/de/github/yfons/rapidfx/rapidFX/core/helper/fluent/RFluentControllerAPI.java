@@ -1,24 +1,21 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.rapidFX.core.helper.fluent;
 
+import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxAutoGenerate;
+import de.github.yfons.rapidfx.rapidFX.interfaces.RapidController;
 import java.lang.annotation.Annotation;
 
-import de.github.yfons.rapidfx.rapidFX.interfaces.RapidController;
+/**
+ * The Interface RFluentControllerAPI.
+ */
+public interface RFluentControllerAPI {
 
-public interface RFluentControllerAPI
-{
-	public interface Generator
-	{
-		Connector generate(Object... components);
-
-		RapidController get();
-	}
-
-	public interface Connector
-	{
-		Connector connect(Object component, Object connectOn, Class<? extends Annotation> onAnnotation);
-
-		Connector connectWithController(Object component);
-
-		<CONTROLLER_TYPE extends RapidController>CONTROLLER_TYPE get();
-	}
+  /**
+   * The Connector. Which will resolve the Given annotations.
+   */
+  public interface Connector extends RFluentAnyAPI.Connector{
+    Connector connectWithController(Object component);
+  }
 }

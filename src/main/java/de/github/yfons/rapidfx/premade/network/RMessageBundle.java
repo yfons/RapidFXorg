@@ -1,6 +1,11 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.premade.network;
 
-public class RMessageBundle extends RMessage
-{
+/**
+ * The Class RMessageBundle.
+ */
+public class RMessageBundle extends RMessage {
 
 }

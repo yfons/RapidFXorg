@@ -1,6 +1,11 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.rapidFX.interfaces;
 
-public interface RapidNode
-{
+/**
+ * The Interface RapidNode.
+ */
+public interface RapidNode {
 
 }

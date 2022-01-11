@@ -1,5 +1,10 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.rapidFX.interfaces;
 
-public interface RapidModel
-{
+/**
+ * The Interface RapidModel.
+ */
+public interface RapidModel {
 }

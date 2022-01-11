@@ -1,32 +1,50 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.premade.language;
 
 import javafx.beans.property.StringProperty;
 
-public class RTranslator
-{
-	private static RLanguageManager manager;
+/**
+ * The Class RTranslator.
+ */
+public class RTranslator {
 
-	public static void injectLanguageManager(RLanguageManager manager)
-	{
-		RTranslator.manager = manager;
-	}
+  /** The manager. */
+  private static RLanguageManager manager;
 
-	public static void bindTranslation(StringProperty... propertyToBindCollection)
-	{
-		manager.translate(propertyToBindCollection);
-	}
+  /**
+   * Inject language manager.
+   *
+   * @param manager the manager
+   */
+  public static void injectLanguageManager(RLanguageManager manager) {
+    RTranslator.manager = manager;
+  }
 
-	public static void swapLanguages(String language)
-	{
-		manager.swapLanguage(language);
-	}
+  /**
+   * Bind translation.
+   *
+   * @param propertyToBindCollection the property to bind collection
+   */
+  public static void bindTranslation(StringProperty... propertyToBindCollection) {
+    manager.translate(propertyToBindCollection);
+  }
 
-	/**
-	 * Meant to be for Debugging Purposes when you can't reach the Manager
-	 * afterwards
-	 */
-	public void printManager()
-	{
-		System.out.println(manager.toString());
-	}
+  /**
+   * Swap languages.
+   *
+   * @param language the language
+   */
+  public static void swapLanguages(String language) {
+    manager.swapLanguage(language);
+  }
+
+  /**
+   * Meant to be for Debugging Purposes when you can't reach the Manager
+   * afterwards.
+   */
+  public void printManager() {
+    System.out.println(manager.toString());
+  }
 }

@@ -1,104 +1,112 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.rapidFX.core.helper;
 
 import java.lang.reflect.Field;
 
-import de.github.yfons.rapidfx.rapidFX.core.RapidFXRuntimeException;
+import de.github.yfons.rapidfx.rapidFX.core.RapidfxRuntimeException;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 
-@SuppressWarnings(
-{ "unchecked", "rawtypes" })
-public class RConnector
-{
-	private ReadOnlyProperty<?> readOnlybindFromProperty;
-	private final Field bindToField;
-	private Object bindToFieldObject;
+/**
+ * The Class RConnector binds the Properties of two Fields. <br>
+ * It can also be used to set an {@link EventHandler} or a
+ * {@link ChangeListener} on a Property with reflection
+ */
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public class RConnector {
 
-	private Property bindFromProperty;
-	private Field fieldFromProperty;
+  private ReadOnlyProperty<?> readOnlybindFromProperty;
+  private FieldRecord   bindFromContent;
+  private FieldRecord   bindToContent;
 
-	public RConnector(Field bindToField, Object bindTo)
-	{
+  /**
+   * Instantiates a new r connector.
+   *
+   * @param bindToField the field which includes the Property which should be used
+   *                    bind the BindFromField Property
+   * @param bindTo      the bind to Property
+   */
+  public RConnector(FieldRecord bindToContent,FieldRecord bindFromContent) {
+    this.bindToContent = bindToContent;
+    this.bindFromContent = bindFromContent;
+    this.readOnlybindFromProperty = bindFromContent.castToReadOnlyProperty();
+  }
 
-		this.bindToField = bindToField;
-		try
-		{
-			this.bindToFieldObject = bindToField.get(bindTo);
-		} catch (IllegalArgumentException | IllegalAccessException e)
-		{
-			throw new RapidFXRuntimeException(
-					"THIS EXCEPTION SHOULDN'T HAPPEN => post to  https://github.com/yfons/RapidFXorg  if it happens An error Occured during executing => this.bindToFieldObject = bindToField.get(bindTo); <= in the constructor of:: "
-							+ this.getClass() + "\n\t=> Values => this.bindToFieldObject == " + this.bindToFieldObject
-							+ "\n" + "bindToField == " + bindToField + "\nException occured::" + e.getMessage());
+  /**
+   * Connect the given bindFromPropertyw with the current property<br>
+   * The setPropertyFrom method should be called before.
+   */
+  public void connectProperties() {
+    if (bindToContent.getObject() instanceof ChangeListener<?> listener) {
+      addListener(listener);
+    } else {
+      this.bindFromProperty = bindFromContent.castToProperty();
+      connectOnPropertyInterface();
+    }
+  }
 
-		}
-	}
+  private void connectOnPropertyInterface() {
+    if (bindToContent.getObject() instanceof EventHandler<?> handler) {
+      setHandlerOnProperty(handler);
+    } else if (bindToContent.getObject() instanceof Property<?>) {
+      bindOnPropertyInterface();
+    }
+  }
 
-	public void setPropertyFrom(Field fieldFromProperty, ReadOnlyProperty<?> viewProperty2)
-	{
-		this.fieldFromProperty = fieldFromProperty;
-		this.readOnlybindFromProperty = viewProperty2;
-		try
-		{
-			this.bindFromProperty = (Property<?>) readOnlybindFromProperty;
-		} catch (Exception e)
-		{
+  private Property bindFromProperty;
+  private void bindOnPropertyInterface() {
+    if (isAssignable()) {
+      bindProperty();
+    } else {
+      throw incompatiblePropertiesErrorMessage(bindToContent.field());
+    }
+  }
 
-		}
-	}
+  private boolean isAssignable() {
+    return bindToContent.getType().isAssignableFrom(readOnlybindFromProperty.getClass());
+  }
 
-	public void connectProperties()
-	{
-		if (bindToFieldObject instanceof ChangeListener<?> listener)
-		{
-			addListener(listener);
-		} else
-		{
-			connectOnPropertyInterface();
-		}
-	}
+  /**
+   * Adds the listener on Property.
+   *
+   * @param listener the new {@link ChangeListener} on property
+   */
+  protected void addListener(ChangeListener listener) {
+    readOnlybindFromProperty.addListener(listener);
+  }
 
-	private void connectOnPropertyInterface()
-	{
-		if (bindToFieldObject instanceof EventHandler<?> bindToHandler)
-		{
-			setHandlerOnProperty(bindToHandler);
-		} else if (bindToFieldObject instanceof Property<?> bindToProperty)
-		{
-			if (bindToField.getType().isAssignableFrom(readOnlybindFromProperty.getClass()))
-			{
-				bindProperty(bindToProperty);
-			} else
-			{
-				incompatiblePropertiesErrorMessage(bindToField);
-			}
-		}
-	}
+  /**
+   * Sets the handler on property.
+   *
+   * @param bindToHandler the new {@link EventHandler} on property
+   */
+  protected void setHandlerOnProperty(EventHandler<?> bindToHandler) {
+    bindFromProperty.setValue(bindToHandler);
+  }
 
-	private void incompatiblePropertiesErrorMessage(final Field bindToField)
-	{
-		throw new RapidFXRuntimeException(
-				"\nThe Field is not  A EventHandler or A ChangeListener or an Assignable Property" + "\n\t=> NAME => "
-						+ bindToField.getName() + "\n\t=> CLASS => " + bindToField.getDeclaringClass()
-						+ "\n\t=> TYPE => " + bindToField.getType() + "\n\t=> EXPECTED_TYPE => "
-						+ fieldFromProperty.getType() + "\n\t=> BASED_ON_FIELD => " + fieldFromProperty.getName()
-						+ "\n\t=> BASED_ON_CLASS => " + fieldFromProperty.getDeclaringClass());
-	}
-
-	private void addListener(ChangeListener listener)
-	{
-		readOnlybindFromProperty.addListener(listener);
-	}
-
-	private void setHandlerOnProperty(EventHandler<?> bindToHandler)
-	{
-		bindFromProperty.setValue(bindToHandler);
-	}
-
-	private <TYPE> void bindProperty(Property<TYPE> bindToProperty)
-	{
-		bindFromProperty.bind(bindToProperty);
-	}
+  /**
+   * Bind property.
+   *
+   * @param <T>            the generic type of the Property which can be anything
+   *                       as long as it is compatible with the other Property
+   * @param bindToProperty the Current Property will be bound to the
+   *                       bindToProperty
+   */
+  protected <T> void bindProperty() {
+    bindFromProperty.bind(this.bindFromProperty);
+  }
+  private RapidfxRuntimeException incompatiblePropertiesErrorMessage(final Field bindToField) {
+    return new RapidfxRuntimeException(
+        "\nThe Field is not  A EventHandler or A ChangeListener or an Assignable Property"
+            + RmBuilder.name(bindToField.getName())
+            + RmBuilder.clazz(bindToField.getDeclaringClass())
+            + RmBuilder.type(bindToField.getType())
+            + RmBuilder.build(bindFromContent.getType(), "EXPECTED_TYPE")
+            + RmBuilder.build(bindFromContent.getFieldName(), "BASED_ON_FIELD")
+            + RmBuilder.build(bindFromContent.getDeclaredClass(), "BASED_ON_CLASS"));
+  }
 }

@@ -1,23 +1,43 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.rapidFX.simple;
 
+import de.github.yfons.rapidfx.rapidFX.core.helper.RmBuilder;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidLayout;
 import javafx.scene.Node;
 
+/**
+ * The Class RapidSimpleLayout.
+ *
+ * @param <LAYOUT_NODE_TYPE> the generic type
+ */
 public abstract class RapidSimpleLayout<LAYOUT_NODE_TYPE extends Node> extends RapidSimple
-		implements RapidLayout<LAYOUT_NODE_TYPE>
-{
-	protected LAYOUT_NODE_TYPE layout;
+    implements RapidLayout<LAYOUT_NODE_TYPE> {
 
-	@Override
-	public final LAYOUT_NODE_TYPE getLayout()
-	{
-		return this.layout;
-	}
+  /** The layout. */
+  protected LAYOUT_NODE_TYPE layout;
 
-	@Override
-	public String toString()
-	{
-		return "Layout =>\n\t=> CLASS => " + this.getClass() + "\n\t=> LAYOUT_CLASS => " + layout.getClass()
-				+ "\n\t=> LAYOUT_NODE => " + layout.toString() + "\n";
-	}
+  /**
+   * Gets the layout.
+   *
+   * @return the layout
+   */
+  @Override
+  public final LAYOUT_NODE_TYPE getLayout() {
+    return this.layout;
+  }
+
+  /**
+   * To string.
+   *
+   * @return the string
+   */
+  @Override
+  public String toString() {
+    return "Layout =>" + RmBuilder.clazz(this.getClass())
+        + RmBuilder.build(layout.getClass(), "LAYOUT_CLASS")
+        + RmBuilder.build(layout.toString(), "LAYOUT_NODE");
+  }
+
 }

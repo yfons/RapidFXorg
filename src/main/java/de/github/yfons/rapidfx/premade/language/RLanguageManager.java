@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.premade.language;
 
 import java.io.File;
@@ -8,161 +11,182 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Properties;
 
-import de.github.yfons.rapidfx.rapidFX.core.RapidFXRuntimeException;
+import de.github.yfons.rapidfx.rapidFX.core.RapidfxRuntimeException;
+import de.github.yfons.rapidfx.rapidFX.core.helper.RmBuilder;
 import de.github.yfons.rapidfx.rapidFX.simple.RapidSimple;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-public abstract class RLanguageManager extends RapidSimple
-{
-	private File supportedLanguagesFile;
-	private final StringProperty language = new SimpleStringProperty("");
-	private final Properties supportedLanguages = new Properties();
+/**
+ * The Class RLanguageManager.
+ */
+public abstract class RLanguageManager extends RlanguageManagerAbstract {
 
-	private final HashMap<String, StringProperty> languageKeys = new HashMap<>();
+  protected final File supportedLanguagesFile;
+  protected final StringProperty language = new SimpleStringProperty("");
 
-	final String hardCodedLanguageDefault;
+  protected Properties supportedLanguages = new Properties();
 
-	public RLanguageManager(String supportLanguages, String hardCodedLanguageDefault, String languageLayout)
-	{
-		this.hardCodedLanguageDefault = hardCodedLanguageDefault;
+  protected final HashMap<String, StringProperty> languageKeys = new HashMap<>();
 
-		setSupportedLanguages(supportLanguages);
+  /** The hard coded language default. */
+  protected final String hardCodedLanguageDefault;
 
-		setFormat(languageLayout);
+  /**
+   * Instantiates a new r language manager.
+   *
+   * @param supportLanguages         the support languages
+   * @param hardCodedLanguageDefault the hard coded language default
+   * @param languageLayout           the language layout
+   */
+  public RLanguageManager(String supportLanguages, String hardCodedLanguageDefault,
+      String languageLayout) {
+    supportedLanguagesFile = getFile(supportLanguages);
+    this.hardCodedLanguageDefault = hardCodedLanguageDefault;
 
-		language.addListener(languageListener);
+    setSupportedLanguages(supportLanguages);
+    setFormat(languageLayout);
 
-		swapToDefault();
-	}
+    language.addListener(languageListener);
 
-	public final void translate(StringProperty... propertyToBindCollection)
-	{
-		System.out.println(languageKeys);
-		for (var propertyToBind : propertyToBindCollection)
-		{
-			propertyToBind.bind(languageKeys.get(propertyToBind.get()));
-		}
-	}
+    swapToDefault();
+  }
 
-	public final void swapLanguage(String newLanguage)
-	{
-		if (supportedLanguages.containsKey(newLanguage))
-		{
-			supportedLanguages.putIfAbsent("DEFAULT", newLanguage);
-			supportedLanguages.put("DEFAULT", newLanguage);
-			try
-			{
-				supportedLanguages.store(new FileWriter(supportedLanguagesFile), "\\u0020 for Spaces, and \\u003d for =");
-			} catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-			language.set((String) supportedLanguages.get(newLanguage));
-		}
-	}
+  /**
+   * Translate.
+   *
+   * @param propertyToBindCollection the property to bind collection
+   */
+  public final void translate(StringProperty... propertyToBindCollection) {
+    for (var propertyToBind : propertyToBindCollection) {
+      propertyToBind.bind(languageKeys.get(propertyToBind.get()));
+    }
+  }
 
-	private final void swapToDefault()
-	{
-		var hasDefault = supportedLanguages.get("DEFAULT");
-		String languageToSwap = hasDefault != null ? (String) hasDefault : hardCodedLanguageDefault;
-		swapLanguage(languageToSwap);
-	}
+  /**
+   * Swap language.
+   *
+   * @param newLanguage the new language
+   */
+  public final void swapLanguage(String newLanguage) {
+    if (supportedLanguages.containsKey(newLanguage)) {
+      supportedLanguages.put("DEFAULT", newLanguage);
+      storeSupportedLanguagesWithDefaultKey();
+      language.set((String) supportedLanguages.get(newLanguage));
+    }
+  }
 
-	private final void setSupportedLanguages(String supportLanguages)
-	{
-		supportedLanguagesFile = getFile(supportLanguages);
-		read(supportedLanguages, supportedLanguagesFile);
-	}
+  private void storeSupportedLanguagesWithDefaultKey() {
+    try {
+      supportedLanguages.store(new FileWriter(supportedLanguagesFile),
+          "\\u0020 for Spaces, and \\u003d for =");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-	private final void setFormat(String languageLayout)
-	{
-		try
-		{
-			setLanguageFormat(languageLayout);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+  /**
+   * Swap to default.
+   */
+  private final void swapToDefault() {
+    var    hasDefault     = supportedLanguages.get("DEFAULT");
+    String languageToSwap = hasDefault != null ? (String) hasDefault : hardCodedLanguageDefault;
+    swapLanguage(languageToSwap);
+  }
 
-	private final void setLanguageFormat(String format) throws IOException
-	{
-		File languageFormat = getFile(format);
-		Properties formatProperty = new Properties();
-		FileReader reader = new FileReader(languageFormat);
-		formatProperty.load(reader);
-		Iterator<Object> it = formatProperty.keys().asIterator();
-		while (it.hasNext())
-		{
-			String key = (String) it.next();
-			languageKeys.put(key, new SimpleStringProperty());
-		}
-	}
+  /**
+   * Sets the supported languages.
+   *
+   * @param supportLanguages the new supported languages
+   */
+  private final void setSupportedLanguages(String supportLanguages) { 
+    supportedLanguages = readProperties(supportLanguages);
+  }
 
-	private final ChangeListener<String> languageListener = new ChangeListener<>()
-	{
+  /**
+   * Sets the format.
+   *
+   * @param languageLayout the new format
+   */
+  private final void setFormat(String languageLayout) {
+    Objects.requireNonNull(languageLayout);
+    try {
+      setLanguageFormat(languageLayout);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-		@Override
-		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
-		{
+  /**
+   * Sets the language format.
+   *
+   * @param format the new language format
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
+  private final void setLanguageFormat(String format) throws IOException {
+    File       languageFormat = getFile(format);
+    Properties formatProperty = new Properties();
+    FileReader reader         = new FileReader(languageFormat);
+    setLanguageKeyProperties(formatProperty, reader);
+  }
 
-			if (newValue != null)
-			{
-				Properties formatProperty = new Properties();
-				read(formatProperty, getFile(newValue));
+  private void setLanguageKeyProperties(Properties formatProperty, FileReader reader)
+      throws IOException {
+    formatProperty.load(reader);
+    Iterator<Object> it = formatProperty.keys().asIterator();
+    while (it.hasNext()) {
+      String key = (String) it.next();
+      languageKeys.put(key, new SimpleStringProperty());
+    }
+  }
 
-				languageKeys.forEach((key, item) -> {
-					if (formatProperty.containsKey(key))
-					{
-						item.set(formatProperty.getProperty(key));
-					} else
-					{
-						item.set(key);
-					}
-				});
-			}
+  /** The language listener. */
+  private final ChangeListener<String> languageListener = new ChangeListener<>() {
 
-		}
-	};
+    @Override
+    public void changed(ObservableValue<? extends String> observable, String oldValue,
+        String newValue) {
 
-	private final File getFile(String fileName)
-	{
-		URI uri;
-		try
-		{
-			uri = getResourceURI(fileName).toURI();
-			return new File(uri);
-		} catch (URISyntaxException e)
-		{
-			throw new RapidFXRuntimeException("During parsing the File Location to a URI/URL an Exception occured"
-					+ "\n\t=> NAME => " + fileName + "\n\t => PATH => " + this.getClass());
-		}
-	}
+      if (newValue != null) {
+        Properties formatProperty = readProperties(newValue);
+        
+        languageKeys.forEach((key, item) -> {
+          setNewPropertyValue(formatProperty, key, item);
+        });
+      }
 
-	private final void read(Properties props, File fileToRead)
-	{
-		try
-		{
-			FileReader reader = new FileReader(fileToRead);
-			props.load(reader);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+    }
 
-	@Override
-	public String toString()
-	{
-		return "Language Manager" + "\n\t=> CLASS => " + this.getClass() + "\n\t=> HARD_CODED_DEFAULT => "
-				+ this.hardCodedLanguageDefault + "\n\t=> CURRENT_LANGUAGE => " + this.language.get()
-				+ "\n\t=> SUPPORTED_FILE => " + supportedLanguagesFile + "\n\t=> SUPPORTED_PROPERTIES => "
-				+ supportedLanguages + "\n\t=> LAYOUT_KEYS => " + languageKeys.keySet() + "\n\t=> LAYOUT_MAP => "
-				+ languageKeys.toString() + "\n";
-	}
+    private void setNewPropertyValue(Properties formatProperty, String key, StringProperty item) {
+      if (formatProperty.containsKey(key)) {
+        item.set(formatProperty.getProperty(key));
+      } else {
+        item.set(key);
+      }
+    }
+  };
+
+
+
+
+  /**
+   * To string.
+   *
+   * @return the string
+   */
+  @Override
+  public String toString() {
+    return "Language Manager" + RmBuilder.clazz(this.getClass())
+        + RmBuilder.build(this.hardCodedLanguageDefault, "HARD_CODED_DEFAULT")
+        + RmBuilder.build(this.language.get(), "CURRENT_LANGUAGE")
+        + RmBuilder.build(supportedLanguagesFile, "SUPPORTED_FILE")
+        + RmBuilder.build(supportedLanguages, "SUPPORTED_PROPERTIES")
+        + RmBuilder.build(languageKeys.keySet(), "LAYOUT_KEYS")
+        + RmBuilder.build(languageKeys.toString(), "LAYOUT_MAP") + "\n";
+  }
 }

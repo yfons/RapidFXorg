@@ -1,12 +1,18 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.rapidFX.interfaces;
 
 import javafx.scene.layout.Pane;
 
-public interface RapidController
-{
-	RapidView<?> getView();
+/**
+ * The Interface RapidController.
+ */
+public interface RapidController {
 
-	RapidModel getModel();
+  RapidView<?> getView();
 
-	Pane getRootPane();
+  RapidModel getModel();
+
+  Pane getRootPane();
 }

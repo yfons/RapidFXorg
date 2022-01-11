@@ -1,53 +1,65 @@
+/*
+ * 
+ */
 package de.github.yfons.rapidfx.examples.viewManaging;
 
 import de.github.yfons.rapidfx.examples.viewManaging.helloWorldPackage.Login;
 import de.github.yfons.rapidfx.premade.RViewManager;
-import de.github.yfons.rapidfx.rapidFX.core.RapidFX;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+
 /**
  * this Example is not made in "well" written Code, it should just summarize how
- * to use the RViewManager
+ * to use the RViewManager.
  *
  * @author marti
  */
-public class Launcher extends Application
-{
-	public static void main(String[] args)
-	{
-		launch((String[]) null);
-	}
+public class Launcher extends Application {
 
-	@Override
-	public void start(Stage primaryStage) throws Exception
-	{
-		var log1 = RapidFX.createNew(Login::new);
-		var log2 = RapidFX.createNew(Login::new);
-		Scene scene = new Scene(log2.getRootPane());
+  /**
+   * The main method.
+   *
+   * @param args the arguments
+   */
+  public static void main(String[] args) {
+    launch((String[]) null);
+  }
 
-		RViewManager<String> manager = new RViewManager<>(scene);
-		manager.appendFactory("First View", log1);
-		manager.appendFactory("Second View", log2);
+  /**
+   * Start.
+   *
+   * @param primaryStage the primary stage
+   * @throws Exception the exception
+   */
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    var   log1  = new Login();
+    var   log2  = new Login();
+    Scene scene = new Scene(log2.getRootPane());
 
-		// normally the second view would have been shown, but here you change it to the
-		// first one
-		manager.swapToView("First View");
+    RViewManager<String> manager = new RViewManager<>(scene);
+    manager.appendFactory("First View", log1);
+    manager.appendFactory("Second View", log2);
 
-		System.out.println(manager);
-		Button button = new Button("Switch Button");
+    // normally the second view would have been shown, but here you change it to the
+    // first one
+    manager.swapToView("First View");
 
-		// the eventhandler switches on action to the Second View, as the button will
-		// disappear -> only exists in First View
-		button.onActionProperty().set(event -> manager.swapToView("Second View"));
+    System.out.println(manager);
+    Button button = new Button("Switch Button");
 
-		log1.getRootPane().getChildren().add(button);
+    // the eventhandler switches on action to the Second View, as the button will
+    // disappear -> only exists in First View
+    button.onActionProperty().set(event -> manager.swapToView("Second View"));
 
-		primaryStage.setScene(scene);
-		primaryStage.show();
+    log1.getRootPane().getChildren().add(button);
 
-	}
+    primaryStage.setScene(scene);
+    primaryStage.show();
+
+  }
 
 }
