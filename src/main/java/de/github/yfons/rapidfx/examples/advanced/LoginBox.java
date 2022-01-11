@@ -67,4 +67,5 @@ public class LoginBox extends RapidSimpleView<VBox> {
   public RMessage<Account> getLoginMessage() {
     return message;
   }
+  
 }

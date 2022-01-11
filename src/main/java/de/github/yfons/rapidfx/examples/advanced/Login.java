@@ -13,7 +13,7 @@ import javafx.event.EventHandler;
 public class Login extends RapidSimpleController<LoginView, LoginModel> {
   {
     view  = new LoginView();
-    model = new LoginModel(view.getLoginBox().getLoginMessage());
+    model = new LoginModel();
   }
 
   /**
@@ -26,7 +26,7 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
   /** The login request handler. */
   @SuppressWarnings("unused")
   private EventHandler<?> loginRequestHandler = event -> {
-    model.login();
+    model.login(view.getLoginBox().getLoginMessage());
   };
 
   /**

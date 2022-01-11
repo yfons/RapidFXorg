@@ -11,26 +11,19 @@ import de.github.yfons.rapidfx.rapidFX.simple.RapidSimpleModel;
  */
 public class LoginModel extends RapidSimpleModel {
 
-  /** The message. */
-  private final RMessage<Account> message;
-
-  /**
-   * Instantiates a new login model.
-   *
-   * @param message the message
-   */
-  public LoginModel(RMessage<Account> message) {
-    this.message = message;
-  }
-
   /**
    * Login.
    *
    * @return true, if successful
    */
-  public boolean login() {
-    System.out.println(message.getContent(Account.NAME));
-    System.out.println(message.getContent(Account.PASSWORD));
-    return true;
+  public boolean login(RMessage<Account> message) {
+    if(message != null) 
+    {
+      System.out.println(message.getContent(Account.NAME));
+      System.out.println(message.getContent(Account.PASSWORD));
+      return true;
+    }
+    return false;
+    
   }
 }
