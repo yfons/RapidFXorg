@@ -25,6 +25,7 @@ public class Rapidfx {
   public static <CONTROLLERT extends RapidScheduler> RFluentController<CONTROLLERT> create(
       final CONTROLLERT controller) {
     
+    
     return new RFluentController<>(controller);
   }
 
