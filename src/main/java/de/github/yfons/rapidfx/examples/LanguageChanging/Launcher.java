@@ -58,24 +58,26 @@ public class Launcher extends Application {
     // language.layout with the current language String
     RTranslator.bindTranslation(greeting.textProperty(), exit.textProperty());
 
-    switcher.onActionProperty().set(event -> {
-      if (isEnglish) {
-        // languages can be swapped to any Language which s listed in the
-        // languages.properties
-        RTranslator.swapLanguages(LanguageManger.GERMAN);
-        isEnglish = false;
-        // the Language Manager has a toString Method to read which state the manager is
-        // in at the moment, and to check which files are Loaded
-        System.out.println(manager.toString());
-      } else {
-        isEnglish = true;
-        RTranslator.swapLanguages(LanguageManger.ENGLISH);
-        // the Language Manager has a toString Method to read which state the manager is
-        // in at the moment, and to check which files are Loaded
-        System.out.println(manager.toString());
-      }
-    });
-    exit.onActionProperty().set(event -> Platform.exit());
+    switcher.onActionProperty()
+        .set(event -> {
+          if (isEnglish) {
+            // languages can be swapped to any Language which s listed in the
+            // languages.properties
+            RTranslator.swapLanguages(LanguageManger.GERMAN);
+            isEnglish = false;
+            // the Language Manager has a toString Method to read which state the manager is
+            // in at the moment, and to check which files are Loaded
+            System.out.println(manager.toString());
+          } else {
+            isEnglish = true;
+            RTranslator.swapLanguages(LanguageManger.ENGLISH);
+            // the Language Manager has a toString Method to read which state the manager is
+            // in at the moment, and to check which files are Loaded
+            System.out.println(manager.toString());
+          }
+        });
+    exit.onActionProperty()
+        .set(event -> Platform.exit());
 
     Scene languageScene = new Scene(layoutbox, 300, 300);
     primaryStage.setScene(languageScene);

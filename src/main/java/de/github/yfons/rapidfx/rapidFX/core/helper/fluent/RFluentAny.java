@@ -6,8 +6,9 @@ package de.github.yfons.rapidfx.rapidFX.core.helper.fluent;
 import java.lang.annotation.Annotation;
 import java.util.Objects;
 
-import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.RFluentAnyAPI.Connector;
-
+import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.abstracts.RFLuentAbstract;
+import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.interfaces.RFluentAnyAPI;
+import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.interfaces.RFluentAnyAPI.Connector;
 
 /**
  * The Class RFluentAny is used for using the Rapid Annotations on any Object.

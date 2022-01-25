@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-
 /**
  * The Class LoginView.
  */
@@ -40,9 +39,11 @@ public class LoginView extends RapidSimpleView<VBox> {
   // for the Naming the controller names should get created before so it's easier
   /** The ok action property. */
   // to swap the views
+  
   @RapidfxController
   private ObjectProperty<EventHandler<ActionEvent>> okActionProperty;
-  SimpleStringProperty t = new SimpleStringProperty();
+  
+  SimpleStringProperty                              t = new SimpleStringProperty();
   // Get's not Initialized because its not null
   // it's also possible to add an Eventhandler/ChangeListener with this setup just
   // name the EventHandler/ChangeListener in the Controller like you did in the
@@ -69,7 +70,8 @@ public class LoginView extends RapidSimpleView<VBox> {
     // gets set before annotations get Read so it will bind ok.onActionProperty() to
     // the Controller
     okActionProperty = ok.onActionProperty();
-    root.getChildren().addAll(title, new HBox(ok, close));
+    root.getChildren()
+        .addAll(title, new HBox(ok, close));
   }
 
   /**

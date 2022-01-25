@@ -11,7 +11,9 @@ import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxAutoGenerate;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxController;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxModel;
 import de.github.yfons.rapidfx.rapidFX.core.Rapidfx;
-import de.github.yfons.rapidfx.rapidFX.interfaces.RapidController;
+import de.github.yfons.rapidfx.rapidFX.core.helper.resolver.AutoGenerationResolver;
+import de.github.yfons.rapidfx.rapidFX.core.helper.resolver.BindingResolver;
+import de.github.yfons.rapidfx.rapidFX.interfaces.RapidScheduler;
 
 /**
  * The Class RConnSetup is used to generate and resolve the Rapid Annotations
@@ -34,17 +36,18 @@ public class RConnSetup {
    * @param toSetUpObjects Collection that need to Initialize all
    *                       RapifxAutoGenerate annotated fields.
    */
-  public void setUp(Object... toSetUpObjects) {
+  public void setUp(Class<? extends Annotation> annotation, Object... toSetUpObjects) {
 
     for (var toSetUp : toSetUpObjects) {
 
-      final Field[] fields = toSetUp.getClass().getDeclaredFields();
+      final Field[] fields = toSetUp.getClass()
+          .getDeclaredFields();
 
       for (var field : fields) {
-        final var fieldHandler = new FieldHandler(new FieldRecord(field,toSetUp));
+        final var resolver = new AutoGenerationResolver(new FieldRecord(field, toSetUp));
 
-        if (fieldHandler.isAnnotationPresent(AUTO_GENERATION)) {
-          fieldHandler.setDefaultProperty();
+        if (resolver.isAnnotationPresent(annotation)) {
+          resolver.setDefaultProperty();
         }
       }
     }
@@ -70,13 +73,14 @@ public class RConnSetup {
    *          should be used to set the bindings and connecting the view
    */
   public void connect(Object bindFrom, Object bindTo, Class<? extends Annotation> annotation) {
-    final var bindFromFields = bindFrom.getClass().getDeclaredFields();
+    final var bindFromFields = bindFrom.getClass()
+        .getDeclaredFields();
 
     for (Field bindFromField : bindFromFields) {
-      final FieldHandler fieldHandler = new FieldHandler(new FieldRecord(bindFromField, bindFrom));
+      final var resolver = new BindingResolver(new FieldRecord(bindFromField, bindFrom));
 
-      if (fieldHandler.isAnnotationPresent(annotation)) {
-        fieldHandler.bindWith(bindTo);
+      if (resolver.isAnnotationPresent(annotation)) {
+        resolver.bindWith(bindTo);
       }
     }
   }

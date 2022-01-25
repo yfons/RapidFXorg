@@ -34,7 +34,7 @@ public class RmBuilder {
   public static String type(Object information) {
     return build(information, ExcType.TYPE.toString());
   }
-  
+
   /**
    * Builds the String in the Format "\\n\\t=> NAME => information".
    *

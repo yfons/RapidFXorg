@@ -3,8 +3,15 @@
  */
 package de.github.yfons.rapidfx.examples.HelloWorld;
 
+import de.github.yfons.rapidfx.premade.UI.ContainerFactory;
+import de.github.yfons.rapidfx.premade.UI.elements.BorderPaneContainer;
+import de.github.yfons.rapidfx.premade.UI.elements.PaneContainer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -31,11 +38,23 @@ public class Launcher extends Application {
   public void start(Stage primaryStage) throws Exception {
     Login log1 = new Login();
 
+    ContainerFactory.getBox(HBox::new).get();
+    
+    
+    BorderPaneContainer bp   = ContainerFactory.getBorderPane()
+        .bottom(new Button("bob"))
+        .center(new Button(""))
+        .maxHeight(200)
+        .prefHeight(180)
+        .minWidth(200)
+        .disable();
+    BorderPane root = bp.get();
     // The Controller supports a toString Method to see Inside in which State it is
     // currently
     System.out.println(log1.toString());
 
-    primaryStage.setScene(new Scene(log1.getView().getRootPane()));
+    primaryStage.setScene(new Scene(log1.getView()
+        .getRootPane()));
     primaryStage.show();
 
   }

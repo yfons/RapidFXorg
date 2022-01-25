@@ -8,11 +8,11 @@ import javafx.scene.layout.Pane;
 /**
  * The Interface RapidController.
  */
-public interface RapidController {
+public interface RapidScheduler {
 
   RapidView<?> getView();
 
-  RapidModel getModel();
+
 
   Pane getRootPane();
 }

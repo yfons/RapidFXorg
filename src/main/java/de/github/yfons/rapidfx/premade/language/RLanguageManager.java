@@ -27,7 +27,7 @@ import javafx.beans.value.ObservableValue;
  */
 public abstract class RLanguageManager extends RlanguageManagerAbstract {
 
-  protected final File supportedLanguagesFile;
+  protected final File           supportedLanguagesFile;
   protected final StringProperty language = new SimpleStringProperty("");
 
   protected Properties supportedLanguages = new Properties();
@@ -46,7 +46,7 @@ public abstract class RLanguageManager extends RlanguageManagerAbstract {
    */
   public RLanguageManager(String supportLanguages, String hardCodedLanguageDefault,
       String languageLayout) {
-    supportedLanguagesFile = getFile(supportLanguages);
+    supportedLanguagesFile        = getFile(supportLanguages);
     this.hardCodedLanguageDefault = hardCodedLanguageDefault;
 
     setSupportedLanguages(supportLanguages);
@@ -104,7 +104,7 @@ public abstract class RLanguageManager extends RlanguageManagerAbstract {
    *
    * @param supportLanguages the new supported languages
    */
-  private final void setSupportedLanguages(String supportLanguages) { 
+  private final void setSupportedLanguages(String supportLanguages) {
     supportedLanguages = readProperties(supportLanguages);
   }
 
@@ -138,7 +138,8 @@ public abstract class RLanguageManager extends RlanguageManagerAbstract {
   private void setLanguageKeyProperties(Properties formatProperty, FileReader reader)
       throws IOException {
     formatProperty.load(reader);
-    Iterator<Object> it = formatProperty.keys().asIterator();
+    Iterator<Object> it = formatProperty.keys()
+        .asIterator();
     while (it.hasNext()) {
       String key = (String) it.next();
       languageKeys.put(key, new SimpleStringProperty());
@@ -154,7 +155,7 @@ public abstract class RLanguageManager extends RlanguageManagerAbstract {
 
       if (newValue != null) {
         Properties formatProperty = readProperties(newValue);
-        
+
         languageKeys.forEach((key, item) -> {
           setNewPropertyValue(formatProperty, key, item);
         });
@@ -170,9 +171,6 @@ public abstract class RLanguageManager extends RlanguageManagerAbstract {
       }
     }
   };
-
-
-
 
   /**
    * To string.

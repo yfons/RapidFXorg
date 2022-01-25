@@ -5,7 +5,7 @@ package de.github.yfons.rapidfx.premade;
 
 import java.util.Set;
 
-import de.github.yfons.rapidfx.rapidFX.interfaces.RapidController;
+import de.github.yfons.rapidfx.rapidFX.interfaces.RapidScheduler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ import javafx.scene.Scene;
 public class RViewManager<keyValue> {
 
   /** The factory map. */
-  private final ObservableMap<keyValue, RapidController> factoryMap = FXCollections
+  private final ObservableMap<keyValue, RapidScheduler> factoryMap = FXCollections
       .observableHashMap();
 
   /** The scene. */
@@ -39,7 +39,7 @@ public class RViewManager<keyValue> {
    * @param key     the key
    * @param factory the factory
    */
-  public void appendFactory(keyValue key, RapidController factory) {
+  public void appendFactory(keyValue key, RapidScheduler factory) {
     factoryMap.put(key, factory);
   }
 
@@ -57,7 +57,7 @@ public class RViewManager<keyValue> {
    *
    * @return the map
    */
-  public ObservableMap<keyValue, RapidController> getMap() {
+  public ObservableMap<keyValue, RapidScheduler> getMap() {
     return factoryMap;
   }
 
@@ -76,7 +76,9 @@ public class RViewManager<keyValue> {
    * @param key the key
    */
   public void swapToView(keyValue key) {
-    scene.setRoot(factoryMap.get(key).getView().getRootPane());
+    scene.setRoot(factoryMap.get(key)
+        .getView()
+        .getRootPane());
   }
 
   /**

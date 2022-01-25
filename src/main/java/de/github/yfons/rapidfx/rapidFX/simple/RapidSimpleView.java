@@ -25,7 +25,7 @@ public class RapidSimpleView<ROOT_PANE_TYPE extends Pane> extends RapidSimple
    * @return the root pane
    */
   @Override
-  public final ROOT_PANE_TYPE getRootPane() {
+  public ROOT_PANE_TYPE getRootPane() {
     return root;
   }
 
@@ -35,25 +35,19 @@ public class RapidSimpleView<ROOT_PANE_TYPE extends Pane> extends RapidSimple
    * e.g ExamplePaneView.java -> ExamplePaneView.css
    */
   protected final void cssStyleRoot() {
-    root.getStylesheets().add(findCssStyleSheet());
+    root.getStylesheets()
+        .add(findCssStyleSheet());
   }
 
-  /**
-   * Doesn't do Anything by Default.
-   *
-   * @param <ENUMTYPE> the generic type
-   * @param message    the message
-   */
-  public <ENUMTYPE extends Enum<?>> void addSubViews(RMessage<ENUMTYPE> message) {
-
-  }
+ 
+  
 
   /**
    * Find css style sheet.
    *
    * @return the string
    */
-  protected final String findCssStyleSheet() {
+  protected String findCssStyleSheet() {
     return getResource(getClass().getSimpleName() + ".css");
   }
 
@@ -64,6 +58,6 @@ public class RapidSimpleView<ROOT_PANE_TYPE extends Pane> extends RapidSimple
    */
   @Override
   public String toString() {
-    return "\t"+RmBuilder.clazz(getClass()) + RmBuilder.build(this.root, "ROOT_PANE");
+    return "\t" + RmBuilder.clazz(getClass()) + RmBuilder.build(this.root, "ROOT_PANE");
   }
 }

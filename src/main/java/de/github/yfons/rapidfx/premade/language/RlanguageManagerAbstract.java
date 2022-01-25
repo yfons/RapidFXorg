@@ -8,7 +8,7 @@ import java.util.Properties;
 import de.github.yfons.rapidfx.rapidFX.simple.RapidSimple;
 import javafx.beans.property.StringProperty;
 
-public abstract class RlanguageManagerAbstract extends RapidSimple{
+public abstract class RlanguageManagerAbstract extends RapidSimple {
   /**
    * Read.
    *
@@ -20,12 +20,14 @@ public abstract class RlanguageManagerAbstract extends RapidSimple{
     try {
       FileReader reader = new FileReader(getFile(fileName));
       props.load(reader);
-      
+
     } catch (IOException e) {
       e.printStackTrace();
     }
     return props;
   }
+
   public abstract void translate(StringProperty... propertyToBindCollection);
+
   public abstract void swapLanguage(String newLanguage);
 }

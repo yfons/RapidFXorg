@@ -4,7 +4,9 @@
 package de.github.yfons.rapidfx.examples.HelloWorld;
 
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxAutoGenerate;
-import de.github.yfons.rapidfx.rapidFX.simple.RapidSimpleController;
+import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxController;
+import de.github.yfons.rapidfx.rapidFX.core.Rapidfx;
+import de.github.yfons.rapidfx.rapidFX.simple.RapidSimpleStrongScheduler;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
@@ -13,7 +15,7 @@ import javafx.event.EventHandler;
 /**
  * The Class Login.
  */
-public class Login extends RapidSimpleController<LoginView, LoginModel> {
+public class Login extends RapidSimpleStrongScheduler<LoginView, LoginModel> {
 
   /** The ok action property. */
   // Get's Initialized as new SimpleObjectProperty<>()
@@ -40,9 +42,9 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
   }
 
   /** The close eh action. */
-  private EventHandler<ActionEvent> closeEhAction = event -> {
-    Platform.exit();
-  };
+ // private EventHandler<ActionEvent> closeEhAction = event -> {
+//    Platform.exit();
+//  };
 
   // gets Called after RapidFX.rapidGenerate is done so use Constructor to set
   // values before generation and this method after the generation
@@ -62,4 +64,6 @@ public class Login extends RapidSimpleController<LoginView, LoginModel> {
     view.setUpView();
 
   }
+
+
 }

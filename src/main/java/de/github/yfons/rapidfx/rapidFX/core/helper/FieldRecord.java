@@ -9,12 +9,13 @@ import de.github.yfons.rapidfx.rapidFX.core.RapidfxRuntimeException;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
 
-public record FieldRecord(Field field,Object component) {
-  public FieldRecord(Field field,Object component) {
-    this.field = field;
+public record FieldRecord(Field field, Object component) {
+  public FieldRecord(Field field, Object component) {
+    this.field     = field;
     this.component = component;
     field.setAccessible(true);
   }
+
   public Object getObject() {
     try {
       return field.get(component);
@@ -22,21 +23,27 @@ public record FieldRecord(Field field,Object component) {
       throw rapidIllegalAccessException(e);
     }
   }
+
   public boolean isAnnotationPresent(final Class<? extends Annotation> annotation) {
     return this.field.isAnnotationPresent(annotation);
   }
+
   public boolean isNull() {
     return getObject() == null;
   }
+
   public boolean isTypeOfProperty() {
     return Property.class.isAssignableFrom(this.field.getType());
   }
+
   public ReadOnlyProperty<?> castToReadOnlyProperty() {
     return (ReadOnlyProperty<?>) getObject();
   }
-  public Property<?> castToProperty(){
-    return (Property<?>)getObject();
+
+  public Property<?> castToProperty() {
+    return (Property<?>) getObject();
   }
+
   private RapidfxRuntimeException rapidIllegalAccessException(Exception e) {
     return new RapidfxRuntimeException(
         "\nThe Field was not accessible to set a RautoGenerate value ,"
@@ -44,29 +51,39 @@ public record FieldRecord(Field field,Object component) {
             + RmBuilder.name(field.getName()) + RmBuilder.clazz(field.getDeclaringClass())
             + RmBuilder.type(field.getType()) + "\n" + e.getMessage());
   }
+
   public String getFieldName() {
-    return field.getName().intern();
+    return field.getName()
+        .intern();
   }
+
   public Class<? extends Field> getFieldClass() {
     return field.getClass();
   }
+
   public Class<?> getDeclaredClass() {
     return field.getDeclaringClass();
   }
+
   public Class<?> getType() {
     return field.getType();
   }
+
   private final Object getDefaultValue() {
     try {
-      final var t = Class
-          .forName(field.getType().getPackageName() + ".Simple" + field.getType().getSimpleName());
-      return t.getDeclaredConstructor().newInstance();
+      final var t = Class.forName(field.getType()
+          .getPackageName() + ".Simple"
+          + field.getType()
+              .getSimpleName());
+      return t.getDeclaredConstructor()
+          .newInstance();
     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
         | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
         | SecurityException e) {
       throw noInstantiationPossible();
     }
   }
+
   private RapidfxRuntimeException noInstantiationPossible() {
     return new RapidfxRuntimeException(
         "\nDuring the try to set a default value an Exception Occured"
@@ -78,13 +95,15 @@ public record FieldRecord(Field field,Object component) {
             + "\n as the binding will still Work with any Properties "
             + "or something else went wrong while setting the default value"
             + RmBuilder.name(field.getName()) + RmBuilder.type(field.getType())
-            + RmBuilder.build(field.getType().getPackageName() + " + .Simple + "
-                + field.getType().getSimpleName(), "SEARCHED")
+            + RmBuilder.build(field.getType()
+                .getPackageName() + " + .Simple + "
+                + field.getType()
+                    .getSimpleName(),
+                "SEARCHED")
             + "\n");
-  
   }
-  public void setNewSimpleProperty() 
-  {
+
+  public void setNewSimpleProperty() {
     try {
       this.field.set(component, getDefaultValue());
     } catch (IllegalArgumentException | IllegalAccessException e) {

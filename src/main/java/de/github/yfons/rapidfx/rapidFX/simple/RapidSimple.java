@@ -30,10 +30,11 @@ public abstract class RapidSimple {
 
   /**
    * searches a resource in the Same path as the Calling Class is in, if the class
-   * is not "open PACKAGENAME" then this will result in a NPE.
+   * is not "open PACKAGENAME" then this will result in a
+   * {@link NullPointerException}.
    *
    * @param resourceName the resource name
-   * @return the resource URI
+   * @return the resource
    */
   protected final URL getResourceURL(String resourceName) {
     URL url = getClass().getResource(resourceName);
@@ -45,6 +46,15 @@ public abstract class RapidSimple {
     }
     return url;
   }
+
+  /**
+   * searches a resource in the Same path as the Calling Class is in, if the class
+   * is not "open PACKAGENAME" then this will result in a
+   * {@link NullPointerException}.
+   *
+   * @param resourceName the resource name
+   * @return the File
+   */
   protected final File getFile(String resourceName) {
     try {
       return new File(getResourceURL(resourceName).toURI());
@@ -58,6 +68,7 @@ public abstract class RapidSimple {
    * Object.
    */
   public void rapidfxMe() {
-    Rapidfx.createAny(this).generate(this);
+    Rapidfx.createAny(this)
+        .generate(this);
   }
 }

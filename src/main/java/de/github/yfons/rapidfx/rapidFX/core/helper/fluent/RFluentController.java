@@ -9,17 +9,20 @@ import java.util.Objects;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxAutoGenerate;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxController;
 import de.github.yfons.rapidfx.rapidFX.core.helper.RConnSetup;
-import de.github.yfons.rapidfx.rapidFX.core.helper.RConnector;
-import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.RFluentControllerAPI.Connector;
-import de.github.yfons.rapidfx.rapidFX.interfaces.RapidController;
-
+import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.abstracts.RFLuentAbstract;
+import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.interfaces.RFluentAnyAPI;
+import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.interfaces.RFluentControllerAPI;
+import de.github.yfons.rapidfx.rapidFX.core.helper.fluent.interfaces.RFluentControllerAPI.Connector;
+import de.github.yfons.rapidfx.rapidFX.core.helper.resolver.BinderConnector;
+import de.github.yfons.rapidfx.rapidFX.interfaces.RapidScheduler;
 
 /**
- * The Class RFluentController is used to Resolve Rapid Annotations on any {@link RapidController}.
+ * The Class RFluentController is used to Resolve Rapid Annotations on any
+ * {@link RapidScheduler}.
  *
  * @param <CONTROLLERT> the generic type
  */
-public class RFluentController<CONTROLLERT extends RapidController>
+public class RFluentController<CONTROLLERT extends RapidScheduler>
     extends RFLuentAbstract<CONTROLLERT>
     implements RFluentAnyAPI.Generator, RFluentControllerAPI.Connector {
 
@@ -60,7 +63,7 @@ public class RFluentController<CONTROLLERT extends RapidController>
 
   /**
    * Connects the Component on the connectOn Object based on the Annotation with
-   * the use of {@link RConnector} and {@link RConnSetup}.
+   * the use of {@link BinderConnector} and {@link RConnSetup}.
    *
    * @return the connector
    */

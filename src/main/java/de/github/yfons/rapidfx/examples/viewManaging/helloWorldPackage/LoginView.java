@@ -29,15 +29,7 @@ class LoginView extends RapidSimpleView<VBox> {
   /** The close. */
   private final Button close = new Button("Close");
 
-  // Get's not Initialized because the constructor of Login is called before the
-  // RapidFX.rapidGenerate method
-  // in the Login Object the view gets Created before the initializations happen
-  // and in the constructor the okActionProperty will get set to the value in the
-  // Contructor
-  // Get's bound to the okActionProperty in the Controller
-  // for the Naming the controller names should get created before so it's easier
-  /** The ok action property. */
-  // to swap the views
+ 
   @RapidfxController
   private ObjectProperty<EventHandler<ActionEvent>> okActionProperty;
   // Get's not Initialized because its not null
@@ -66,7 +58,8 @@ class LoginView extends RapidSimpleView<VBox> {
     // gets set before annotations get Read so it will bind ok.onActionProperty() to
     // the Controller
     okActionProperty = ok.onActionProperty();
-    root.getChildren().addAll(title, new HBox(ok, close));
+    root.getChildren()
+        .addAll(title, new HBox(ok, close));
   }
 
   /**

@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-
 /**
  * this Example is not made in "well" written Code, it should just summarize how
  * to use the RViewManager.
@@ -53,9 +52,12 @@ public class Launcher extends Application {
 
     // the eventhandler switches on action to the Second View, as the button will
     // disappear -> only exists in First View
-    button.onActionProperty().set(event -> manager.swapToView("Second View"));
+    button.onActionProperty()
+        .set(event -> manager.swapToView("Second View"));
 
-    log1.getRootPane().getChildren().add(button);
+    log1.getRootPane()
+        .getChildren()
+        .add(button);
 
     primaryStage.setScene(scene);
     primaryStage.show();

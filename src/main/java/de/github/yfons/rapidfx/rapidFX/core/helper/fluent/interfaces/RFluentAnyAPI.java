@@ -1,7 +1,7 @@
 /*
  * 
  */
-package de.github.yfons.rapidfx.rapidFX.core.helper.fluent;
+package de.github.yfons.rapidfx.rapidFX.core.helper.fluent.interfaces;
 
 import java.lang.annotation.Annotation;
 

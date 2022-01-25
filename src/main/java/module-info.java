@@ -15,7 +15,6 @@ module de.github.yfons.rapidfx {
   exports de.github.yfons.rapidfx.examples.viewManaging;
   exports de.github.yfons.rapidfx.examples.viewManaging.helloWorldPackage;
   exports de.github.yfons.rapidfx.rapidFX.core.helper;
-  exports de.github.yfons.rapidfx.examples.advanced;
 
   opens de.github.yfons.rapidfx.premade.language;
   opens de.github.yfons.rapidfx.premade;
