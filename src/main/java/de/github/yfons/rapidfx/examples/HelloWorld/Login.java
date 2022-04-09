@@ -6,6 +6,7 @@ package de.github.yfons.rapidfx.examples.HelloWorld;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxAutoGenerate;
 import de.github.yfons.rapidfx.rapidFX.annotation.RapidfxController;
 import de.github.yfons.rapidfx.rapidFX.core.Rapidfx;
+import de.github.yfons.rapidfx.rapidFX.simple.RapidSimpleScheduler;
 import de.github.yfons.rapidfx.rapidFX.simple.RapidSimpleStrongScheduler;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -15,7 +16,7 @@ import javafx.event.EventHandler;
 /**
  * The Class Login.
  */
-public class Login extends RapidSimpleStrongScheduler<LoginView, LoginModel> {
+public class Login extends RapidSimpleScheduler<LoginView> {
 
   /** The ok action property. */
   // Get's Initialized as new SimpleObjectProperty<>()
@@ -26,10 +27,6 @@ public class Login extends RapidSimpleStrongScheduler<LoginView, LoginModel> {
    * Instantiates a new login.
    */
   public Login() {
-    // this way of setting the model and view is prefered as its easier to swap them
-    // out afterwards during refactoring
-    // model is predefined as modelClass generic type
-    model = new LoginModel();
     // view is predefined as viewClass generic type
     view = new LoginView();
     rapidfxMe();
@@ -57,10 +54,8 @@ public class Login extends RapidSimpleStrongScheduler<LoginView, LoginModel> {
     // the ok ActionProperty would have gave a NullPointerException if it's set
     // before RapidFXGenerateMe(), only after that the Autogenerate is done
     okActionProperty.set(event -> {
-      model.login();
-      System.out.println("Hello From The Controller");
+      System.out.println("Hello From The Scheduler");
     });
-    model.setUpModel();
     view.setUpView();
 
   }

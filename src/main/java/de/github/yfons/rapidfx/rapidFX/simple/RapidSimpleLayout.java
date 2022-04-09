@@ -28,16 +28,9 @@ public abstract class RapidSimpleLayout<LAYOUT_NODE_TYPE extends Node> extends R
     return this.layout;
   }
 
-  /**
-   * To string.
-   *
-   * @return the string
-   */
   @Override
-  public String toString() {
-    return "Layout =>" + RmBuilder.clazz(this.getClass())
-        + RmBuilder.build(layout.getClass(), "LAYOUT_CLASS")
-        + RmBuilder.build(layout.toString(), "LAYOUT_NODE");
-  }
+public String toString() {
+	return "RapidSimpleLayout [layout=" + layout + "], [getClass()=" + getClass() + "]";
+}
 
 }

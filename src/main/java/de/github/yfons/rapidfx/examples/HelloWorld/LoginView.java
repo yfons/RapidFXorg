@@ -21,13 +21,13 @@ import javafx.scene.layout.VBox;
  */
 public class LoginView extends RapidSimpleView<VBox> {
 
-  /** The title. */
+
   private final Label title = new Label();
 
-  /** The ok. */
+
   private final Button ok = new Button("OK");
 
-  /** The close. */
+
   private final Button close = new Button("Close");
 
   // Get's not Initialized because the constructor of Login is called before the
@@ -43,7 +43,7 @@ public class LoginView extends RapidSimpleView<VBox> {
   @RapidfxController
   private ObjectProperty<EventHandler<ActionEvent>> okActionProperty;
   
-  SimpleStringProperty                              t = new SimpleStringProperty();
+
   // Get's not Initialized because its not null
   // it's also possible to add an Eventhandler/ChangeListener with this setup just
   // name the EventHandler/ChangeListener in the Controller like you did in the

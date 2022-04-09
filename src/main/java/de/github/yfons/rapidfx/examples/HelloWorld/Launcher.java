@@ -38,17 +38,6 @@ public class Launcher extends Application {
   public void start(Stage primaryStage) throws Exception {
     Login log1 = new Login();
 
-    ContainerFactory.getBox(HBox::new).get();
-    
-    
-    BorderPaneContainer bp   = ContainerFactory.getBorderPane()
-        .bottom(new Button("bob"))
-        .center(new Button(""))
-        .maxHeight(200)
-        .prefHeight(180)
-        .minWidth(200)
-        .disable();
-    BorderPane root = bp.get();
     // The Controller supports a toString Method to see Inside in which State it is
     // currently
     System.out.println(log1.toString());

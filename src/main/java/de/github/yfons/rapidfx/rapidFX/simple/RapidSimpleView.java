@@ -16,7 +16,15 @@ import javafx.scene.layout.Pane;
 public class RapidSimpleView<ROOT_PANE_TYPE extends Pane> extends RapidSimple
     implements RapidView<ROOT_PANE_TYPE> {
 
-  /** The root. */
+  @Override
+	public String toString() {
+		return "RapidSimpleView [root=" + root + "], [getClass()=" + getClass() + "]";
+	}
+
+
+
+
+/** The root. */
   protected ROOT_PANE_TYPE root;
 
   /**
@@ -51,13 +59,5 @@ public class RapidSimpleView<ROOT_PANE_TYPE extends Pane> extends RapidSimple
     return getResource(getClass().getSimpleName() + ".css");
   }
 
-  /**
-   * To string.
-   *
-   * @return the string
-   */
-  @Override
-  public String toString() {
-    return "\t" + RmBuilder.clazz(getClass()) + RmBuilder.build(this.root, "ROOT_PANE");
-  }
+ 
 }

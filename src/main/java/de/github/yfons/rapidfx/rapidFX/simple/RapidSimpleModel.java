@@ -12,7 +12,7 @@ import de.github.yfons.rapidfx.rapidFX.interfaces.RapidModel;
 public abstract class RapidSimpleModel implements RapidModel {
 
   @Override
-  public String toString() {
-    return RmBuilder.clazz(getClass());
-  }
+public String toString() {
+	return "RapidSimpleModel [getClass()=" + getClass() + "]";
+}
 }

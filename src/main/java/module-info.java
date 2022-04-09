@@ -4,7 +4,7 @@ module de.github.yfons.rapidfx {
   requires transitive javafx.controls;
 
   opens de.github.yfons.rapidfx.examples.HelloWorld;
-
+  requires lombok;
   exports de.github.yfons.rapidfx.examples.LanguageChanging;
   exports de.github.yfons.rapidfx.premade;
   exports de.github.yfons.rapidfx.rapidFX.simple;

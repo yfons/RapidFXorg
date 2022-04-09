@@ -6,9 +6,12 @@ import de.github.yfons.rapidfx.premade.UI.NodeContainer;
 import de.github.yfons.rapidfx.rapidFX.interfaces.RapidView;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import lombok.Builder;
+
 
 public class BorderPaneContainer extends NodeContainer<BorderPane,BorderPaneContainer>{
 
+	
   public BorderPaneContainer(Supplier<BorderPane> supplier) {
     super(supplier);
   }

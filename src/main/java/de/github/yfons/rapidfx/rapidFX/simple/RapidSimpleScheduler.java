@@ -11,7 +11,7 @@ import de.github.yfons.rapidfx.rapidFX.interfaces.RapidView;
 import javafx.scene.layout.Pane;
 
 /**
- * The Class RapidSimpleWeakController.
+ * The Class RapidSimpleScheduler.
  *
  * @param <VIEWT> the generic type
  */
@@ -41,7 +41,7 @@ public abstract class RapidSimpleScheduler<VIEWT extends RapidView<?>> extends R
 
   @Override
   public String toString() {
-    return "Controller =>" + RmBuilder.clazz(this.getClass())
+    return "Scheduler =>" + RmBuilder.clazz(this.getClass())
         + RmBuilder.build(view.toString(), "VIEW_OBJECT");
   }
 }
